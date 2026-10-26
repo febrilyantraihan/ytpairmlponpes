@@ -13,10 +13,151 @@ document.addEventListener('DOMContentLoaded', () => {
   loadCurrentTab();
 });
 
-/* 1. AUTHENTICATION, RBAC & 15-MINUTE INACTIVITY AUTO LOGOUT */
+/* 1. AUTHENTICATION, RBAC, BRUTE-FORCE SHIELD & 15-MINUTE INACTIVITY AUTO LOGOUT */
 const INACTIVITY_TIMEOUT_MS = 15 * 60 * 1000; // 15 Menit Tidak Ada Interaksi
+const MAX_LOGIN_ATTEMPTS = 5; // Batas maksimal percobaan salah berturut-turut
+const LOCKOUT_DURATION_MS = 5 * 60 * 1000; // 5 Menit penguncian sementara jika terdeteksi brute force
 let lastActivityTimestamp = Date.now();
 let inactivityCheckInterval = null;
+let lockoutCountdownInterval = null;
+
+function getLoginAttempts() {
+  try {
+    const data = JSON.parse(localStorage.getItem('ytpai_login_attempts') || '{}');
+    return {
+      count: Number(data.count) || 0,
+      lockedUntil: Number(data.lockedUntil) || 0
+    };
+  } catch (e) {
+    return { count: 0, lockedUntil: 0 };
+  }
+}
+
+function recordFailedLoginAttempt(username) {
+  const attempts = getLoginAttempts();
+  attempts.count = (attempts.count || 0) + 1;
+  if (attempts.count >= MAX_LOGIN_ATTEMPTS) {
+    attempts.lockedUntil = Date.now() + LOCKOUT_DURATION_MS;
+    logSecurityEvent('BRUTE_FORCE_LOCKOUT', username, `Akses login dikunci sementara 5 menit karena ${attempts.count}x percobaan salah berturut-turut.`);
+  } else {
+    logSecurityEvent('LOGIN_FAILED', username, `Percobaan login gagal (${attempts.count}/${MAX_LOGIN_ATTEMPTS})`);
+  }
+  localStorage.setItem('ytpai_login_attempts', JSON.stringify(attempts));
+  return attempts;
+}
+
+function resetLoginAttempts(username) {
+  localStorage.removeItem('ytpai_login_attempts');
+  if (lockoutCountdownInterval) {
+    clearInterval(lockoutCountdownInterval);
+    lockoutCountdownInterval = null;
+  }
+  logSecurityEvent('LOGIN_SUCCESS', username, 'Autentikasi kredensial berhasil diverifikasi.');
+}
+
+function checkLockoutStatus() {
+  const attempts = getLoginAttempts();
+  if (attempts.lockedUntil && Date.now() < attempts.lockedUntil) {
+    return {
+      locked: true,
+      remainingSec: Math.ceil((attempts.lockedUntil - Date.now()) / 1000)
+    };
+  }
+  if (attempts.lockedUntil && Date.now() >= attempts.lockedUntil) {
+    localStorage.removeItem('ytpai_login_attempts');
+  }
+  return { locked: false, remainingSec: 0 };
+}
+
+function updateLockoutUI() {
+  const status = checkLockoutStatus();
+  const submitBtn = document.getElementById('loginSubmitBtn');
+  const submitText = document.getElementById('loginSubmitText');
+  const alertBox = document.getElementById('loginAlert');
+  const userInput = document.getElementById('adminUser');
+  const pinInput = document.getElementById('adminPin');
+
+  if (status.locked) {
+    if (submitBtn) submitBtn.disabled = true;
+    if (userInput) userInput.disabled = true;
+    if (pinInput) pinInput.disabled = true;
+    if (submitText) submitText.textContent = `Terkunci (${status.remainingSec}s)`;
+    if (alertBox) {
+      alertBox.className = 'login-alert-banner alert-danger';
+      alertBox.innerHTML = `🔒 <strong>Akses Terkunci Sementara:</strong> Terdeteksi ${MAX_LOGIN_ATTEMPTS}x percobaan login salah. Demi keamanan data madrasah, silakan tunggu <strong><span id="lockoutSec">${status.remainingSec}</span> detik</strong> sebelum mencoba kembali.`;
+      alertBox.style.display = 'block';
+    }
+
+    if (!lockoutCountdownInterval) {
+      lockoutCountdownInterval = setInterval(() => {
+        const curStatus = checkLockoutStatus();
+        const secSpan = document.getElementById('lockoutSec');
+        if (secSpan) secSpan.textContent = curStatus.remainingSec;
+        if (submitText) submitText.textContent = `Terkunci (${curStatus.remainingSec}s)`;
+
+        if (!curStatus.locked) {
+          clearInterval(lockoutCountdownInterval);
+          lockoutCountdownInterval = null;
+          if (submitBtn) submitBtn.disabled = false;
+          if (submitText) submitText.textContent = 'Buka Panel Admin';
+          if (userInput) userInput.disabled = false;
+          if (pinInput) {
+            pinInput.disabled = false;
+            pinInput.focus();
+          }
+          if (alertBox) {
+            alertBox.className = 'login-alert-banner alert-success';
+            alertBox.innerHTML = '🔓 <strong>Kunci Berakhir:</strong> Silakan masukkan nama akun dan kata sandi yang valid.';
+            alertBox.style.display = 'block';
+          }
+        }
+      }, 1000);
+    }
+    return true;
+  } else {
+    if (lockoutCountdownInterval) {
+      clearInterval(lockoutCountdownInterval);
+      lockoutCountdownInterval = null;
+    }
+    if (submitBtn && submitBtn.disabled && submitText && submitText.textContent.startsWith('Terkunci')) {
+      submitBtn.disabled = false;
+      submitText.textContent = 'Buka Panel Admin';
+      if (userInput) userInput.disabled = false;
+      if (pinInput) pinInput.disabled = false;
+      if (alertBox) alertBox.style.display = 'none';
+    }
+    return false;
+  }
+}
+
+function logSecurityEvent(type, targetUser, details) {
+  try {
+    const logs = JSON.parse(localStorage.getItem('ytpai_security_logs') || '[]');
+    logs.unshift({
+      id: 'sec-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5),
+      timestamp: new Date().toISOString(),
+      formattedTime: new Date().toLocaleString('id-ID'),
+      type: type,
+      user: targetUser || 'anonymous',
+      details: details,
+      userAgent: (navigator.userAgent || '').substring(0, 80)
+    });
+    if (logs.length > 80) logs.length = 80;
+    localStorage.setItem('ytpai_security_logs', JSON.stringify(logs));
+  } catch (e) {}
+}
+
+function generateSessionToken(user) {
+  let entropy = '';
+  try {
+    const arr = new Uint8Array(12);
+    crypto.getRandomValues(arr);
+    entropy = Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+  } catch (e) {
+    entropy = Math.random().toString(36).substr(2, 10) + Date.now().toString(36);
+  }
+  return `ytp_${(user && user.id) || 'usr'}_${Date.now()}_${entropy}`;
+}
 
 function recordUserActivity() {
   lastActivityTimestamp = Date.now();
@@ -50,6 +191,15 @@ function startInactivityMonitor() {
     const isLogged = localStorage.getItem('ytpai_admin_auth') === 'true' || sessionStorage.getItem('ytpai_admin_auth') === 'true';
     if (!isLogged) return;
 
+    // Validasi token sesi aktif
+    const activeUser = getActiveAdminUser();
+    const storedToken = localStorage.getItem('ytpai_session_token') || sessionStorage.getItem('ytpai_session_token');
+    if (!activeUser || !storedToken || activeUser.sessionToken !== storedToken) {
+      console.warn('[Keamanan Backoffice] Token sesi tidak valid atau sesi ganda terdeteksi. Melakukan logout otomatis.');
+      triggerAutoLogoutDueToInactivity();
+      return;
+    }
+
     let lastTime = lastActivityTimestamp;
     try {
       const storedTime = parseInt(localStorage.getItem('ytpai_last_activity') || '0', 10);
@@ -67,8 +217,10 @@ function startInactivityMonitor() {
 function triggerAutoLogoutDueToInactivity() {
   localStorage.removeItem('ytpai_admin_auth');
   localStorage.removeItem('ytpai_admin_session');
+  localStorage.removeItem('ytpai_session_token');
   sessionStorage.removeItem('ytpai_admin_auth');
   sessionStorage.removeItem('ytpai_admin_session');
+  sessionStorage.removeItem('ytpai_session_token');
   localStorage.removeItem('ytpai_last_activity');
 
   const loginOverlay = document.getElementById('loginOverlay');
@@ -93,28 +245,8 @@ function triggerAutoLogoutDueToInactivity() {
     pinInput.value = '';
     pinInput.focus();
   }
+  updateLockoutUI();
 }
-
-window.adminLogout = function(message) {
-  localStorage.removeItem('ytpai_admin_auth');
-  localStorage.removeItem('ytpai_admin_session');
-  sessionStorage.removeItem('ytpai_admin_auth');
-  sessionStorage.removeItem('ytpai_admin_session');
-  localStorage.removeItem('ytpai_last_activity');
-
-  const loginOverlay = document.getElementById('loginOverlay');
-  if (loginOverlay) loginOverlay.style.display = 'flex';
-
-  const alertBox = document.getElementById('loginAlert');
-  if (alertBox) {
-    alertBox.className = 'login-alert-banner alert-success';
-    alertBox.innerHTML = message || '👋 <strong>Anda telah logout.</strong> Sesi panel Backoffice CMS telah ditutup dengan aman.';
-    alertBox.style.display = 'block';
-  }
-
-  const pinInput = document.getElementById('adminPin');
-  if (pinInput) pinInput.value = '';
-};
 
 function getActiveAdminUser() {
   const sessionStr = localStorage.getItem('ytpai_admin_session') || sessionStorage.getItem('ytpai_admin_session');
@@ -128,6 +260,7 @@ function getActiveAdminUser() {
 
 function initAuth() {
   startInactivityMonitor();
+  updateLockoutUI();
 
   const isLogged = localStorage.getItem('ytpai_admin_auth') === 'true' || sessionStorage.getItem('ytpai_admin_auth') === 'true';
   const loginOverlay = document.getElementById('loginOverlay');
@@ -135,8 +268,13 @@ function initAuth() {
 
   if (isLogged) {
     const user = getActiveAdminUser();
-    applyRolePermissions(user);
-    if (loginOverlay) loginOverlay.style.display = 'none';
+    const storedToken = localStorage.getItem('ytpai_session_token') || sessionStorage.getItem('ytpai_session_token');
+    if (user && storedToken && user.sessionToken === storedToken) {
+      applyRolePermissions(user);
+      if (loginOverlay) loginOverlay.style.display = 'none';
+    } else {
+      triggerAutoLogoutDueToInactivity();
+    }
   } else {
     if (loginOverlay) loginOverlay.style.display = 'flex';
   }
@@ -144,6 +282,12 @@ function initAuth() {
   if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      
+      // Cegah submit jika dalam status lockout
+      if (updateLockoutUI()) {
+        return;
+      }
+
       const userInput = document.getElementById('adminUser');
       const pinInput = document.getElementById('adminPin');
       const alertBox = document.getElementById('loginAlert');
@@ -155,14 +299,23 @@ function initAuth() {
       const username = (userInput ? userInput.value.trim() : '').toLowerCase();
       const pin = pinInput ? pinInput.value.trim() : '';
 
+      if (!username || !pin) {
+        if (alertBox) {
+          alertBox.className = 'login-alert-banner alert-danger';
+          alertBox.innerHTML = '⚠️ <strong>Data Belum Lengkap:</strong> Harap masukkan nama akun dan kata sandi Anda.';
+          alertBox.style.display = 'block';
+        }
+        return;
+      }
+
       const db = getDB();
       const users = db.adminUsers || [];
       
-      // Cari akun yang cocok di database lokal
-      let matchedUser = users.find(u => (u.username || '').toLowerCase() === username && (u.password === pin || pin === 'admin123'));
+      // Strict matching: Kata sandi wajib persis sesuai database akun masing-masing
+      let matchedUser = users.find(u => (u.username || '').toLowerCase() === username && u.password === pin);
       
-      // Fallback akun Super Admin jika cache baru direset
-      if (!matchedUser && (username === 'admin' || username === 'superadmin') && (pin === 'admin123' || pin === 'admin')) {
+      // Fallback darurat HANYA untuk Super Admin pertama kali jika database kosong
+      if (!matchedUser && (!users || users.length === 0) && (username === 'admin' || username === 'superadmin') && pin === 'admin123') {
         matchedUser = {
           id: 'usr-superadmin',
           username: 'admin',
@@ -176,17 +329,21 @@ function initAuth() {
 
       if (matchedUser) {
         if (matchedUser.status === 'inactive') {
+          logSecurityEvent('LOGIN_BLOCKED_INACTIVE', username, 'Upaya login ditolak karena status akun dinonaktifkan.');
           if (alertBox) {
             alertBox.className = 'login-alert-banner alert-danger';
-            alertBox.innerHTML = '⚠️ <strong>Akun Dinonaktifkan!</strong> Hubungi Super Admin untuk mengaktifkan kembali akun ini.';
+            alertBox.innerHTML = '⚠️ <strong>Akun Dinonaktifkan:</strong> Akun ini telah dibekukan. Hubungi Super Admin Yayasan untuk verifikasi ulang.';
             alertBox.style.display = 'block';
           }
           return;
         }
 
+        // Reset kegagalan login karena berhasil
+        resetLoginAttempts(username);
+
         if (alertBox) {
           alertBox.className = 'login-alert-banner alert-success';
-          alertBox.innerHTML = `✅ <strong>Login Berhasil!</strong> Selamat datang, <strong>${matchedUser.name}</strong> (${matchedUser.roleName || matchedUser.role}). Menyiapkan sesi...`;
+          alertBox.innerHTML = `✅ <strong>Login Berhasil!</strong> Selamat datang, <strong>${matchedUser.name}</strong> (${matchedUser.roleName || matchedUser.role}). Mengamankan sesi...`;
           alertBox.style.display = 'block';
         }
         if (submitBtn) {
@@ -195,6 +352,7 @@ function initAuth() {
         }
 
         setTimeout(() => {
+          const sessionToken = generateSessionToken(matchedUser);
           const userSession = {
             id: matchedUser.id,
             username: matchedUser.username,
@@ -204,20 +362,24 @@ function initAuth() {
             status: matchedUser.status || 'active',
             avatar: matchedUser.avatar || '👤',
             unitId: matchedUser.unitId || null,
-            email: matchedUser.email || ''
+            email: matchedUser.email || '',
+            sessionToken: sessionToken,
+            loginAt: Date.now()
           };
 
           if (rememberCheckbox && rememberCheckbox.checked) {
             localStorage.setItem('ytpai_admin_auth', 'true');
             localStorage.setItem('ytpai_admin_session', JSON.stringify(userSession));
+            localStorage.setItem('ytpai_session_token', sessionToken);
           } else {
             sessionStorage.setItem('ytpai_admin_auth', 'true');
             sessionStorage.setItem('ytpai_admin_session', JSON.stringify(userSession));
+            sessionStorage.setItem('ytpai_session_token', sessionToken);
           }
 
           recordUserActivity();
           applyRolePermissions(userSession);
-          loginOverlay.style.display = 'none';
+          if (loginOverlay) loginOverlay.style.display = 'none';
 
           // Arahkan otomatis ke tab yang sesuai dengan perannya
           if (userSession.role === 'kbihu') {
@@ -237,19 +399,28 @@ function initAuth() {
           }
         }, 380);
       } else {
-        if (alertBox) {
-          alertBox.className = 'login-alert-banner alert-danger';
-          alertBox.innerHTML = '⚠️ <strong>Kredensial Tidak Cocok!</strong> Periksa kembali username atau kata sandi Anda.';
-          alertBox.style.display = 'block';
-        }
+        // Catat kegagalan login dan periksa batasan brute force
+        const attempts = recordFailedLoginAttempt(username);
+        
         if (loginCard) {
           loginCard.classList.remove('shake-animation');
           void loginCard.offsetWidth; // trigger reflow
           loginCard.classList.add('shake-animation');
         }
-        if (pinInput) {
-          pinInput.focus();
-          pinInput.select();
+
+        if (attempts.count >= MAX_LOGIN_ATTEMPTS) {
+          updateLockoutUI();
+        } else {
+          const sisaPercobaan = MAX_LOGIN_ATTEMPTS - attempts.count;
+          if (alertBox) {
+            alertBox.className = 'login-alert-banner alert-danger';
+            alertBox.innerHTML = `⚠️ <strong>Kredensial Tidak Cocok!</strong> Username atau kata sandi salah.<br><small style="font-size:0.75rem; opacity:0.9;">Tersisa <strong>${sisaPercobaan}x percobaan lagi</strong> sebelum akun terkunci 5 menit.</small>`;
+            alertBox.style.display = 'block';
+          }
+          if (pinInput) {
+            pinInput.value = '';
+            pinInput.focus();
+          }
         }
       }
     });
@@ -437,21 +608,8 @@ window.applyRolePermissions = function(user) {
   }
 };
 
-window.selectQuickAccount = function(username) {
-  const userInput = document.getElementById('adminUser');
-  const pinInput = document.getElementById('adminPin');
-  const alertBox = document.getElementById('loginAlert');
-  if (!username) return;
-
-  const db = getDB();
-  const users = db.adminUsers || [];
-  const found = users.find(u => u.username === username);
-
-  if (found) {
-    if (userInput) userInput.value = found.username;
-    if (pinInput) pinInput.value = found.password;
-    if (alertBox) alertBox.style.display = 'none';
-  }
+window.selectQuickAccount = function() {
+  console.warn('[Keamanan Backoffice] Fitur demo pemilihan akun otomatis dinonaktifkan demi privasi dan integritas sistem.');
 };
 
 window.togglePasswordVisibility = function() {
@@ -479,32 +637,46 @@ window.togglePasswordVisibility = function() {
 };
 
 window.autoFillDefaultPin = function() {
-  const pinInput = document.getElementById('adminPin');
-  const alertBox = document.getElementById('loginAlert');
-  const btn = document.getElementById('btnQuickFill');
-  if (pinInput) {
-    pinInput.value = 'admin123';
-    pinInput.focus();
-    if (alertBox) alertBox.style.display = 'none';
-
-    if (btn) {
-      btn.classList.add('filled');
-      btn.innerHTML = '<span>✓ Terisi!</span> <code>admin123</code>';
-      setTimeout(() => {
-        btn.innerHTML = '<span>Isi Cepat:</span> <code>admin123</code>';
-        btn.classList.remove('filled');
-      }, 1500);
-    }
-  }
+  console.warn('[Keamanan Backoffice] Tombol isi cepat PIN demo dinonaktifkan demi mematuhi standar keamanan institusional.');
 };
 
-window.adminLogout = function() {
-  if (confirm('Yakin ingin keluar dari panel admin?')) {
+window.adminLogout = function(message) {
+  const doLogout = () => {
+    const user = getActiveAdminUser();
+    if (user && user.username) {
+      logSecurityEvent('LOGOUT_MANUAL', user.username, 'Sesi pengguna ditutup secara sadar oleh pengelola.');
+    }
     localStorage.removeItem('ytpai_admin_auth');
     localStorage.removeItem('ytpai_admin_session');
+    localStorage.removeItem('ytpai_session_token');
     sessionStorage.removeItem('ytpai_admin_auth');
     sessionStorage.removeItem('ytpai_admin_session');
-    location.reload();
+    sessionStorage.removeItem('ytpai_session_token');
+    localStorage.removeItem('ytpai_last_activity');
+
+    const loginOverlay = document.getElementById('loginOverlay');
+    if (loginOverlay) loginOverlay.style.display = 'flex';
+
+    const alertBox = document.getElementById('loginAlert');
+    if (alertBox) {
+      alertBox.className = 'login-alert-banner alert-success';
+      alertBox.innerHTML = message || '👋 <strong>Anda telah logout.</strong> Sesi panel Backoffice CMS telah ditutup dengan aman.';
+      alertBox.style.display = 'block';
+    }
+
+    const pinInput = document.getElementById('adminPin');
+    if (pinInput) pinInput.value = '';
+
+    updateLockoutUI();
+    if (!message) {
+      location.reload();
+    }
+  };
+
+  if (message) {
+    doLogout();
+  } else if (confirm('Yakin ingin keluar dari panel admin?')) {
+    doLogout();
   }
 };
 

@@ -6,7 +6,7 @@
   <title>Backoffice CMS - YTPAI Raudlatul Muta'allimin Lamongan</title>
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css?v=15.8">
-  <link rel="stylesheet" href="css/admin.css?v=7.3">
+  <link rel="stylesheet" href="css/admin.css?v=7.4">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
@@ -183,7 +183,7 @@
                   <circle cx="12" cy="7" r="4"></circle>
                 </svg>
               </span>
-              <input type="text" id="adminUser" class="pill-field-input" value="admin" placeholder="Nama Akun Pengelola" autocomplete="username">
+              <input type="text" id="adminUser" class="pill-field-input" placeholder="Nama Akun Pengelola" autocomplete="username">
             </div>
 
             <!-- PIN / Password Input (Pill Style from Reference) -->
@@ -194,7 +194,7 @@
                   <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                 </svg>
               </span>
-              <input type="password" id="adminPin" class="pill-field-input" placeholder="PIN Admin (admin123)" required autofocus autocomplete="current-password">
+              <input type="password" id="adminPin" class="pill-field-input" placeholder="Kata Sandi / PIN Akun" required autofocus autocomplete="current-password">
               <button type="button" id="togglePasswordBtn" class="pill-field-toggle" onclick="togglePasswordVisibility()" title="Lihat/Sembunyikan Kata Sandi" aria-label="Lihat Kata Sandi">
                 <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -206,7 +206,7 @@
             <!-- Security Strength Indicator (Matches Reference Image) -->
             <div class="login-security-meter-row">
               <span class="security-meter-label">Status Keamanan</span>
-              <div class="security-meter-bars" title="Enkripsi Terotentikasi SSL 256-Bit">
+              <div class="security-meter-bars" title="Enkripsi Terotentikasi SSL 256-Bit & Brute-Force Shield">
                 <span class="meter-segment seg-gold"></span>
                 <span class="meter-segment seg-gold"></span>
                 <span class="meter-segment seg-gold"></span>
@@ -214,38 +214,16 @@
               <span class="security-meter-badge">Maksimal</span>
             </div>
 
-            <!-- Quick Role Account Switcher for Demo / Testing -->
-            <div style="margin: 12px 0; padding: 10px 12px; background: rgba(255,255,255,0.06); border: 1px dashed rgba(255,255,255,0.2); border-radius: 6px;">
-              <div style="font-size: 0.74rem; color: #CBD5E1; margin-bottom: 6px; display:flex; justify-content:space-between; align-items:center;">
-                <span>⚡ Pilih Akun Demo / Instan:</span>
-                <span style="color:#FBBF24; font-weight:700;">Multi-Role RBAC</span>
-              </div>
-              <select id="quickAccountSelect" class="pill-field-input" style="padding: 6px 10px; font-size: 0.78rem; height: auto; background: #0A2540; color: #FFFFFF; border-color: rgba(251,191,36,0.5);" onchange="selectQuickAccount(this.value)">
-                <option value="admin">👑 Super Admin (admin / admin123)</option>
-                <option value="adminkbihu">🕋 Admin KBIHU (adminkbihu / kbihu123)</option>
-                <option value="adminlbb">🚀 Admin LBB (adminlbb / lbb123)</option>
-                <option value="admin_mts">📖 Admin MTs (admin_mts / mts123)</option>
-                <option value="admin_smp">🔬 Admin SMP (admin_smp / smp123)</option>
-                <option value="admin_ma">🕌 Admin MA (admin_ma / ma123)</option>
-                <option value="admin_sma">🎓 Admin SMA (admin_sma / sma123)</option>
-                <option value="admin_mi">🎒 Admin MI (admin_mi / mi123)</option>
-                <option value="admin_tk">🎈 Admin TK (admin_tk / tk123)</option>
-                <option value="admin_kb">👶 Admin KB (admin_kb / kb123)</option>
-                <option value="admin_madin">📜 Admin Madin (admin_madin / madin123)</option>
-                <option value="admin_lpba">🌐 Admin LPBA (admin_lpba / lpba123)</option>
-                <option value="admin_ponpes">🏰 Admin Ponpes (admin_ponpes / ponpes123)</option>
-              </select>
-            </div>
-
             <!-- Quick Helper & Remember Session -->
             <div class="login-options-bar">
               <label class="login-checkbox-pill">
                 <input type="checkbox" id="adminRememberMe" checked>
-                <span>Ingat sesi</span>
+                <span>Ingat sesi di perangkat ini</span>
               </label>
-              <button type="button" class="btn-quick-code" id="btnQuickFill" onclick="autoFillDefaultPin()" title="Klik untuk mengisi PIN demo">
-                <span>Isi Cepat:</span> <code>admin123</code>
-              </button>
+              <div class="login-security-notice" style="font-size:0.72rem; color:rgba(255,255,255,0.78); display:inline-flex; align-items:center; gap:5px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                <span>Anti-Brute Force Active</span>
+              </div>
             </div>
 
             <!-- Action Buttons: Gold Pill Primary + Outline Secondary -->
@@ -1088,6 +1066,6 @@
 
   <script src="js/data.js?v=10.0"></script>
   <script src="js/ai-chatbot.js?v=10.0"></script>
-  <script src="js/admin.js?v=9.2"></script>
+  <script src="js/admin.js?v=9.3"></script>
 </body>
 </html>
