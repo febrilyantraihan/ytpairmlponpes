@@ -1,0 +1,449 @@
+/* ===================================================
+   ANIMATIONS & MICRO-INTERACTIONS SUITE
+   YTPAI Raudlatul Muta'allimin Lamongan
+   Lightweight, GPU-Accelerated, Mobile-Optimized
+=================================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-14px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(14px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulseGold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.45); }
+  50% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
+}
+
+@keyframes pulseEmerald {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45); }
+  50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+}
+
+@keyframes shimmerGlow {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.fade-in {
+  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.slide-down {
+  animation: slideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.slide-up {
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ===================================================
+   SMOOTH SCROLL REVEAL SUITE (UNIVERSAL ALL PAGES)
+   Silky 60fps/120Hz Hardware-Accelerated Luxury Motion
+   Gentle Silk Deceleration with Subtle Camera Focus Glide
+=================================================== */
+:root {
+  --motion-ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-duration-soft: 0.88s;
+  --motion-duration-mobile: 0.76s;
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  filter: blur(2.5px);
+  transition: opacity var(--motion-duration-soft) var(--motion-ease-luxury),
+              transform var(--motion-duration-soft) var(--motion-ease-luxury),
+              filter var(--motion-duration-soft) var(--motion-ease-luxury);
+  will-change: opacity, transform, filter;
+  backface-visibility: hidden;
+}
+
+.scroll-reveal-soft {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  filter: blur(2px);
+  transition: opacity 0.95s var(--motion-ease-luxury),
+              transform 0.95s var(--motion-ease-luxury),
+              filter 0.95s var(--motion-ease-luxury);
+  will-change: opacity, transform, filter;
+  backface-visibility: hidden;
+}
+
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translate3d(-28px, 0, 0);
+  filter: blur(2.5px);
+  transition: opacity var(--motion-duration-soft) var(--motion-ease-luxury),
+              transform var(--motion-duration-soft) var(--motion-ease-luxury),
+              filter var(--motion-duration-soft) var(--motion-ease-luxury);
+  will-change: opacity, transform, filter;
+  backface-visibility: hidden;
+}
+
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translate3d(28px, 0, 0);
+  filter: blur(2.5px);
+  transition: opacity var(--motion-duration-soft) var(--motion-ease-luxury),
+              transform var(--motion-duration-soft) var(--motion-ease-luxury),
+              filter var(--motion-duration-soft) var(--motion-ease-luxury);
+  will-change: opacity, transform, filter;
+  backface-visibility: hidden;
+}
+
+.scroll-reveal-scale,
+.scroll-reveal-zoom {
+  opacity: 0;
+  transform: scale(0.97) translate3d(0, 18px, 0);
+  filter: blur(2.5px);
+  transition: opacity var(--motion-duration-soft) var(--motion-ease-luxury),
+              transform var(--motion-duration-soft) var(--motion-ease-luxury),
+              filter var(--motion-duration-soft) var(--motion-ease-luxury);
+  will-change: opacity, transform, filter;
+  backface-visibility: hidden;
+}
+
+.scroll-reveal.is-revealed,
+.scroll-reveal-soft.is-revealed,
+.scroll-reveal-left.is-revealed,
+.scroll-reveal-right.is-revealed,
+.scroll-reveal-scale.is-revealed,
+.scroll-reveal-zoom.is-revealed {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) scale(1) !important;
+  filter: blur(0px) !important;
+}
+
+/* Staggered Cascading Delay (Harmonious Wave) */
+.stagger-1 { transition-delay: 0.04s; }
+.stagger-2 { transition-delay: 0.10s; }
+.stagger-3 { transition-delay: 0.16s; }
+.stagger-4 { transition-delay: 0.22s; }
+.stagger-5 { transition-delay: 0.28s; }
+.stagger-6 { transition-delay: 0.34s; }
+
+@media (min-width: 769px) {
+  .stagger-1 { transition-delay: 0.05s; }
+  .stagger-2 { transition-delay: 0.12s; }
+  .stagger-3 { transition-delay: 0.19s; }
+  .stagger-4 { transition-delay: 0.26s; }
+  .stagger-5 { transition-delay: 0.33s; }
+  .stagger-6 { transition-delay: 0.40s; }
+}
+
+@media (max-width: 768px) {
+  .scroll-reveal,
+  .scroll-reveal-soft,
+  .scroll-reveal-left,
+  .scroll-reveal-right,
+  .scroll-reveal-scale,
+  .scroll-reveal-zoom {
+    filter: none !important;
+    transform: translate3d(0, 16px, 0);
+    transition-duration: var(--motion-duration-mobile) !important;
+  }
+  .scroll-reveal-left {
+    transform: translate3d(-18px, 0, 0);
+  }
+  .scroll-reveal-right {
+    transform: translate3d(18px, 0, 0);
+  }
+  .scroll-reveal-scale,
+  .scroll-reveal-zoom {
+    transform: scale(0.98) translate3d(0, 14px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal-soft,
+  .scroll-reveal-left,
+  .scroll-reveal-right,
+  .scroll-reveal-scale,
+  .scroll-reveal-zoom {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
+
+/* Dynamic Expansion of Card Accent Flourish on Scroll Reveal */
+.core-value-card::before {
+  transform-origin: center;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+}
+.core-value-card:not(.is-revealed)::before {
+  transform: scaleX(0.2);
+}
+.core-value-card.is-revealed::before {
+  transform: scaleX(1);
+}
+
+/* ===================================================
+   CINEMATIC SLOW-MO COUNTER SUITE
+   Deliberate Easing, Warm Shimmer & Milestone Glow
+=================================================== */
+.stat-number.is-counting-slowmo,
+.core-value-stat-num.is-counting-slowmo {
+  color: #0A2540 !important;
+  text-shadow: 0 0 12px rgba(251, 191, 36, 0.45);
+  transform: scale(1.02);
+  display: inline-block;
+  transition: transform 0.2s ease, text-shadow 0.2s ease;
+}
+
+.stat-number.counter-finished,
+.core-value-stat-num.counter-finished {
+  animation: statNumberFinishGlow 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes statNumberFinishGlow {
+  0% {
+    transform: scale(1.07);
+    color: #D97706;
+    text-shadow: 0 0 16px rgba(251, 191, 36, 0.75);
+  }
+  100% {
+    transform: scale(1);
+    color: #0F4C81;
+    text-shadow: none;
+  }
+}
+
+
+/* ===================================================
+   RICH HOVER MICRO-INTERACTIONS SUITE
+   Instant 3D Lift, Depth Shadows, and Smooth Icon Tilt
+=================================================== */
+
+/* 1. Hero Pillars */
+.kbihu-hero-pillar-item,
+.lbb-hero-pillar-item {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer;
+}
+.kbihu-hero-pillar-item:hover,
+.lbb-hero-pillar-item:hover {
+  transform: translateY(-6px) scale(1.025) !important;
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: #FBBF24 !important;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28) !important;
+}
+.kbihu-hero-pillar-item:hover .icon-box,
+.kbihu-hero-pillar-item:hover svg,
+.lbb-hero-pillar-item:hover .icon-box,
+.lbb-hero-pillar-item:hover svg {
+  transform: scale(1.2) rotate(6deg) !important;
+  color: #FBBF24 !important;
+  transition: transform 0.3s ease, color 0.3s ease !important;
+}
+
+/* 2. Stat Card Hero */
+.kbihu-hero-stat-card,
+.lbb-hero-stat-card {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.kbihu-hero-stat-card:hover,
+.lbb-hero-stat-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4) !important;
+  border-color: rgba(52, 211, 153, 0.6) !important;
+}
+
+/* 3. Package & Service & Program Cards */
+.kbihu-package-card,
+.kbihu-program-card,
+.kbihu-facility-card,
+.kbihu-mentor-card,
+.kbihu-step-card,
+.kbihu-faq-item,
+.kbihu-doc-card,
+.kbihu-info-card,
+.lbb-package-card,
+.lbb-program-card,
+.lbb-tentor-card,
+.lbb-smart-card,
+.tka-session-card,
+.lbb-facility-card,
+.lbb-faq-item,
+.lbb-timeline-card,
+.pilar-card,
+.program-card,
+.facility-card,
+.news-card,
+.stat-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background 0.3s ease !important;
+}
+
+.kbihu-package-card:hover,
+.kbihu-program-card:hover,
+.kbihu-facility-card:hover,
+.kbihu-mentor-card:hover,
+.kbihu-step-card:hover,
+.kbihu-doc-card:hover,
+.kbihu-info-card:hover,
+.lbb-package-card:hover,
+.lbb-program-card:hover,
+.lbb-tentor-card:hover,
+.lbb-smart-card:hover,
+.tka-session-card:hover,
+.lbb-facility-card:hover,
+.lbb-timeline-card:hover {
+  transform: translateY(-8px) scale(1.015) !important;
+  box-shadow: 0 20px 42px -8px rgba(10, 37, 64, 0.15), 0 10px 18px -4px rgba(10, 37, 64, 0.08) !important;
+  border-color: #059669 !important;
+}
+
+/* Icon box animation inside cards */
+.kbihu-package-card:hover .kbihu-package-icon-wrap,
+.kbihu-facility-card:hover .kbihu-facility-icon-wrap,
+.lbb-package-card:hover .lbb-package-icon-wrap,
+.lbb-smart-card:hover .lbb-smart-icon-box {
+  transform: scale(1.15) rotate(6deg) !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Photo Zoom inside mentor/tentor cards */
+.kbihu-mentor-card:hover .kbihu-mentor-img,
+.lbb-tentor-card:hover .lbb-tentor-img,
+.kbihu-facility-card:hover img,
+.lbb-facility-card:hover img {
+  transform: scale(1.08) !important;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* 4. Interactive Buttons & CTA */
+.btn-kbihu-wa,
+.btn-kbihu-outline,
+.btn-lbb-wa,
+.btn-lbb-outline,
+.btn-primary,
+.nav-cta-btn,
+.nav-bimbingan-action-btn,
+.btn-action {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer;
+}
+
+.btn-kbihu-wa:hover,
+.btn-lbb-wa:hover,
+.nav-cta-btn:hover {
+  transform: translateY(-3px) scale(1.03) !important;
+  box-shadow: 0 12px 28px -2px rgba(5, 150, 105, 0.45) !important;
+  filter: brightness(1.08) !important;
+}
+
+.btn-kbihu-outline:hover,
+.btn-lbb-outline:hover,
+.nav-bimbingan-action-btn:hover {
+  transform: translateY(-3px) scale(1.03) !important;
+  box-shadow: 0 10px 24px -2px rgba(251, 191, 36, 0.35) !important;
+}
+
+.btn-kbihu-wa:active,
+.btn-lbb-wa:active,
+.nav-cta-btn:active,
+.btn-primary:active {
+  transform: translateY(1px) scale(0.98) !important;
+}
+
+/* 5. Mission items list hover */
+.mission-item {
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.mission-item:hover {
+  background: #FFFFFF !important;
+  border-color: rgba(5, 150, 105, 0.35) !important;
+  border-left-color: #D97706 !important;
+  transform: translateX(6px) !important;
+  box-shadow: 0 8px 20px rgba(10, 37, 64, 0.08) !important;
+}
+.mission-item:hover .mission-number {
+  transform: scale(1.12) !important;
+  transition: transform 0.25s ease !important;
+}
+
+/* 6. Contact Box & Form Card Hover */
+.kbihu-contact-box,
+.kbihu-form-card,
+.lbb-contact-box,
+.lbb-form-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.kbihu-contact-box:hover,
+.kbihu-form-card:hover,
+.lbb-contact-box:hover,
+.lbb-form-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 24px 50px rgba(10, 37, 64, 0.22) !important;
+}
+
+/* ===================================================
+   OPTIMASI KHUSUS PONSEL & HP (SMOOTH MOBILE SCROLL SUITE)
+   - Transisi halus berkelas & elegan dengan cascading stagger
+   - Menghilangkan 300ms tap delay
+================================================== */
+@media (max-width: 768px) {
+  .scroll-reveal,
+  .scroll-reveal-left,
+  .scroll-reveal-right,
+  .scroll-reveal-scale,
+  .scroll-reveal-zoom {
+    transform: translateY(18px) scale(0.98);
+    filter: blur(2px);
+    transition-duration: 0.7s !important;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .scroll-reveal.is-revealed,
+  .scroll-reveal-left.is-revealed,
+  .scroll-reveal-right.is-revealed,
+  .scroll-reveal-scale.is-revealed,
+  .scroll-reveal-zoom.is-revealed {
+    transform: none !important;
+    filter: blur(0px) !important;
+  }
+
+  /* Smooth Cascading Stagger pada Ponsel */
+  .stagger-1 { transition-delay: 0.05s !important; }
+  .stagger-2 { transition-delay: 0.12s !important; }
+  .stagger-3 { transition-delay: 0.19s !important; }
+  .stagger-4 { transition-delay: 0.26s !important; }
+  .stagger-5 { transition-delay: 0.33s !important; }
+  .stagger-6 { transition-delay: 0.40s !important; }
+
+  /* Hilangkan delay tap pada layar sentuh mobile */
+  a, button, input, select, textarea, .btn, .nav-link, .topbar-item {
+    touch-action: manipulation !important;
+  }
+}
+
+/* Dukungan Mode Hemat Gerak & Perangkat Sangat Lama */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .scroll-reveal,
+  .scroll-reveal-left,
+  .scroll-reveal-right,
+  .scroll-reveal-scale,
+  .scroll-reveal-zoom {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

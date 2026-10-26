@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backoffice CMS - YTPAI Raudlatul Muta'allimin Lamongan</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css?v=15.8">
+  <link rel="stylesheet" href="css/admin.css?v=7.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="icon" type="image/png" href="assets/logo-favicon.png">
+</head>
+<body class="admin-body">
+
+  <!-- SECURITY LOGIN GATE -->
+  <div class="admin-login-overlay" id="loginOverlay">
+    <div class="login-ambient-glow" aria-hidden="true"></div>
+
+    <div class="admin-login-card split-login-card" id="loginCard">
+      <!-- Top Decorative Accent Bar (Navy - Gold) -->
+      <div class="login-card-accent-bar" aria-hidden="true"></div>
+
+      <!-- LEFT COLUMN: Institutional Brand & Illustration Showcase -->
+      <div class="login-showcase-col">
+        <div class="showcase-top-header">
+          <div class="showcase-brand-pill">
+            <img src="assets/logo.png" alt="Logo YTPAI Lamongan" class="showcase-brand-logo">
+            <div class="showcase-brand-text">
+              <span class="showcase-brand-name">YTPAI Lamongan</span>
+              <span class="showcase-brand-sub">Raudlatul Muta'allimin</span>
+            </div>
+          </div>
+          <div class="login-security-tag">
+            <span class="security-dot"></span>
+            <span>Akses Terautentikasi CMS</span>
+          </div>
+        </div>
+
+        <!-- Bespoke Vector SVG Illustration Matching Reference Layout -->
+        <div class="showcase-illustration-wrapper" aria-label="Ilustrasi Akses Pengelola">
+          <svg class="showcase-svg-art" viewBox="0 0 460 330" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background Decorative Dashed Arc Curves -->
+            <path d="M50 260C25 210 35 140 90 95C150 50 260 65 300 100" stroke="#0F4C81" stroke-width="2" stroke-dasharray="6 6" opacity="0.3"/>
+            <path d="M340 70C390 100 435 160 415 220" stroke="#C59B27" stroke-width="2" stroke-dasharray="5 5" opacity="0.35"/>
+            
+            <!-- Password Bubble on Top Left (••••••) -->
+            <g transform="translate(65, 38)">
+              <rect x="0" y="0" width="130" height="36" rx="18" fill="#FFFFFF" stroke="#0F4C81" stroke-width="1.8" stroke-dasharray="4 3"/>
+              <circle cx="28" cy="18" r="4" fill="#0F4C81"/>
+              <circle cx="48" cy="18" r="4" fill="#0F4C81"/>
+              <circle cx="68" cy="18" r="4" fill="#0F4C81"/>
+              <circle cx="88" cy="18" r="4" fill="#0F4C81"/>
+              <circle cx="108" cy="18" r="4" fill="#0F4C81"/>
+            </g>
+
+            <!-- Floating Modern Gear -->
+            <g transform="translate(232, 75)">
+              <rect x="11" y="0" width="10" height="32" rx="3" fill="#0F4C81"/>
+              <rect x="0" y="11" width="32" height="10" rx="3" fill="#0F4C81"/>
+              <rect x="3" y="3" width="26" height="26" rx="3" transform="rotate(45 16 16)" fill="#0F4C81"/>
+              <circle cx="16" cy="16" r="10.5" fill="#0A2540"/>
+              <circle cx="16" cy="16" r="4.5" fill="#FFFFFF"/>
+            </g>
+
+            <!-- Floating Golden Key -->
+            <g transform="translate(325, 88)">
+              <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="2.8" fill="#FFFDF5"/>
+              <circle cx="12" cy="12" r="4" fill="#C59B27"/>
+              <path d="M21 12H44" stroke="#C59B27" stroke-width="2.8" stroke-linecap="round"/>
+              <path d="M35 12V18" stroke="#C59B27" stroke-width="2.8" stroke-linecap="round"/>
+              <path d="M41 12V17" stroke="#C59B27" stroke-width="2.8" stroke-linecap="round"/>
+            </g>
+
+            <!-- Ground Base Line -->
+            <line x1="35" y1="285" x2="425" y2="285" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+
+            <!-- Central CMS Window Dashboard Screen -->
+            <g transform="translate(145, 115)">
+              <!-- Main Window Card Body -->
+              <rect x="0" y="0" width="190" height="170" rx="14" fill="#F0F7FF" stroke="#0F4C81" stroke-width="2.4"/>
+              
+              <!-- Window Top Bar -->
+              <path d="M0 14C0 6.268 6.268 0 14 0H176C183.732 0 190 6.268 190 14V30H0V14Z" fill="#DBEAFE"/>
+              <circle cx="16" cy="15" r="4" fill="#EF4444"/>
+              <circle cx="30" cy="15" r="4" fill="#FBBF24"/>
+              <circle cx="44" cy="15" r="4" fill="#10B981"/>
+
+              <!-- Simulated Form Rows Inside Window -->
+              <rect x="22" y="44" width="146" height="18" rx="9" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.2"/>
+              <rect x="22" y="72" width="146" height="18" rx="9" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.2"/>
+              <rect x="22" y="100" width="146" height="18" rx="9" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.2"/>
+
+              <!-- Action Button Inside Window -->
+              <rect x="45" y="130" width="100" height="24" rx="12" fill="#0A2540"/>
+              <rect x="68" y="139" width="54" height="6" rx="3" fill="#FBBF24"/>
+            </g>
+
+            <!-- Potted Plant on Right Side -->
+            <g transform="translate(315, 210)">
+              <!-- Pot -->
+              <path d="M12 40L16 75H48L52 40H12Z" fill="#0F4C81"/>
+              <rect x="8" y="34" width="48" height="8" rx="3" fill="#0A2540"/>
+              <!-- Green Plant Leaves -->
+              <path d="M32 34V12" stroke="#10B981" stroke-width="3" stroke-linecap="round"/>
+              <path d="M32 22C42 18 48 10 48 10C48 10 38 6 32 16" fill="#10B981"/>
+              <path d="M32 28C22 24 16 16 16 16C16 16 26 12 32 22" fill="#059669"/>
+              
+              <!-- Circular Badge with Security Lock Emblem -->
+              <circle cx="32" cy="-12" r="23" fill="#FFFFFF" stroke="#C59B27" stroke-width="2.5"/>
+              <circle cx="32" cy="-12" r="18" fill="#FEF3C7"/>
+              <rect x="24.5" y="-12" width="15" height="12" rx="2.5" fill="#0A2540"/>
+              <path d="M27 -12V-17C27 -19.76 29.24 -22 32 -22C34.76 -22 37 -19.76 37 -17V-12" stroke="#0A2540" stroke-width="2.2" fill="none"/>
+              <circle cx="32" cy="-6" r="1.5" fill="#FBBF24"/>
+            </g>
+
+            <!-- Person Character on Left Leaning On Portal -->
+            <g transform="translate(56, 92)">
+              <!-- Head -->
+              <circle cx="48" cy="28" r="15" fill="#0A2540"/>
+              <path d="M42 32C44 40 56 40 58 32" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="56" cy="27" r="3" fill="#FBBF24"/>
+              
+              <!-- Torso / Blue Body Jacket -->
+              <path d="M32 58C28 72 16 95 14 112C22 116 30 110 34 102L40 82V148H60V82L88 95L92 80L58 58H32Z" fill="#0F4C81"/>
+              
+              <!-- White Pants -->
+              <rect x="38" y="144" width="11" height="49" rx="4" fill="#FFFFFF" stroke="#0A2540" stroke-width="2"/>
+              <rect x="53" y="144" width="11" height="49" rx="4" fill="#FFFFFF" stroke="#0A2540" stroke-width="2"/>
+              
+              <!-- Shoes -->
+              <path d="M34 192H50V198H30C30 194.7 31.8 192 34 192Z" fill="#0A2540"/>
+              <path d="M53 192H69C71.2 192 73 194.7 73 198H53V192Z" fill="#0A2540"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="showcase-footer-meta">
+          <div class="showcase-meta-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>SSL 256-Bit Protection</span>
+          </div>
+          <div class="showcase-meta-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            <span>YTPAI Central Dashboard</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Deep Islamic Navy Welcome & Auth Form -->
+      <div class="login-form-col">
+        <!-- Ambient Decorative Curves (Similar to reference image) -->
+        <div class="form-curve-glow form-curve-1" aria-hidden="true"></div>
+        <div class="form-curve-glow form-curve-2" aria-hidden="true"></div>
+
+        <div class="login-form-inner">
+          <div class="login-welcome-header">
+            <!-- Mobile Identity Emblem (Displayed exclusively on mobile view) -->
+            <div class="mobile-login-brand" aria-label="Identitas Lembaga">
+              <img src="assets/logo.png" alt="Logo YTPAI Lamongan" class="mobile-login-logo">
+              <div class="mobile-login-org">
+                <span class="mobile-login-title">YTPAI Lamongan</span>
+                <span class="mobile-login-sub">Raudlatul Muta'allimin</span>
+              </div>
+            </div>
+
+            <h1 class="welcome-title">Welcome!</h1>
+            <p class="welcome-desc">Panel Pengelola Yayasan & Madrasah</p>
+            <span class="welcome-sub-badge">YTPAI RAUDLATUL MUTA'ALLIMIN LAMONGAN</span>
+          </div>
+
+          <!-- Alert Box for Error / Success Notifications -->
+          <div id="loginAlert" class="login-alert-banner" style="display:none;"></div>
+
+          <form id="loginForm">
+            <!-- Username Input (Pill Style from Reference) -->
+            <div class="pill-field-group">
+              <span class="pill-field-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </span>
+              <input type="text" id="adminUser" class="pill-field-input" value="admin" placeholder="Nama Akun Pengelola" autocomplete="username">
+            </div>
+
+            <!-- PIN / Password Input (Pill Style from Reference) -->
+            <div class="pill-field-group">
+              <span class="pill-field-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </span>
+              <input type="password" id="adminPin" class="pill-field-input" placeholder="PIN Admin (admin123)" required autofocus autocomplete="current-password">
+              <button type="button" id="togglePasswordBtn" class="pill-field-toggle" onclick="togglePasswordVisibility()" title="Lihat/Sembunyikan Kata Sandi" aria-label="Lihat Kata Sandi">
+                <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Security Strength Indicator (Matches Reference Image) -->
+            <div class="login-security-meter-row">
+              <span class="security-meter-label">Status Keamanan</span>
+              <div class="security-meter-bars" title="Enkripsi Terotentikasi SSL 256-Bit">
+                <span class="meter-segment seg-gold"></span>
+                <span class="meter-segment seg-gold"></span>
+                <span class="meter-segment seg-gold"></span>
+              </div>
+              <span class="security-meter-badge">Maksimal</span>
+            </div>
+
+            <!-- Quick Role Account Switcher for Demo / Testing -->
+            <div style="margin: 12px 0; padding: 10px 12px; background: rgba(255,255,255,0.06); border: 1px dashed rgba(255,255,255,0.2); border-radius: 6px;">
+              <div style="font-size: 0.74rem; color: #CBD5E1; margin-bottom: 6px; display:flex; justify-content:space-between; align-items:center;">
+                <span>⚡ Pilih Akun Demo / Instan:</span>
+                <span style="color:#FBBF24; font-weight:700;">Multi-Role RBAC</span>
+              </div>
+              <select id="quickAccountSelect" class="pill-field-input" style="padding: 6px 10px; font-size: 0.78rem; height: auto; background: #0A2540; color: #FFFFFF; border-color: rgba(251,191,36,0.5);" onchange="selectQuickAccount(this.value)">
+                <option value="admin">👑 Super Admin (admin / admin123)</option>
+                <option value="adminkbihu">🕋 Admin KBIHU (adminkbihu / kbihu123)</option>
+                <option value="adminlbb">🚀 Admin LBB (adminlbb / lbb123)</option>
+                <option value="admin_mts">📖 Admin MTs (admin_mts / mts123)</option>
+                <option value="admin_smp">🔬 Admin SMP (admin_smp / smp123)</option>
+                <option value="admin_ma">🕌 Admin MA (admin_ma / ma123)</option>
+                <option value="admin_sma">🎓 Admin SMA (admin_sma / sma123)</option>
+                <option value="admin_mi">🎒 Admin MI (admin_mi / mi123)</option>
+                <option value="admin_tk">🎈 Admin TK (admin_tk / tk123)</option>
+                <option value="admin_kb">👶 Admin KB (admin_kb / kb123)</option>
+                <option value="admin_madin">📜 Admin Madin (admin_madin / madin123)</option>
+                <option value="admin_lpba">🌐 Admin LPBA (admin_lpba / lpba123)</option>
+                <option value="admin_ponpes">🏰 Admin Ponpes (admin_ponpes / ponpes123)</option>
+              </select>
+            </div>
+
+            <!-- Quick Helper & Remember Session -->
+            <div class="login-options-bar">
+              <label class="login-checkbox-pill">
+                <input type="checkbox" id="adminRememberMe" checked>
+                <span>Ingat sesi</span>
+              </label>
+              <button type="button" class="btn-quick-code" id="btnQuickFill" onclick="autoFillDefaultPin()" title="Klik untuk mengisi PIN demo">
+                <span>Isi Cepat:</span> <code>admin123</code>
+              </button>
+            </div>
+
+            <!-- Action Buttons: Gold Pill Primary + Outline Secondary -->
+            <div class="login-action-buttons">
+              <button type="submit" id="loginSubmitBtn" class="btn-pill-submit" title="Buka Panel Admin">
+                <span id="loginSubmitText">Buka Panel Admin</span>
+                <svg class="login-submit-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+              <a href="index.html" class="btn-pill-back" title="Kembali ke Website Publik">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span>Website Publik</span>
+              </a>
+            </div>
+          </form>
+
+          <div class="login-split-card-footer">
+            <span>Official Portal CMS • v1.2</span>
+            <span>Datinawong Babat Lamongan</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BACKDROP FOR MOBILE OFF-CANVAS SIDEBAR -->
+  <div class="admin-sidebar-backdrop" id="adminSidebarBackdrop" onclick="toggleAdminSidebar(false)"></div>
+
+  <!-- CRM APP SHELL (MODERN MINIMALIST UNIFIED FRAME) -->
+  <div class="crm-app-shell" id="crmAppShell">
+
+    <!-- SINGLE UNIFIED CLEAN SIDEBAR (MINIMALIST & MODERN) -->
+    <aside class="admin-sidebar" id="adminSidebar" aria-label="Navigasi Utama CMS">
+      <!-- Brand Header -->
+      <div class="admin-sidebar-brand">
+        <div class="sidebar-brand-logo-wrap">
+          <img src="assets/logo.png" alt="Logo YTPAI" class="sidebar-brand-logo">
+        </div>
+        <div class="sidebar-brand-meta">
+          <div class="sidebar-brand-title">YTPAI <span class="brand-gold">CMS</span></div>
+          <div class="sidebar-brand-sub">Raudlatul Muta'allimin</div>
+        </div>
+        <!-- Mobile Close Button (Visible on Mobile only) -->
+        <button type="button" class="sidebar-mobile-close" onclick="toggleAdminSidebar(false)" aria-label="Tutup Menu">✕</button>
+      </div>
+
+      <!-- Quick Search inside Sidebar -->
+      <div class="sidebar-search-wrap">
+        <div class="sidebar-search-box">
+          <svg class="sidebar-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="sidebarSearchInput" class="sidebar-search-input" placeholder="Cari menu / data..." oninput="filterSidebarMenu(this.value)" autocomplete="off">
+        </div>
+      </div>
+
+      <!-- Unified Clean Navigation -->
+      <div class="admin-sidebar-nav" id="adminSidebarNav">
+        
+        <!-- Category 1: Utama -->
+        <div class="nav-section-label">UTAMA</div>
+        <button type="button" class="nav-item-btn active" data-tab="dashboard" onclick="switchToTab('dashboard')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          <span class="nav-item-text">Ringkasan Dasbor</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="leads" onclick="switchToTab('leads')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+          <span class="nav-item-text">Pendaftar PSB Online</span>
+          <span class="nav-item-badge" id="navLeadsCount">0</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="analytics" onclick="switchToTab('analytics')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span class="nav-item-text">Trafik & Analitik Pengunjung</span>
+        </button>
+
+        <!-- Category 2: Konten Beranda & Profil -->
+        <div class="nav-section-label">BERANDA & PROFIL</div>
+        <button type="button" class="nav-item-btn" data-tab="slider" onclick="switchToTab('slider')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span class="nav-item-text">Teks Hero & Banner Pengumuman</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="corevalues" onclick="switchToTab('corevalues')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span class="nav-item-text">4 Pilar Keunggulan</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="facilities" onclick="switchToTab('facilities')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M4 21V9l8-5 8 5v12M9 14h6M9 21v-6h6v6"/></svg>
+          <span class="nav-item-text">Fasilitas & Asrama</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="leadership" onclick="switchToTab('leadership')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="nav-item-text">Dewan Pimpinan & Pengasuh</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="muassis" onclick="switchToTab('muassis')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+          <span class="nav-item-text">Muassis & Masyayikh 1984</span>
+        </button>
+
+        <!-- Category 3: Satuan Pendidikan & Lembaga -->
+        <div class="nav-section-label">LEMBAGA & PENDIDIKAN</div>
+        <button type="button" class="nav-item-btn" data-tab="units" onclick="switchToTab('units')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <span class="nav-item-text">7 Satuan Formal (KB–SMA)</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="boarding" onclick="switchToTab('boarding')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3c-1.5 2-4 3.5-4 6v12h8V9c0-2.5-2.5-4-4-6z"/><path d="M4 21V12a3 3 0 0 1 4-2.8M20 21V12a3 3 0 0 0-4-2.8"/><path d="M2 21h20"/></svg>
+          <span class="nav-item-text">Pondok Pesantren & Asrama</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="daily_schedule" onclick="switchToTab('daily_schedule')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="nav-item-text">Jadwal Harian 24 Jam Santri</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="ekskul" onclick="switchToTab('ekskul')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span class="nav-item-text">Ekstrakurikuler & Kegiatan</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="kbihu" onclick="switchToTab('kbihu')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8l8-4 8 4v10l-8 4-8-4V8z"/><path d="M12 4v18"/><path d="M4 11.5l8 4 8-4"/></svg>
+          <span class="nav-item-text">KBIHU Haji & Umrah</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="lbb" onclick="switchToTab('lbb')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+          <span class="nav-item-text">LBB Bimbel TKA 2026</span>
+        </button>
+
+        <!-- Category 4: Publikasi, Prestasi & Komunikasi -->
+        <div class="nav-section-label">PUBLIKASI & HUMAS</div>
+        <button type="button" class="nav-item-btn" data-tab="popup" onclick="switchToTab('popup')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><circle cx="12" cy="3" r="1"/></svg>
+          <span class="nav-item-text">Pop-Up Pengumuman Web</span>
+          <span class="nav-item-badge" id="navPopupStatus" style="background:#10B981; color:#fff; font-size:0.65rem;">ON</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="news" onclick="switchToTab('news')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg>
+          <span class="nav-item-text">Warta & Berita Humas</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="agenda" onclick="switchToTab('agenda')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span class="nav-item-text">Agenda & Kalender Santri</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="achievements" onclick="switchToTab('achievements')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7.5a1.5 1.5 0 0 0-1.5 1.5V22h12v-2.5a1.5 1.5 0 0 0-1.5-1.5H15c-.55 0-1-.45-1-1v-2.34"/></svg>
+          <span class="nav-item-text">Etalase Prestasi</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="tasmik" onclick="switchToTab('tasmik')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span class="nav-item-text">Galeri Tasmik Al-Qur'an</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="studentWorks" onclick="switchToTab('studentWorks')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+          <span class="nav-item-text">Ruang Karya Santri</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="testimonials" onclick="switchToTab('testimonials')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span class="nav-item-text">Testimoni Santri & Alumni</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="messages" onclick="switchToTab('messages')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span class="nav-item-text">Kotak Pesan Publik</span>
+          <span class="nav-item-badge" id="navMsgCount">0</span>
+        </button>
+
+        <!-- Category 5: Sistem & Akses -->
+        <div class="nav-section-label">SISTEM & CADANGAN</div>
+        <button type="button" class="nav-item-btn" data-tab="settings" onclick="switchToTab('settings')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span class="nav-item-text">Pengaturan & Backup Sheets</span>
+        </button>
+        <button type="button" class="nav-item-btn" data-tab="users" onclick="switchToTab('users')">
+          <svg class="nav-item-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="nav-item-text">Kelola Akun Admin (RBAC)</span>
+        </button>
+      </div>
+
+      <!-- Sidebar Footer -->
+      <div class="admin-sidebar-footer">
+        <a href="index.html" target="_blank" class="sidebar-footer-link" title="Buka website publik">
+          <span style="color:#FBBF24;">Lihat Website Publik</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+        <button type="button" class="sidebar-footer-logout" onclick="adminLogout()" title="Keluar dari Panel CMS">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span>Keluar (Logout)</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- 3. MAIN CRM VIEWPORT -->
+    <div class="crm-main-viewport">
+      <header class="crm-topbar">
+        <div class="crm-topbar-left">
+          <button class="btn-sidebar-toggle" id="adminSidebarToggle" onclick="toggleAdminSidebar()" title="Buka/Tutup Menu" aria-label="Toggle Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <div class="crm-brand-pill">
+            <span class="crm-brand-name">YTPAI <span class="crm-brand-highlight">CMS</span></span>
+          </div>
+        </div>
+
+        <!-- CENTER: PILL SEARCH BAR (MATCHING REFERENCE HEADER) -->
+        <div class="crm-topbar-center">
+          <div class="crm-pill-search">
+            <svg class="crm-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="topbarSearchInput" class="crm-search-input" placeholder="Cari modul, pendaftar, atau data santri... (tekan '/')" oninput="handleCrmTopSearch(this.value)" autocomplete="off">
+            <button type="button" class="crm-search-clear" id="topbarSearchClear" onclick="clearCrmTopSearch()" style="display:none;">✕</button>
+          </div>
+        </div>
+
+        <!-- RIGHT: ICONS & PROFILE AVATAR CHIP -->
+        <div class="crm-topbar-right">
+          <button type="button" class="crm-icon-btn" onclick="document.getElementById('topbarSearchInput').focus()" title="Cari Cepat">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </button>
+          <button type="button" class="crm-icon-btn notification-btn" onclick="switchToTab('messages')" title="Kotak Masuk Pesan">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            <span class="crm-badge-dot" id="crmHeaderMsgDot"></span>
+          </button>
+          <a href="index.html" target="_blank" class="crm-icon-btn preview-btn" title="Lihat Website Publik">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          </a>
+
+          <!-- USER PROFILE AVATAR (MATCHING REFERENCE CIRCULAR AVATAR) -->
+          <div class="crm-user-profile-pill" id="adminUserBadgeChip" onclick="switchToTab('users')" title="Kelola Profil & Hak Akses">
+            <div class="crm-avatar-wrap">
+              <span id="adminUserAvatar" class="crm-avatar-emoji">👑</span>
+              <span class="crm-avatar-online-dot"></span>
+            </div>
+            <div class="crm-user-meta">
+              <div id="adminUserName" class="crm-user-name">Pimpinan Yayasan</div>
+              <div id="adminUserRoleBadge" class="crm-user-role">Super Admin</div>
+            </div>
+            <svg class="crm-user-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+        </div>
+      </header>
+
+      <!-- 4. FLOATING WHITE CANVAS (MATCHING REFERENCE MAIN CONTAINER) -->
+      <main class="crm-white-canvas" id="crmWhiteCanvas">
+        <div class="crm-canvas-header">
+          <div class="crm-canvas-title-wrap">
+            <h1 class="crm-canvas-title" id="adminPageTitle">Ringkasan Dasbor Eksekutif</h1>
+          </div>
+        </div>
+
+        <div class="admin-content-body" id="adminContentArea">
+          <!-- Active tab content rendered here by js/admin.js -->
+        </div>
+      </main>
+    </div>
+
+    <!-- 5. FLOATING QUICK ACTION BUTTON (MATCHING REFERENCE BOTTOM-RIGHT) -->
+    <button type="button" class="crm-floating-action-btn" onclick="openCrmAssistantModal()" title="Bantuan Cepat & AI Humas">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </button>
+  </div>
+
+  <!-- MOBILE BOTTOM NAVIGATION BAR (KHUSUS MODE HP / TABLET <= 991px) -->
+  <nav class="admin-mobile-nav" id="adminMobileNav" aria-label="Navigasi Menu HP">
+    <button type="button" class="admin-mobile-nav-btn active" data-tab="dashboard" onclick="switchToTab('dashboard')" title="Ringkasan Dasbor">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      <span class="nav-btn-label">Dasbor</span>
+    </button>
+    <button type="button" class="admin-mobile-nav-btn" data-tab="leads" onclick="switchToTab('leads')" title="PPDB Online">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+      <span class="nav-btn-label">PSB</span>
+    </button>
+    <button type="button" class="admin-mobile-nav-btn" data-tab="news" onclick="switchToTab('news')" title="Warta & Berita">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg>
+      <span class="nav-btn-label">Warta</span>
+    </button>
+    <button type="button" class="admin-mobile-nav-btn" onclick="toggleAdminSidebar(true)" title="Buka Semua Menu">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+      <span class="nav-btn-label">Menu</span>
+    </button>
+  </nav>
+
+  <!-- MOBILE ALL-FEATURES BOTTOM SHEET (MODAL KISI SEMUA FITUR CMS HP) -->
+  <div class="admin-features-sheet-overlay" id="adminFeaturesSheetOverlay" onclick="closeMobileFeaturesSheet(event)">
+    <div class="admin-features-sheet-card" id="adminFeaturesSheetCard" onclick="event.stopPropagation()">
+      <div class="features-sheet-handle-bar">
+        <div class="sheet-drag-handle"></div>
+      </div>
+      <div class="features-sheet-header">
+        <div class="sheet-header-title-box">
+          <div class="sheet-header-badge">CMS YTPAI</div>
+          <h3 class="sheet-header-title">Semua Fitur & Modul Pengelola</h3>
+        </div>
+        <button type="button" class="sheet-close-btn" onclick="closeMobileFeaturesSheet()" aria-label="Tutup">✕</button>
+      </div>
+
+      <div class="features-sheet-scroll-body">
+        <!-- Grup 1: Beranda & Profil -->
+        <div class="sheet-section">
+          <div class="sheet-section-title">
+            <span>Beranda & Profil Yayasan</span>
+            <span class="sheet-section-count">7 Modul</span>
+          </div>
+          <div class="sheet-grid">
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('dashboard')">
+              <span class="feature-icon">📊</span>
+              <span class="feature-title">Dasbor Eksekutif</span>
+              <span class="feature-sub">Statistik Utama</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('analytics')">
+              <span class="feature-icon">📈</span>
+              <span class="feature-title">Analisis Trafik</span>
+              <span class="feature-sub">Data Pengunjung</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('slider')">
+              <span class="feature-icon">🖼️</span>
+              <span class="feature-title">Slide Hero Beranda</span>
+              <span class="feature-sub">Banner & Parallax</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('corevalues')">
+              <span class="feature-icon">⭐</span>
+              <span class="feature-title">4 Nilai Dasar</span>
+              <span class="feature-sub">Pilar Pesantren</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('leadership')">
+              <span class="feature-icon">👤</span>
+              <span class="feature-title">Dewan Pembina</span>
+              <span class="feature-sub">Masyayikh & Pengasuh</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('muassis')">
+              <span class="feature-icon">📿</span>
+              <span class="feature-title">Muassis (1984)</span>
+              <span class="feature-sub">Pendiri & Masyayikh</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('facilities')">
+              <span class="feature-icon">🏛️</span>
+              <span class="feature-title">Fasilitas & Sarana</span>
+              <span class="feature-sub">Lab, Mushola & Asrama</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Grup 2: Satuan Pendidikan & Pesantren -->
+        <div class="sheet-section">
+          <div class="sheet-section-title">
+            <span>Pendidikan & Pesantren</span>
+            <span class="sheet-section-count">5 Modul</span>
+          </div>
+          <div class="sheet-grid">
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('units')">
+              <span class="feature-icon">🏫</span>
+              <span class="feature-title">7 Satuan Formal</span>
+              <span class="feature-sub">KB, TK, MI, MTs, SMP, MA, SMA</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('boarding')">
+              <span class="feature-icon">🏰</span>
+              <span class="feature-title">Ponpes Putra & Putri</span>
+              <span class="feature-sub">Asrama & Kamar Mukim</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('programs')">
+              <span class="feature-icon">🎯</span>
+              <span class="feature-title">Program Unggulan</span>
+              <span class="feature-sub">Tahfidz & Kepesantrenan</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('kbihu')">
+              <span class="feature-icon">🕋</span>
+              <span class="feature-title">KBIHU Haji & Umrah</span>
+              <span class="feature-sub">SK Kemenag & Pembimbing</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('lbb')">
+              <span class="feature-icon">🚀</span>
+              <span class="feature-title">LBB Bimbel PTN</span>
+              <span class="feature-sub">Lab CBT & Dewan Tentor</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('ekskul')">
+              <span class="feature-icon">🎪</span>
+              <span class="feature-title">Ekstrakurikuler</span>
+              <span class="feature-sub">Kegiatan Santri</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Grup 3: Kesiswaan & PSB Online -->
+        <div class="sheet-section">
+          <div class="sheet-section-title">
+            <span>PSB Online & Kesiswaan</span>
+            <span class="sheet-section-count">4 Modul</span>
+          </div>
+          <div class="sheet-grid">
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('leads')">
+              <span class="feature-icon">📝</span>
+              <span class="feature-title">Pendaftar PSB</span>
+              <span class="feature-sub">Santri Baru & Kupon</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('agenda')">
+              <span class="feature-icon">📅</span>
+              <span class="feature-title">Agenda & Kalender</span>
+              <span class="feature-sub">Jadwal Kegiatan Santri</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('messages')">
+              <span class="feature-icon">✉️</span>
+              <span class="feature-title">Kotak Pesan Inbox</span>
+              <span class="feature-sub">Pesan Pengunjung</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('testimonials')">
+              <span class="feature-icon">💬</span>
+              <span class="feature-title">Testimoni Alumni</span>
+              <span class="feature-sub">Ulasan & Kesan Santri</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Grup 4: Publikasi, Prestasi & Sistem -->
+        <div class="sheet-section">
+          <div class="sheet-section-title">
+            <span>Publikasi, Prestasi & Sistem</span>
+            <span class="sheet-section-count">5 Modul</span>
+          </div>
+          <div class="sheet-grid">
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('news')">
+              <span class="feature-icon">📰</span>
+              <span class="feature-title">Warta & Berita</span>
+              <span class="feature-sub">Kabar Terkini Yayasan</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('achievements')">
+              <span class="feature-icon">🏆</span>
+              <span class="feature-title">Etalase Prestasi</span>
+              <span class="feature-sub">Juara & Penghargaan</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('works')">
+              <span class="feature-icon">🎨</span>
+              <span class="feature-title">Ruang Karya</span>
+              <span class="feature-sub">Kreativitas Santri</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('settings')">
+              <span class="feature-icon">⚙️</span>
+              <span class="feature-title">Pengaturan & Sync</span>
+              <span class="feature-sub">Backup Cloud Sheets</span>
+            </button>
+            <button type="button" class="sheet-feature-item" onclick="selectMobileSheetTab('users')">
+              <span class="feature-icon">👥</span>
+              <span class="feature-title">Hak Akses RBAC</span>
+              <span class="feature-sub">Kelola Akun Admin</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sheet Footer Actions -->
+      <div class="features-sheet-footer">
+        <a href="index.html" target="_blank" class="sheet-footer-link">
+          <span>👁️ Lihat Website Publik</span>
+        </a>
+        <button type="button" class="sheet-footer-logout" onclick="adminLogout()">
+          <span>🚪 Logout</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CRUD DIALOG -->
+  <div class="admin-modal-overlay" id="adminModal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-header">
+        <h3 style="margin:0; font-size:1.15rem; color:#0F172A;" id="adminModalTitle">Formulir Data</h3>
+        <button onclick="closeAdminModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer; padding:4px 8px;">✕</button>
+      </div>
+      <div class="admin-modal-body" id="adminModalBody">
+        <!-- Form injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL STUDIO PENYESUAIAN FOTO (CROP, ZOOM, ROTASI) -->
+  <div class="cropper-modal-overlay" id="imageCropperModal" style="display:none;">
+    <div class="cropper-modal-card">
+      <div class="cropper-modal-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="cropper-header-icon">✂️</div>
+          <div>
+            <h3 style="margin:0; font-size:1.1rem; color:#0F2942; font-weight:800;">Studio Penyesuaian Foto</h3>
+            <p style="margin:2px 0 0; font-size:0.75rem; color:#64748B;">Geser (pan), perbesar (zoom), dan luruskan kemiringan (rotasi) foto sesuai kebutuhan.</p>
+          </div>
+        </div>
+        <button type="button" class="cropper-close-btn" onclick="closeImageCropper()" aria-label="Tutup">✕</button>
+      </div>
+
+      <div class="cropper-modal-body">
+        <!-- Interactive Viewport Canvas -->
+        <div class="cropper-viewport-wrap" id="cropperViewportWrap">
+          <canvas id="cropperCanvas"></canvas>
+          
+          <!-- Crop Guide Frame & Rule of Thirds Overlay -->
+          <div class="cropper-crop-box" id="cropperCropBox">
+            <div class="cropper-grid-line line-h1"></div>
+            <div class="cropper-grid-line line-h2"></div>
+            <div class="cropper-grid-line line-v1"></div>
+            <div class="cropper-grid-line line-v2"></div>
+            <div class="cropper-corner corner-tl"></div>
+            <div class="cropper-corner corner-tr"></div>
+            <div class="cropper-corner corner-bl"></div>
+            <div class="cropper-corner corner-br"></div>
+          </div>
+
+          <div class="cropper-drag-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 9 2 12 5 15"/><polyline points="9 5 12 2 15 5"/><polyline points="15 19 12 22 9 19"/><polyline points="19 9 22 12 19 15"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+            <span>Klik & seret foto untuk memposisikan • Gunakan scroll mouse untuk zoom</span>
+          </div>
+        </div>
+
+        <!-- Toolbar Controls -->
+        <div class="cropper-controls-panel">
+          <!-- Ratio Selector -->
+          <div class="cropper-control-group">
+            <label class="cropper-control-label">Rasio Aspek Potong:</label>
+            <div class="cropper-ratio-chips">
+              <button type="button" class="ratio-chip" data-ratio="820:312" onclick="setCropperRatio('820:312')">
+                <span>Banner PC (820:312)</span>
+                <small>Slider Utama (~2.63:1)</small>
+              </button>
+              <button type="button" class="ratio-chip" data-ratio="16:9" onclick="setCropperRatio('16:9')">
+                <span>Landscape (16:9)</span>
+                <small>Berita / Video</small>
+              </button>
+              <button type="button" class="ratio-chip active" data-ratio="4:5" onclick="setCropperRatio('4:5')">
+                <span>Portrait (4:5)</span>
+                <small>Tokoh / Pimpinan</small>
+              </button>
+              <button type="button" class="ratio-chip" data-ratio="1:1" onclick="setCropperRatio('1:1')">
+                <span>Kotak (1:1)</span>
+                <small>Avatar / Logo</small>
+              </button>
+              <button type="button" class="ratio-chip" data-ratio="free" onclick="setCropperRatio('free')">
+                <span>Bebas</span>
+                <small>Penuh</small>
+              </button>
+            </div>
+          </div>
+
+          <!-- Zoom Slider -->
+          <div class="cropper-control-group">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <label class="cropper-control-label" style="margin:0;">Perbesaran (Zoom):</label>
+              <span id="cropperZoomVal" class="cropper-val-badge">100%</span>
+            </div>
+            <div class="cropper-slider-row">
+              <button type="button" class="btn-micro-tool" onclick="adjustCropperZoom(-0.1)" title="Perkecil Zoom">🔍−</button>
+              <input type="range" id="cropperZoomSlider" min="1" max="3" step="0.02" value="1" class="cropper-slider" oninput="onCropperZoomChange(this.value)">
+              <button type="button" class="btn-micro-tool" onclick="adjustCropperZoom(0.1)" title="Perbesar Zoom">🔍＋</button>
+            </div>
+          </div>
+
+          <!-- Fine Rotation Slider (-45 deg to +45 deg) -->
+          <div class="cropper-control-group">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <label class="cropper-control-label" style="margin:0;">Luruskan Kemiringan (Rotasi Sedikit):</label>
+              <span id="cropperRotateVal" class="cropper-val-badge">0°</span>
+            </div>
+            <div class="cropper-slider-row">
+              <button type="button" class="btn-micro-tool" onclick="adjustCropperRotate(-1)" title="Putar Kiri 1°">↶</button>
+              <input type="range" id="cropperRotateSlider" min="-45" max="45" step="1" value="0" class="cropper-slider" oninput="onCropperRotateChange(this.value)">
+              <button type="button" class="btn-micro-tool" onclick="adjustCropperRotate(1)" title="Putar Kanan 1°">↷</button>
+            </div>
+          </div>
+
+          <!-- Quick Tools (Rotate 90 deg, Flip, Reset) -->
+          <div class="cropper-quick-tools">
+            <button type="button" class="btn-cropper-tool" onclick="rotateCropper90(-1)">
+              <span>↺ Putar 90° Kiri</span>
+            </button>
+            <button type="button" class="btn-cropper-tool" onclick="rotateCropper90(1)">
+              <span>↻ Putar 90° Kanan</span>
+            </button>
+            <button type="button" class="btn-cropper-tool" onclick="flipCropperHorizontal()">
+              <span>⇄ Balik Horizontal</span>
+            </button>
+            <button type="button" class="btn-cropper-tool btn-tool-reset" onclick="resetCropperAdjustments()">
+              <span>↺ Reset Posisi</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cropper-modal-footer">
+        <button type="button" class="btn btn-outline btn-md" onclick="closeImageCropper()">Batal</button>
+        <button type="button" class="btn btn-primary btn-md cropper-apply-btn" onclick="applyCroppedImage()">
+          <span>✓ Terapkan & Gunakan Foto</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ASISTEN AI PENULIS WARTA HUMAS (KHUSUS SUPER ADMIN) -->
+  <div class="ai-drafter-modal-overlay" id="aiNewsDrafterModal" style="display:none;">
+    <div class="ai-drafter-modal-card">
+      <div class="ai-drafter-modal-header">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="ai-drafter-header-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2.2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <h3 style="margin:0; font-size:1.12rem; color:#FFFFFF; font-weight:800; letter-spacing:0.3px;">Asisten AI Penulis Warta Humas</h3>
+              <span class="ai-badge-superadmin">👑 Khusus Super Admin</span>
+            </div>
+            <p style="margin:3px 0 0; font-size:0.77rem; color:#CBD5E1;">Perumusan rilis warta resmi 5W+1H berstandar Humas Senior (~2,5 menit baca) bertenaga Mesin Kecerdasan Mandiri.</p>
+          </div>
+        </div>
+        <button type="button" class="ai-drafter-close-btn" onclick="closeAiNewsDrafterModal()" aria-label="Tutup Asisten AI">✕</button>
+      </div>
+
+      <div class="ai-drafter-modal-body">
+        <div class="ai-drafter-layout">
+          <!-- Kolom Kiri: Input Pokok-pokok Fakta Berita -->
+          <!-- Kolom Kiri: Input Pokok-pokok Warta (Luwes & Fleksibel) -->
+          <div class="ai-drafter-inputs-col">
+            <div class="ai-section-title">
+              <span class="ai-step-pill">1</span>
+              <span>Input Ide / Pokok Warta (Luwes & Serbaguna)</span>
+            </div>
+
+            <!-- Quick Sample Presets (Sangat Luwes: Kenangan Alumni, Mushola, Prestasi, PPDB) -->
+            <div class="ai-sample-prompts-bar">
+              <span style="font-size:0.73rem; font-weight:700; color:#475569; display:inline-flex; align-items:center; gap:4px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                Inspirasi Cepat:
+              </span>
+              <button type="button" class="ai-sample-chip" onclick="fillAiSampleDraft('alumni')">🎓 Kenangan Alumni di Mushola</button>
+              <button type="button" class="ai-sample-chip" onclick="fillAiSampleDraft('mushola')">🕌 Mushola & Suasana Ibadah</button>
+              <button type="button" class="ai-sample-chip" onclick="fillAiSampleDraft('prestasi')">🏆 Prestasi Pidato Jatim</button>
+              <button type="button" class="ai-sample-chip" onclick="fillAiSampleDraft('kegiatan')">📅 Maulid & Wisuda Tahfidz</button>
+              <button type="button" class="ai-sample-chip" onclick="fillAiSampleDraft('ppdb')">📢 Pembukaan PSB</button>
+            </div>
+
+            <!-- Format & Tema Tulisan -->
+            <div class="form-group" style="margin-bottom:11px;">
+              <label class="form-label" style="font-size:0.8rem; font-weight:700;">Format / Tema Tulisan</label>
+              <select id="aiDraftTheme" class="form-select" onchange="onAiThemeSelect(this.value)">
+                <option value="alumni" selected>🎓 Kenangan Alumni, Nostalgia & Silaturahmi Lintas Angkatan</option>
+                <option value="mushola">🕌 Fasilitas, Tempat Ibadah & Kehidupan Santri Sehari-hari</option>
+                <option value="prestasi">🏆 Prestasi, Kejuaraan & Lomba Santri/Siswa</option>
+                <option value="kegiatan">📅 Kegiatan, Pengajian & Peringatan Hari Besar</option>
+                <option value="ppdb">📢 Pengumuman Resmi, PSB & Beasiswa Yayasan</option>
+                <option value="opini">✍️ Refleksi, Catatan Humas & Nasihat Hikmah Masyayikh</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom:11px;">
+              <label class="form-label" style="font-size:0.8rem; font-weight:700;" id="labelAiDraftTopic">Gagasan Utama / Topik Sementara *</label>
+              <input type="text" id="aiDraftTopic" class="form-input" placeholder="Misal: Kenangan Mengaji di Mushola Ponpes Putra, atau Tempat Ibadah yang Asyik Mendekatkan Diri pada Allah">
+            </div>
+
+            <div style="display:grid; grid-template-columns:1.2fr 1fr; gap:10px; margin-bottom:11px;">
+              <div class="form-group">
+                <label class="form-label" style="font-size:0.8rem; font-weight:700;" id="labelAiDraftEvent">Fokus Bahasan / Momen Cerita *</label>
+                <input type="text" id="aiDraftEvent" class="form-input" placeholder="Misal: Ruang ibadah santai mendekatkan diri ke Allah / Temu kangen alumni">
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size:0.8rem; font-weight:700;">Sasaran Pembaca</label>
+                <select id="aiDraftScale" class="form-select">
+                  <option value="Seluruh Alumni & Simpatisan Pesantren" selected>Alumni & Simpatisan</option>
+                  <option value="Keluarga Besar Yayasan, Santri & Wali Murid">Santri & Wali Murid</option>
+                  <option value="Masyarakat Umum & Jamaah">Masyarakat Umum</option>
+                  <option value="Tingkat Kabupaten Lamongan & Jawa Timur">Regional Lamongan/Jatim</option>
+                  <option value="Tingkat Nasional">Tingkat Nasional</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:11px;">
+              <div class="form-group">
+                <label class="form-label" style="font-size:0.8rem; font-weight:700;">Waktu / Masa yang Dikenang</label>
+                <input type="text" id="aiDraftDate" class="form-input" placeholder="Misal: Masa Mondok / Terkini / September 2026">
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size:0.8rem; font-weight:700;">Latar Tempat / Ruang Pesantren</label>
+                <input type="text" id="aiDraftLocation" class="form-input" placeholder="Misal: Mushola Pondok Pesantren Putra, Babat, Lamongan">
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:11px;">
+              <div class="form-group">
+                <label class="form-label" style="font-size:0.8rem; font-weight:700;">Lembaga Yayasan Terkait</label>
+                <select id="aiDraftUnit" class="form-select">
+                  <option value="Yayasan Taman Pendidikan Agama Islam (YTPAI) Lamongan">Yayasan Pusat (YTPAI)</option>
+                  <option value="Pondok Pesantren Raudlatul Muta'allimin" selected>Pondok Pesantren (Putra/Putri)</option>
+                  <option value="Ikatan Alumni Pondok Pesantren Raudlatul Muta'allimin">Ikatan Alumni Santri</option>
+                  <option value="MA Raudlatul Muta'allimin">MA Raudlatul Muta'allimin</option>
+                  <option value="SMA Raudlatul Muta'allimin">SMA Raudlatul Muta'allimin</option>
+                  <option value="MTs Raudlatul Muta'allimin">MTs Raudlatul Muta'allimin</option>
+                  <option value="SMP Plus Raudlatul Muta'allimin">SMP Plus Raudlatul Muta'allimin</option>
+                  <option value="MI Raudlatul Muta'allimin">MI Raudlatul Muta'allimin</option>
+                  <option value="LPBA (Lembaga Pengembangan Bahasa Asing)">LPBA Bahasa Asing</option>
+                  <option value="LBB & Bimbel TKA 2026">LBB & Bimbel TKA 2026</option>
+                  <option value="KBIHU Haji & Umrah">KBIHU Haji & Umrah</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size:0.8rem; font-weight:700;">Gaya Penulisan (Tone)</label>
+                <select id="aiDraftTone" class="form-select">
+                  <option value="Hangat, penuh kenangan indah, dan menggugah rasa rindu masa nyantri (Nostalgia Alumni)" selected>Hangat & Nostalgia Alumni</option>
+                  <option value="Sejuk, santai, kontemplatif, dan syahdu untuk mendekatkan diri pada Allah">Sejuk & Syahdu Ruang Ibadah</option>
+                  <option value="Inspiratif, santun, dan berwibawa khas Humas Senior Pesantren">Inspiratif & Berwibawa (Default)</option>
+                  <option value="Semangat, apresiatif, dinamis, dan membakar motivasi prestasi">Semangat & Memotivasi</option>
+                  <option value="Resmi, lugas, terstruktur, dan edukatif">Resmi & Edukatif</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:11px;">
+              <label class="form-label" style="font-size:0.8rem; font-weight:700;">Subjek / Tokoh yang Diceritakan</label>
+              <input type="text" id="aiDraftParticipants" class="form-input" placeholder="Misal: Para santri putra, alumni lintas generasi, asatidz, dan masyayikh pondok">
+            </div>
+
+            <div class="form-group" style="margin-bottom:13px;">
+              <label class="form-label" style="font-size:0.8rem; font-weight:700;">Poin Cerita / Kesan Mendalam / Pesan Kiai</label>
+              <textarea id="aiDraftPoints" class="form-textarea" rows="3" placeholder="Tulis bebas apa saja... Misal: Tempat bersantai yang asyik untuk mendekatkan diri pada Allah, obrolan santri usai ngaji kitab, nasihat kiai agar alumni tetap istiqomah sholat berjamaah..."></textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display:flex; gap:10px; align-items:center;">
+              <button type="button" id="btnAiDraftGenerate" class="btn btn-primary" onclick="generateHumasNewsDraft()" style="flex:1; justify-content:center; padding:11px 16px; font-weight:700; background:linear-gradient(135deg, #0A2540 0%, #0F4C81 100%); border:1px solid #FBBF24; box-shadow:0 3px 10px rgba(10,37,64,0.2);">
+                <span id="aiDraftBtnSpinner" style="display:none; margin-right:6px;" class="ai-spin">⚡</span>
+                <span id="aiDraftBtnText">✨ Susun Narasi Warta Humas (~2,5 Mnt)</span>
+              </button>
+              <button type="button" class="btn btn-outline" onclick="resetAiDraftForm()" style="padding:11px 14px; font-weight:700;" title="Kosongkan Semua Input">↺</button>
+            </div>
+
+            <!-- KAPSUL STATUS LOADING SESUAI GAMBAR REFERENSI DENGAN OPSI JEDA -->
+            <div id="aiDraftLoadingBox" class="ai-capsule-loading-card" style="display:none; margin-top:12px;">
+              <div class="ai-capsule-status-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="ai-capsule-pulse-dot"></span>
+                  <span id="aiCapsuleStepText" style="font-weight:700; color:#0A2540; font-size:0.82rem;">Menghubungkan ke Mesin Cerdas Humas...</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span id="aiCapsulePercentBadge" class="ai-capsule-percent">15%</span>
+                  <button type="button" class="ai-btn-pause" onclick="pauseAiNewsGeneration()" title="Klik untuk menjeda pembuatan jika ada ide yang ingin diperbaiki terlebih dahulu">
+                    <span>⏸️ Jeda & Perbaiki Dulu</span>
+                  </button>
+                </div>
+              </div>
+              <!-- Outer Capsule Frame & Blue Inner Fill (Sesuai Referensi Gambar 2) -->
+              <div class="ai-capsule-outer-frame">
+                <div id="aiCapsuleProgressBar" class="ai-capsule-inner-fill" style="width: 15%;"></div>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; flex-wrap:wrap; gap:6px;">
+                <div id="aiCapsuleDescText" style="font-size:0.73rem; color:#64748B; font-style:italic;">
+                  Meracik naskah warta luwes 5W+1H (~250–300 kata)...
+                </div>
+                <span style="font-size:0.71rem; color:#94A3B8;">Tekan jeda kapan saja bila ingin mengedit input</span>
+              </div>
+            </div>
+
+            <div id="aiDraftStatusMessage" style="margin-top:10px; font-size:0.77rem; color:#64748B; display:none;"></div>
+          </div>
+
+          <!-- Kolom Kanan: Pratinjau & Hasil Warta Siap Pakai -->
+          <div class="ai-drafter-preview-col">
+            <div class="ai-section-title" style="justify-content:space-between;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="ai-step-pill">2</span>
+                <span>Hasil Draf Warta Berita</span>
+              </div>
+              <div id="aiDraftWordCountBadge" class="ai-draft-badge" style="display:none;">0 Kata (~0 Menit)</div>
+            </div>
+
+            <!-- Placeholder State -->
+            <div id="aiDraftPlaceholder" class="ai-draft-placeholder-state">
+              <div class="ai-placeholder-icon">📰</div>
+              <div style="font-weight:700; font-size:0.96rem; color:#0A2540; margin-bottom:6px;">Belum Ada Draf yang Disusun</div>
+              <p style="font-size:0.8rem; color:#64748B; max-width:340px; margin:0 auto 12px; line-height:1.5;">
+                Ketik pokok-pokok fakta warta di sebelah kiri, lalu klik tombol <b>Susun Narasi Warta Humas</b>. AI akan merumuskan naskah profesional ~250–300 kata (~2,5 menit baca).
+              </p>
+              <div style="font-size:0.74rem; color:#0F4C81; font-weight:600; background:#EFF6FF; border:1px solid #BFDBFE; border-radius:8px; padding:8px 12px; display:inline-flex; align-items:center; gap:6px;">
+                <span>💡 Tips: Klik salah satu tombol <b>Contoh Cepat</b> di atas untuk uji coba langsung.</span>
+              </div>
+            </div>
+
+            <!-- Result State (Hidden initially) -->
+            <div id="aiDraftResultCard" style="display:none; flex-direction:column; height:100%;">
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label" style="font-size:0.78rem; font-weight:700; display:flex; justify-content:space-between; align-items:center;">
+                  <span>Judul Hasil Generasi:</span>
+                  <span style="font-size:0.72rem; color:#0F4C81; font-weight:600;">Dapat diedit langsung</span>
+                </label>
+                <input type="text" id="aiResultTitle" class="form-input" style="font-weight:700; font-size:0.92rem; color:#0A2540; border-color:#93C5FD;">
+              </div>
+
+              <div style="grid-template-columns:1.2fr 1fr; gap:10px; margin-bottom:10px; display:grid;">
+                <div class="form-group">
+                  <label class="form-label" style="font-size:0.78rem; font-weight:700;">Rekomendasi Kategori:</label>
+                  <input type="text" id="aiResultCategory" class="form-input" style="font-size:0.82rem;">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" style="font-size:0.78rem; font-weight:700;">Estimasi Waktu Baca:</label>
+                  <input type="text" id="aiResultReadTime" class="form-input" value="2,5 Menit Baca" style="font-size:0.82rem;">
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label" style="font-size:0.78rem; font-weight:700;">Cuplikan / Excerpt (Lead Kartu Depan):</label>
+                <textarea id="aiResultExcerpt" class="form-textarea" rows="2" style="font-size:0.82rem;"></textarea>
+              </div>
+
+              <div class="form-group" style="margin-bottom:12px; flex:1; display:flex; flex-direction:column;">
+                <label class="form-label" style="font-size:0.78rem; font-weight:700; display:flex; justify-content:space-between; align-items:center;">
+                  <span>Isi Narasi Lengkap Artikel (3–4 Paragraf Bernas 5W+1H):</span>
+                  <span id="aiResultCharInfo" style="font-size:0.72rem; color:#64748B;">~250–300 Kata (2,5 Menit)</span>
+                </label>
+                <textarea id="aiResultContent" class="form-textarea" style="flex:1; min-height:190px; font-size:0.84rem; line-height:1.65; white-space:pre-wrap;"></textarea>
+              </div>
+
+              <div class="ai-result-actions">
+                <button type="button" class="btn btn-outline btn-sm" onclick="copyAiDraftText()" style="display:inline-flex; align-items:center; gap:6px;">
+                  <span>📋 Salin Naskah</span>
+                </button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="generateHumasNewsDraft(true)" style="display:inline-flex; align-items:center; gap:6px;">
+                  <span>↺ Susun Ulang</span>
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="applyAiDraftToNewsForm()" style="margin-left:auto; display:inline-flex; align-items:center; gap:6px; background:#0F4C81; border-color:#FBBF24; font-weight:700; box-shadow:0 2px 6px rgba(15,76,129,0.25);">
+                  <span>✓ Terapkan ke Formulir Berita</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js?v=9.0"></script>
+  <script src="js/ai-chatbot.js?v=9.0"></script>
+  <script src="js/admin.js?v=9.0"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 856 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgKtp" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="50%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="856" height="540" fill="#FFFFFF"/>
+  <rect x="20" y="20" width="816" height="500" rx="16" fill="url(#bgKtp)" stroke="#0284C7" stroke-width="2" filter="url(#cardShadow)"/>
+
+  <!-- Watermark Peta Indonesia Abstrak -->
+  <path d="M120 280 Q250 250 380 270 T600 250 T750 270" fill="none" stroke="#BAE6FD" stroke-width="24" opacity="0.15"/>
+  <path d="M200 320 Q350 300 500 320 T700 310" fill="none" stroke="#BAE6FD" stroke-width="18" opacity="0.15"/>
+
+  <!-- Header KTP -->
+  <g transform="translate(428, 62)" text-anchor="middle" font-family="Arial, sans-serif">
+    <text x="0" y="0" font-size="18" font-weight="900" fill="#FFFFFF" letter-spacing="2">PROVINSI JAWA TIMUR</text>
+    <text x="0" y="24" font-size="16" font-weight="bold" fill="#F0F9FF" letter-spacing="1.5">KABUPATEN LAMONGAN</text>
+  </g>
+
+  <!-- NIK Header -->
+  <g transform="translate(50, 130)" font-family="Arial, sans-serif">
+    <text x="0" y="0" font-size="20" font-weight="bold" fill="#FFFFFF">NIK</text>
+    <text x="180" y="0" font-size="24" font-weight="900" fill="#FFFFFF" font-family="monospace" letter-spacing="2">: 3524101205820001</text>
+  </g>
+
+  <!-- Biodata KTP Orang Tua -->
+  <g transform="translate(50, 168)" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#FFFFFF" line-height="1.5">
+    <text x="0" y="0">Nama</text>
+    <text x="180" y="0">: HENDRA GUNAWAN</text>
+
+    <text x="0" y="26">Tempat/Tgl Lahir</text>
+    <text x="180" y="26">: LAMONGAN, 12-05-1982</text>
+
+    <text x="0" y="52">Jenis Kelamin</text>
+    <text x="180" y="52">: LAKI-LAKI &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gol. Darah : O</text>
+
+    <text x="0" y="78">Alamat</text>
+    <text x="180" y="78">: DUSUN TEGALREJO</text>
+
+    <text x="40" y="102">&nbsp;&nbsp;RT/RW</text>
+    <text x="180" y="102">: 003/002</text>
+
+    <text x="40" y="126">&nbsp;&nbsp;Kel/Desa</text>
+    <text x="180" y="126">: DATINAWONG</text>
+
+    <text x="40" y="150">&nbsp;&nbsp;Kecamatan</text>
+    <text x="180" y="150">: BABAT</text>
+
+    <text x="0" y="174">Agama</text>
+    <text x="180" y="174">: ISLAM</text>
+
+    <text x="0" y="198">Status Perkawinan</text>
+    <text x="180" y="198">: KAWIN</text>
+
+    <text x="0" y="222">Pekerjaan</text>
+    <text x="180" y="222">: WIRASWASTA</text>
+
+    <text x="0" y="246">Kewarganegaraan</text>
+    <text x="180" y="246">: WNI</text>
+
+    <text x="0" y="270">Berlaku Hingga</text>
+    <text x="180" y="270">: SEUMUR HIDUP</text>
+  </g>
+
+  <!-- Foto KTP & Tanda Tangan -->
+  <g transform="translate(630, 130)">
+    <!-- Bingkai Pasfoto KTP Berlatar Biru -->
+    <rect width="170" height="220" rx="8" fill="#1E3A8A" stroke="#FFFFFF" stroke-width="2"/>
+    <!-- Ilustrasi Foto Siluet Formal Pria Peci -->
+    <circle cx="85" cy="80" r="42" fill="#FEF3C7"/>
+    <rect x="52" y="38" width="66" height="24" rx="4" fill="#0F172A"/> <!-- Peci hitam -->
+    <path d="M40 200 C40 135 130 135 130 200 Z" fill="#0A2540"/>
+    <polygon points="85,145 75,185 85,200 95,185" fill="#FFFFFF"/>
+    
+    <!-- Chip e-KTP -->
+    <rect x="-80" y="30" width="46" height="36" rx="4" fill="#FCD34D" stroke="#B45309" stroke-width="1"/>
+    <line x1="-80" y1="48" x2="-34" y2="48" stroke="#92400E"/>
+    <line x1="-57" y1="30" x2="-57" y2="66" stroke="#92400E"/>
+
+    <!-- Tanda Tangan & Lokasi -->
+    <text x="85" y="255" font-family="Arial, sans-serif" font-size="11" fill="#FFFFFF" text-anchor="middle">LAMONGAN</text>
+    <text x="85" y="270" font-family="Arial, sans-serif" font-size="10" fill="#E0F2FE" text-anchor="middle">14-01-2016</text>
+    <!-- Goresan TTD -->
+    <path d="M40 300 Q70 280 90 305 T130 295" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+  </g>
+
+  <!-- Lencana Status Dokumen Sah -->
+  <g transform="translate(50, 480)">
+    <rect width="250" height="28" fill="#ECFDF5" stroke="#10B981" rx="4"/>
+    <text x="10" y="19" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#047857">✓ E-KTP TERVERIFIKASI DUKCAPIL</text>
+  </g>
+</svg>

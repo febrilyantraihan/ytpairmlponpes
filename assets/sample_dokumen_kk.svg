@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgKk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FDFBF7"/>
+      <stop offset="100%" stop-color="#F7F3E9"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+  
+  <rect width="900" height="620" fill="#FFFFFF"/>
+  <rect x="25" y="25" width="850" height="570" fill="url(#bgKk)" stroke="#0F4C81" stroke-width="2" rx="6" filter="url(#shadow)"/>
+  <rect x="35" y="35" width="830" height="550" fill="none" stroke="#C59B27" stroke-width="1.2" stroke-dasharray="4 2"/>
+
+  <!-- Kop Garuda & Judul -->
+  <g transform="translate(450, 75)" text-anchor="middle">
+    <!-- Emblem Lambang Garuda Stylized -->
+    <circle cx="0" cy="-10" r="22" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+    <text x="0" y="-4" font-family="serif" font-size="16" font-weight="bold" fill="#B45309">🇮🇩</text>
+    <text x="0" y="22" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#0A2540" letter-spacing="2">REPUBLIK INDONESIA</text>
+    <text x="0" y="42" font-family="Arial, sans-serif" font-size="22" font-weight="900" fill="#0F4C81" letter-spacing="3">KARTU KELUARGA</text>
+    <text x="0" y="60" font-family="monospace" font-size="14" font-weight="bold" fill="#475569">No. 3524101205110002</text>
+  </g>
+
+  <!-- Data Kepala Keluarga & Alamat -->
+  <g transform="translate(55, 175)" font-family="Arial, sans-serif" font-size="12" fill="#1E293B">
+    <text x="0" y="0">Nama Kepala Keluarga</text>
+    <text x="170" y="0">: <tspan font-weight="bold" fill="#0A2540">HENDRA GUNAWAN</tspan></text>
+    
+    <text x="0" y="22">Alamat Lengkap</text>
+    <text x="170" y="22">: RT 03 / RW 02, Dusun Tegalrejo</text>
+    
+    <text x="0" y="44">Desa / Kelurahan</text>
+    <text x="170" y="44">: Datinawong</text>
+
+    <text x="500" y="0">Kecamatan</text>
+    <text x="610" y="0">: Babat</text>
+
+    <text x="500" y="22">Kabupaten</text>
+    <text x="610" y="22">: Lamongan</text>
+
+    <text x="500" y="44">Provinsi / Kode Pos</text>
+    <text x="610" y="44">: Jawa Timur / 62271</text>
+  </g>
+
+  <!-- Tabel Anggota Keluarga -->
+  <g transform="translate(55, 250)">
+    <rect width="790" height="28" fill="#0F4C81" rx="4"/>
+    <text x="15" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF">No</text>
+    <text x="45" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF">Nama Lengkap</text>
+    <text x="250" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF">NIK</text>
+    <text x="430" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF">Jenis Kelamin</text>
+    <text x="550" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF">Tempat, Tgl Lahir</text>
+    <text x="700" y="18" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF">Hubungan</text>
+
+    <!-- Baris 1: Ayah -->
+    <rect x="0" y="32" width="790" height="26" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <text x="15" y="49" font-family="Arial, sans-serif" font-size="11" fill="#334155">1</text>
+    <text x="45" y="49" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#0F4C81">Hendra Gunawan</text>
+    <text x="250" y="49" font-family="monospace" font-size="11" fill="#334155">3524101205820001</text>
+    <text x="430" y="49" font-family="Arial, sans-serif" font-size="11" fill="#334155">Laki-laki</text>
+    <text x="550" y="49" font-family="Arial, sans-serif" font-size="11" fill="#334155">Lamongan, 12-05-1982</text>
+    <text x="700" y="49" font-family="Arial, sans-serif" font-size="11" font-weight="600" fill="#0A2540">Kepala Keluarga</text>
+
+    <!-- Baris 2: Ibu -->
+    <rect x="0" y="60" width="790" height="26" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <text x="15" y="77" font-family="Arial, sans-serif" font-size="11" fill="#334155">2</text>
+    <text x="45" y="77" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#0F4C81">Siti Aminah</text>
+    <text x="250" y="77" font-family="monospace" font-size="11" fill="#334155">3524101205850002</text>
+    <text x="430" y="77" font-family="Arial, sans-serif" font-size="11" fill="#334155">Perempuan</text>
+    <text x="550" y="77" font-family="Arial, sans-serif" font-size="11" fill="#334155">Tuban, 24-08-1985</text>
+    <text x="700" y="77" font-family="Arial, sans-serif" font-size="11" font-weight="600" fill="#0A2540">Isteri</text>
+
+    <!-- Baris 3: Santri -->
+    <rect x="0" y="88" width="790" height="28" fill="#FEFCE8" stroke="#FDE68A" stroke-width="1.5"/>
+    <text x="15" y="106" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#854D0E">3</text>
+    <text x="45" y="106" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#0A2540">AHMAD RAYHAN AL-GHIFARI ★</text>
+    <text x="250" y="106" font-family="monospace" font-size="11" font-weight="bold" fill="#0F4C81">3524101205110003</text>
+    <text x="430" y="106" font-family="Arial, sans-serif" font-size="11" fill="#334155">Laki-laki</text>
+    <text x="550" y="106" font-family="Arial, sans-serif" font-size="11" fill="#334155">Lamongan, 12-05-2011</text>
+    <text x="700" y="106" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#15803D">Anak Kandung</text>
+  </g>
+
+  <!-- Tanda Tangan & QR Resmi -->
+  <g transform="translate(620, 420)" font-family="Arial, sans-serif" font-size="11" fill="#1E293B" text-anchor="center">
+    <text x="0" y="0">Dikeluarkan di: Lamongan</text>
+    <text x="0" y="18">Pada Tanggal: 14 Januari 2024</text>
+    <text x="0" y="36" font-weight="bold">Kepala Dinas Kependudukan &amp; Pencatatan Sipil</text>
+    <!-- Stempel & TTD QR -->
+    <rect x="25" y="48" width="60" height="60" fill="#FFFFFF" stroke="#0F4C81" rx="4"/>
+    <path d="M35 58 h40 v40 h-40 z" fill="#0A2540" opacity="0.8"/>
+    <circle cx="95" cy="80" r="32" fill="none" stroke="#2563EB" stroke-width="2" stroke-dasharray="3 2" opacity="0.6"/>
+    <text x="95" y="84" font-size="9" fill="#1E40AF" font-weight="bold" text-anchor="middle">TERVERIFIKASI</text>
+    <text x="0" y="125" font-weight="bold" text-decoration="underline">Drs. H. SUGENG SANTOSO, M.Si</text>
+  </g>
+
+  <!-- Lencana Status Sah Dokumen -->
+  <g transform="translate(55, 530)">
+    <rect width="260" height="34" fill="#ECFDF5" stroke="#10B981" rx="6"/>
+    <text x="12" y="22" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#047857">✓ DOKUMEN ASLI SAH PPDB ONLINE 2026</text>
+  </g>
+</svg>

@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 1000" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgIjazah" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FCFAF5"/>
+      <stop offset="100%" stop-color="#F4EEDC"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="750" height="1000" fill="#FFFFFF"/>
+  <rect x="25" y="25" width="700" height="950" fill="url(#bgIjazah)" stroke="#0F4C81" stroke-width="3" rx="8"/>
+  
+  <!-- Bingkai Ornamen Luar & Dalam Bertema Islami Hijau-Emas -->
+  <rect x="35" y="35" width="680" height="930" fill="none" stroke="#C59B27" stroke-width="2"/>
+  <rect x="42" y="42" width="666" height="916" fill="none" stroke="#059669" stroke-width="1.2" stroke-dasharray="6 3"/>
+
+  <!-- Ornamen Pojok -->
+  <g stroke="#C59B27" stroke-width="2" fill="none">
+    <path d="M45 85 L85 45 M45 95 L95 45 M45 105 L105 45"/>
+    <path d="M705 85 L665 45 M705 95 L655 45 M705 105 L645 45"/>
+    <path d="M45 915 L85 955 M45 905 L95 955 M45 895 L105 955"/>
+    <path d="M705 915 L665 955 M705 905 L655 955 M705 895 L645 955"/>
+  </g>
+
+  <!-- Kop Ijazah & Lambang Garuda -->
+  <g transform="translate(375, 110)" text-anchor="middle">
+    <circle cx="0" cy="0" r="28" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+    <text x="0" y="8" font-family="serif" font-size="22" font-weight="bold" fill="#92400E">🇮🇩</text>
+    
+    <text x="0" y="55" font-family="Arial, sans-serif" font-size="16" font-weight="900" fill="#0A2540" letter-spacing="2">KEMENTERIAN AGAMA REPUBLIK INDONESIA</text>
+    <text x="0" y="76" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#059669" letter-spacing="1">KANTOR KABUPATEN LAMONGAN</text>
+    
+    <line x1="-250" y1="92" x2="250" y2="92" stroke="#C59B27" stroke-width="2"/>
+    
+    <text x="0" y="140" font-family="Georgia, serif" font-size="28" font-weight="bold" fill="#0A2540" letter-spacing="4">I J A Z A H</text>
+    <text x="0" y="170" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#0F4C81">MADRASAH TSANAWIYAH / SMP</text>
+    <text x="0" y="195" font-family="Arial, sans-serif" font-size="13" fill="#64748B">TAHUN PELAJARAN 2025/2026</text>
+    <text x="0" y="220" font-family="monospace" font-size="13" font-weight="bold" fill="#0A2540">No. Seri: MTs-13/05/2026/0188</text>
+  </g>
+
+  <!-- Isi Pernyataan Kelulusan -->
+  <g transform="translate(95, 370)" font-family="Georgia, serif" font-size="14" fill="#1E293B" line-height="1.8">
+    <text x="0" y="0">Yang bertanda tangan di bawah ini, Kepala Madrasah Tsanawiyah menerangkan bahwa:</text>
+    
+    <g transform="translate(30, 45)" font-family="Arial, sans-serif">
+      <text x="0" y="0" font-size="13">Nama Lengkap</text>
+      <text x="180" y="0" font-size="15" font-weight="bold" fill="#0A2540">: AHMAD RAYHAN AL-GHIFARI</text>
+
+      <text x="0" y="30" font-size="13">Tempat, Tanggal Lahir</text>
+      <text x="180" y="30" font-size="13" font-weight="bold" fill="#334155">: Lamongan, 12 Mei 2011</text>
+
+      <text x="0" y="60" font-size="13">Nama Orang Tua</text>
+      <text x="180" y="60" font-size="13" font-weight="bold" fill="#334155">: Hendra Gunawan</text>
+
+      <text x="0" y="90" font-size="13">Nomor Induk Siswa (NISN)</text>
+      <text x="180" y="90" font-size="13" font-family="monospace" font-weight="bold" fill="#0F4C81">: 0115829104</text>
+
+      <text x="0" y="120" font-size="13">Madrasah / Sekolah Asal</text>
+      <text x="180" y="120" font-size="13" font-weight="bold" fill="#334155">: MTs Raudlatul Muta'allimin Babat</text>
+    </g>
+
+    <text x="0" y="215" font-weight="bold" font-size="15" fill="#0F4C81">L U L U S</text>
+    <text x="0" y="245">dari satuan pendidikan menengah pertama dengan predikat:</text>
+    
+    <rect x="-10" y="265" width="560" height="42" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5" rx="6"/>
+    <text x="270" y="292" font-family="Arial, sans-serif" font-size="16" font-weight="900" fill="#047857" text-anchor="middle">SANGAT MEMUASKAN (NILAI RATA-RATA: 92,8)</text>
+  </g>
+
+  <!-- Pasfoto Ijazah & TTD Kepala Madrasah -->
+  <g transform="translate(120, 720)">
+    <!-- Kotak Pasfoto 3x4 Santri Berlatar Merah -->
+    <rect width="105" height="135" fill="#DC2626" stroke="#FFFFFF" stroke-width="2" rx="4"/>
+    <circle cx="52" cy="50" r="26" fill="#FEF3C7"/>
+    <rect x="32" y="22" width="40" height="16" rx="2" fill="#0F172A"/> <!-- Peci hitam -->
+    <path d="M22 135 C22 88 82 88 82 135 Z" fill="#0A2540"/>
+    <polygon points="52,90 45,115 52,130 59,115" fill="#FFFFFF"/>
+    <!-- Cap Stempel Tiga Jari Kiri Memotong Pasfoto -->
+    <circle cx="100" cy="95" r="42" fill="none" stroke="#1D4ED8" stroke-width="2" stroke-dasharray="4 2" opacity="0.7"/>
+    <text x="100" y="93" font-size="8" font-weight="bold" fill="#1D4ED8" text-anchor="middle">MTS RAUDLATUL</text>
+    <text x="100" y="104" font-size="8" font-weight="bold" fill="#1D4ED8" text-anchor="middle">MUTA'ALLIMIN</text>
+  </g>
+
+  <g transform="translate(450, 720)" font-family="Arial, sans-serif" font-size="12" fill="#1E293B">
+    <text x="0" y="0">Lamongan, 15 Juni 2026</text>
+    <text x="0" y="22" font-weight="bold">Kepala Madrasah,</text>
+    
+    <!-- TTD Goresan -->
+    <path d="M10 65 Q40 45 60 70 T110 60" fill="none" stroke="#0F4C81" stroke-width="2.5"/>
+    
+    <text x="0" y="105" font-weight="bold" text-decoration="underline">H. ISROIL, S.Pd., M.Pd.</text>
+    <text x="0" y="122" font-size="11" fill="#64748B">NIP. 19750820 200212 1 003</text>
+  </g>
+
+  <!-- Lencana Status Dokumen Terverifikasi -->
+  <g transform="translate(65, 920)">
+    <rect width="280" height="30" fill="#ECFDF5" stroke="#10B981" rx="6"/>
+    <text x="12" y="20" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#047857">✓ IJAZAH RESMI DILEGIR PPDB 2026</text>
+  </g>
+</svg>

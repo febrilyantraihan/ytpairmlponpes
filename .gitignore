@@ -1,0 +1,12 @@
+_baseline_snapshot/
+_archive_master_assets/
+scratch/
+*.log
+.DS_Store
+Thumbs.db
+cloudflared.exe
+temp_dom.html
+START_CLOUDFLARE_TUNNEL.bat
+START_MOBILE_SERVER.bat
+serve.ps1
+
