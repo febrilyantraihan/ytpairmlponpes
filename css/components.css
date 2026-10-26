@@ -15063,8 +15063,39 @@ img.footer-logo {
   border-bottom: 3px solid #FBBF24;
 }
 
-/* Cinematic Drone Slow Zoom & Rotation Background */
-.psb-masthead::before {
+/* Dedicated Background Backdrop (Guaranteed Rendering Across All Modern Browsers & Clean URLs) */
+.psb-masthead-bg-backdrop {
+  position: absolute;
+  top: -15%;
+  left: -15%;
+  width: 130%;
+  height: 130%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.psb-masthead-drone-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+  transform-origin: center center;
+  animation: psbHeroCinematicDrone 36s ease-in-out infinite;
+  will-change: transform;
+  display: block;
+}
+
+.psb-masthead-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 37, 64, 0.70) 0%, rgba(10, 37, 64, 0.46) 40%, rgba(10, 37, 64, 0.82) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Fallback for environments without backdrop DOM elements */
+.psb-masthead:not(:has(.psb-masthead-bg-backdrop))::before {
   content: '';
   position: absolute;
   top: -15%;
@@ -15084,8 +15115,7 @@ img.footer-logo {
   -webkit-backface-visibility: hidden;
 }
 
-/* Semi-translucent Luxury Islamic Navy Overlay */
-.psb-masthead::after {
+.psb-masthead:not(:has(.psb-masthead-overlay))::after {
   content: '';
   position: absolute;
   inset: 0;
