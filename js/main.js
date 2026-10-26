@@ -4015,15 +4015,9 @@ function renderPsbWaveHeader(db) {
 
   // 0. UPDATE BACKGROUND FOTO MASTHEAD HERO PORTAL PSB (Dinamis dari CMS)
   const mastheadEl = document.querySelector('.psb-masthead');
-  const droneImg = document.getElementById('psbMastheadDroneImg');
   const customBg = (waveCfg && waveCfg.heroBackground) || (db.meta && db.meta.psbHeroBackground);
-  if (customBg) {
-    if (droneImg) {
-      droneImg.src = customBg;
-    }
-    if (mastheadEl) {
-      mastheadEl.style.setProperty('--psb-masthead-bg', `url("${customBg}")`);
-    }
+  if (mastheadEl && customBg) {
+    mastheadEl.style.setProperty('--psb-masthead-bg', `url("${customBg}")`);
   }
 
   // 1. UPDATE GELOMBANG I DI BADGE
