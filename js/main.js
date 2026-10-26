@@ -4017,7 +4017,12 @@ function renderPsbWaveHeader(db) {
   const mastheadEl = document.querySelector('.psb-masthead');
   const customBg = (waveCfg && waveCfg.heroBackground) || (db.meta && db.meta.psbHeroBackground);
   if (mastheadEl && customBg) {
-    mastheadEl.style.setProperty('--psb-masthead-bg', `url("${customBg}")`);
+    try {
+      const resolvedBg = new URL(customBg, window.location.href).href;
+      mastheadEl.style.setProperty('--psb-masthead-bg', `url("${resolvedBg}")`);
+    } catch (e) {
+      mastheadEl.style.setProperty('--psb-masthead-bg', `url("${customBg}")`);
+    }
   }
 
   // 1. UPDATE GELOMBANG I DI BADGE
