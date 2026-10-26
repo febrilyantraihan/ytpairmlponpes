@@ -13086,8 +13086,8 @@ function renderTabUsers(db, container) {
         </div>
       </div>
 
-      <!-- Interactive Table -->
-      <div style="overflow-x:auto;">
+      <!-- Interactive Table & Mobile Cards -->
+      <div class="crm-users-desktop-table" style="overflow-x:auto;">
         <table class="admin-table" id="adminUsersTable">
           <thead>
             <tr>
@@ -13104,6 +13104,9 @@ function renderTabUsers(db, container) {
           </tbody>
         </table>
       </div>
+      <div class="mobile-users-list" id="mobileUsersList">
+        <!-- Rendered by renderAdminUsersList() -->
+      </div>
     </div>
   `;
 
@@ -13112,7 +13115,8 @@ function renderTabUsers(db, container) {
 
 window.renderAdminUsersList = function() {
   const tbody = document.getElementById('adminUsersTableBody');
-  if (!tbody) return;
+  const mobileList = document.getElementById('mobileUsersList');
+  if (!tbody && !mobileList) return;
 
   const db = getDB();
   const users = db.adminUsers || [];
@@ -13120,11 +13124,15 @@ window.renderAdminUsersList = function() {
   const isSuperAdmin = !activeUser || activeUser.role === 'superadmin';
 
   if (users.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="padding:32px; text-align:center; color:#64748B;">Belum ada data akun pengelola.</td></tr>`;
+    if (tbody) tbody.innerHTML = `<tr><td colspan="6" style="padding:32px; text-align:center; color:#64748B;">Belum ada data akun pengelola.</td></tr>`;
+    if (mobileList) mobileList.innerHTML = `<div style="padding:24px; text-align:center; color:#64748B; background:#FFF; border:1px solid #E2E8F0; border-radius:10px;">Belum ada data akun pengelola.</div>`;
     return;
   }
 
-  tbody.innerHTML = users.map((u, i) => {
+  const rows = [];
+  const cards = [];
+
+  users.forEach((u, i) => {
     let roleBadgeStyle = 'background:#F1F5F9; color:#475569; border:1px solid #CBD5E1;';
 
     if (u.role === 'superadmin') {
@@ -13139,7 +13147,8 @@ window.renderAdminUsersList = function() {
 
     const isMaster = u.username === 'admin';
 
-    return `
+    // Desktop Table Row
+    rows.push(`
       <tr class="admin-user-row" data-role="${u.role}" data-username="${u.username}" data-name="${(u.name || '').toLowerCase()}" data-email="${(u.email || '').toLowerCase()}">
         <td style="text-align:center; font-weight:700; color:#64748B; vertical-align:middle;">${i + 1}</td>
         <td style="vertical-align:middle;">
@@ -13191,20 +13200,74 @@ window.renderAdminUsersList = function() {
           </div>
         </td>
       </tr>
-    `;
-  }).join('');
+    `);
+
+    // Mobile Touch Card
+    cards.push(`
+      <div class="crm-user-card-mobile" data-role="${u.role}" data-username="${u.username}" data-name="${(u.name || '').toLowerCase()}" data-email="${(u.email || '').toLowerCase()}">
+        <div class="crm-user-card-top">
+          <div style="display:flex; align-items:center; gap:8px; min-width:0;">
+            <div style="width:34px; height:34px; border-radius:50%; background:#F8FAFC; display:flex; align-items:center; justify-content:center; font-size:1.1rem; border:1px solid #CBD5E1; flex-shrink:0;">
+              ${u.avatar || '👤'}
+            </div>
+            <div style="min-width:0;">
+              <strong style="color:#0A2540; font-size:0.88rem; display:block; word-break:break-all;">${u.username}</strong>
+              <small style="color:#64748B; font-size:0.72rem;">ID: ${u.id}</small>
+            </div>
+          </div>
+          <span class="badge-status ${u.status === 'active' ? 'badge-verified' : 'badge-inactive'}" style="font-size:0.72rem; padding:2px 8px; flex-shrink:0;">
+            ${u.status === 'active' ? 'Aktif' : 'Nonaktif'}
+          </span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:2px;">
+          <div style="font-size:0.84rem; font-weight:700; color:#1E293B;">${u.name || '-'}</div>
+          <div style="font-size:0.76rem; color:#64748B;">${u.email || '-'}</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+          <span style="display:inline-flex; align-items:center; gap:5px; padding:3px 8px; border-radius:6px; font-size:0.75rem; ${roleBadgeStyle}">
+            <span>${u.avatar || '👤'}</span>
+            <span>${u.roleName || u.role}</span>
+          </span>
+        </div>
+        <div class="crm-user-card-actions">
+          ${isSuperAdmin ? `
+            <button type="button" class="btn btn-outline btn-sm" onclick="openModalAdminUser('${u.id}')" style="font-size:0.76rem; padding:6px 10px; display:inline-flex; align-items:center; justify-content:center; gap:4px; font-weight:700; min-height:36px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+              <span>Edit</span>
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="resetAdminPassword('${u.id}')" style="font-size:0.76rem; padding:6px 10px; background:#EFF6FF; color:#1D4ED8; border-color:#BFDBFE; font-weight:700; min-height:36px;">
+              <span>🔑 Sandi</span>
+            </button>
+            ${!isMaster ? `
+              <button type="button" class="btn btn-danger btn-sm" onclick="deleteAdminUser('${u.id}')" style="font-size:0.76rem; padding:6px 10px; min-height:36px;" title="Hapus Akun">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </button>
+            ` : `
+              <div style="display:flex; align-items:center; justify-content:center; font-size:0.72rem; color:#94A3B8; font-style:italic;">Master</div>
+            `}
+          ` : `
+            <span style="font-size:0.75rem; color:#94A3B8;">Read Only</span>
+          `}
+        </div>
+      </div>
+    `);
+  });
+
+  if (tbody) tbody.innerHTML = rows.join('');
+  if (mobileList) mobileList.innerHTML = cards.join('');
 };
 
 window.filterAdminUsersTable = function() {
   const searchVal = (document.getElementById('searchAdminUser')?.value || '').toLowerCase();
   const roleVal = document.getElementById('filterRoleAdminUser')?.value || 'ALL';
 
-  document.querySelectorAll('.admin-user-row').forEach(row => {
-    const role = row.getAttribute('data-role') || '';
-    const username = (row.getAttribute('data-username') || '').toLowerCase();
-    const name = (row.getAttribute('data-name') || '').toLowerCase();
+  const filterItem = (el) => {
+    const role = el.getAttribute('data-role') || '';
+    const username = (el.getAttribute('data-username') || '').toLowerCase();
+    const name = (el.getAttribute('data-name') || '').toLowerCase();
+    const email = (el.getAttribute('data-email') || '').toLowerCase();
 
-    let matchSearch = !searchVal || username.includes(searchVal) || name.includes(searchVal);
+    let matchSearch = !searchVal || username.includes(searchVal) || name.includes(searchVal) || email.includes(searchVal);
     let matchRole = true;
 
     if (roleVal === 'superadmin') matchRole = (role === 'superadmin');
@@ -13213,8 +13276,11 @@ window.filterAdminUsersTable = function() {
     else if (roleVal === 'units') matchRole = role.startsWith('unit_') && !['unit_madin', 'unit_lpba', 'unit_boarding'].includes(role);
     else if (roleVal === 'nonformal') matchRole = ['unit_madin', 'unit_lpba', 'unit_boarding'].includes(role);
 
-    row.style.display = (matchSearch && matchRole) ? '' : 'none';
-  });
+    el.style.display = (matchSearch && matchRole) ? '' : 'none';
+  };
+
+  document.querySelectorAll('.admin-user-row').forEach(filterItem);
+  document.querySelectorAll('.crm-user-card-mobile').forEach(filterItem);
 };
 
 window.openModalAdminUser = function(userId = null) {

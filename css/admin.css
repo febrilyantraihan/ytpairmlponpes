@@ -7271,14 +7271,15 @@ input:checked + .crm-slider:before {
   .form-input,
   .form-select,
   .form-textarea {
-    padding: 6px 8px !important;
-    font-size: 0.76rem !important;
-    min-height: 32px !important;
+    padding: 8px 10px !important;
+    font-size: 0.82rem !important;
+    min-height: 40px !important;
     border-radius: 6px !important;
+    box-sizing: border-box !important;
   }
 
   .form-textarea {
-    min-height: 60px !important;
+    min-height: 72px !important;
   }
 
   /* Compact Table for Mobile */
@@ -7295,31 +7296,31 @@ input:checked + .crm-slider:before {
     display: none !important;
   }
 
-  /* Welcome Banner on Mobile: Ultra-sleek executive compact banner */
+  /* Welcome Banner on Mobile: Ultra-sleek executive stacked layout (Zero Text Collision & Full Readability) */
   .admin-welcome-card {
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 10px 12px !important;
-    border-radius: 8px !important;
-    gap: 10px !important;
-    margin-bottom: 12px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 14px 14px !important;
+    border-radius: 10px !important;
+    gap: 12px !important;
+    margin-bottom: 14px !important;
   }
 
   .welcome-card-left {
     display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
     min-width: 0 !important;
-    flex: 1 1 auto !important;
+    width: 100% !important;
   }
 
   .welcome-avatar-wrap {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    border-radius: 6px !important;
-    font-size: 1.15rem !important;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    border-radius: 8px !important;
+    font-size: 1.25rem !important;
+    flex-shrink: 0 !important;
   }
 
   .welcome-meta {
@@ -7328,41 +7329,52 @@ input:checked + .crm-slider:before {
   }
 
   .welcome-greeting {
-    font-size: 0.82rem !important;
-    line-height: 1.25 !important;
+    font-size: 0.92rem !important;
+    font-weight: 800 !important;
+    line-height: 1.35 !important;
     gap: 6px !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    color: #FFFFFF !important;
   }
 
   .welcome-role-badge {
-    font-size: 0.58rem !important;
-    padding: 1px 6px !important;
+    font-size: 0.62rem !important;
+    padding: 2px 8px !important;
     border-radius: 4px !important;
+    font-weight: 800 !important;
   }
 
   .welcome-sub {
-    font-size: 0.68rem !important;
+    font-size: 0.74rem !important;
     color: #CBD5E1 !important;
-    margin: 2px 0 0 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    line-height: 1.2 !important;
+    margin: 4px 0 0 !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    line-height: 1.4 !important;
   }
 
   .welcome-card-right {
+    width: 100% !important;
     flex-shrink: 0 !important;
   }
 
   .btn-welcome-preview {
-    width: auto !important;
-    padding: 6px 10px !important;
-    font-size: 0.72rem !important;
+    width: 100% !important;
+    padding: 9px 14px !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
     border-radius: 6px !important;
     white-space: nowrap !important;
-    gap: 4px !important;
+    gap: 6px !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    min-height: 40px !important;
   }
 
   /* Metrics Grid on Mobile: Guaranteed Zero Overflow & Balanced Proportion */
@@ -7412,15 +7424,18 @@ input:checked + .crm-slider:before {
   }
 
   .kpi-label {
-    display: block !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
     font-size: 0.68rem !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     color: #65676B !important;
     line-height: 1.25 !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
     overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    margin-bottom: 2px !important;
+    text-overflow: clip !important;
+    min-height: 2.3em !important;
+    margin-bottom: 4px !important;
     width: 100% !important;
     text-transform: uppercase !important;
     letter-spacing: 0.3px !important;
@@ -7437,8 +7452,8 @@ input:checked + .crm-slider:before {
   }
 
   .kpi-val {
-    font-size: 1.15rem !important;
-    font-weight: 700 !important;
+    font-size: 1.18rem !important;
+    font-weight: 800 !important;
     line-height: 1 !important;
     color: #0A2540 !important;
     flex-shrink: 0 !important;
@@ -7447,7 +7462,7 @@ input:checked + .crm-slider:before {
   .kpi-badge-tag,
   .kpi-badge-new {
     font-size: 0.60rem !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     padding: 2px 6px !important;
     border-radius: 4px !important;
     white-space: nowrap !important;
@@ -7608,18 +7623,9 @@ input:checked + .crm-slider:before {
     font-weight: 800;
   }
 
-  /* Compact Floating Assistant Button */
+  /* Floating Assistant Button - Hidden on mobile screens to prevent obscuring interactive forms & cards */
   .crm-floating-action-btn {
-    bottom: 64px;
-    right: 10px;
-    width: 38px;
-    height: 38px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-
-  .crm-floating-action-btn svg {
-    width: 18px;
-    height: 18px;
+    display: none !important;
   }
 }
 
@@ -8744,6 +8750,7 @@ input:checked + .crm-slider:before {
 
 .crm-msg-filter-pills {
   display: flex;
+  flex-wrap: nowrap;
   gap: 6px;
   margin-bottom: 14px;
   border-bottom: 1px solid #E2E8F0;
@@ -8758,10 +8765,11 @@ input:checked + .crm-slider:before {
 }
 
 .crm-msg-pill-btn {
+  flex-shrink: 0;
   background: #F8FAFC;
   border: 1px solid #CBD5E1;
   color: #475569;
-  padding: 5px 11px;
+  padding: 6px 12px;
   font-size: 0.74rem;
   font-weight: 700;
   border-radius: 999px;
@@ -9101,6 +9109,54 @@ input:checked + .crm-slider:before {
     justify-content: center;
     box-sizing: border-box;
   }
+
+  /* Mobile Touch Cards for Admin Users (RBAC) */
+  .crm-users-desktop-table {
+    display: none !important;
+  }
+
+  .mobile-users-list {
+    display: flex !important;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .crm-user-card-mobile {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 12px 14px;
+    box-shadow: 0 1px 4px rgba(10, 37, 64, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .crm-user-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .crm-user-card-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 6px;
+    margin-top: 4px;
+  }
+}
+
+.crm-users-desktop-table {
+  display: block;
+}
+
+.mobile-users-list {
+  display: none;
 }
 
 /* ===================================================================
@@ -9325,6 +9381,33 @@ input:checked + .crm-slider:before {
 @media (max-width: 900px) {
   .lead-card-body {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .lead-unified-card {
+    border: 1px solid #E2E8F0 !important;
+    border-top: 3px solid #0F4C81 !important;
+    padding: 10px 12px !important;
+    border-radius: 8px !important;
+  }
+  .lead-unified-card[data-status="Diverifikasi"] {
+    border-top-color: #0284C7 !important;
+  }
+  .lead-unified-card[data-status="Diterima"] {
+    border-top-color: #10B981 !important;
+  }
+  .lead-unified-card[data-status="Ditolak"] {
+    border-top-color: #EF4444 !important;
+  }
+  .lead-card-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+  }
+  .lead-header-actions {
+    width: 100% !important;
+    justify-content: space-between !important;
   }
 }
 
