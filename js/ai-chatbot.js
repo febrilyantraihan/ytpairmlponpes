@@ -361,7 +361,7 @@
       actions: [
         { icon: "👋", text: "Kenalan dengan RAUDLY", query: "Kenalan dengan RAUDLY" },
         { icon: "📖", text: "Kajian Kitab & Pengajian", query: "Kapan jadwal ngaji kitab di pesantren?" },
-        { icon: "📋", text: "Alur & Syarat PPDB 2026/2027", query: "Bagaimana alur dan syarat pendaftaran santri baru PPDB?" },
+        { icon: "📋", text: "Alur & Jadwal SPMB 2027/2028", query: "Bagaimana alur dan jadwal pendaftaran SPMB TA. 2027/2028?" },
         { icon: "🏫", text: "7 Satuan Pendidikan Formal (KB–SMA)", query: "Apa saja 7 unit pendidikan formal di YTPAI Lamongan?" },
         { icon: "🕌", text: "Pondok Pesantren Putra & Putri", query: "Bagaimana sistem asrama di Pondok Pesantren Raudlatul Muta'allimin Tegalrejo?" }
       ],
@@ -582,8 +582,8 @@ BASIS DATA RESMI SELURUH EKOSISTEM YAYASAN (REAL-TIME DATA):
 - 5 Pilar Misi:
 ${(meta.missionList || []).map((m, i) => `  ${i + 1}. ${m}`).join('\n')}
 - Alamat Kompleks Yayasan: ${meta.address || "Jalan Raya Babat - Surabaya, Dsn. Tegalrejo, Ds. Datinawong, Kec. Babat, Kab. Lamongan, Prov. Jawa Timur"}
-- Telepon Kantor: ${meta.phone || "(0322) 321-789"}
-- WhatsApp Hotline PPDB: ${meta.whatsapp || "+62 857-0433-2952"}
+- WhatsApp / Telepon: ${meta.phone || "0856-4884-7070"}
+- WhatsApp Informasi Pendaftaran: 0856-4884-7070
 - Email Resmi: ${meta.email || "sekretariat@ytpai-lamongan.sch.id"}
 - Google Maps: ${meta.mapsUrl || "https://maps.app.goo.gl/ePeaKwX8PnkgPYGy9"}
 
@@ -623,15 +623,18 @@ ${boardingStr}
 - Sarana Ibadah Putri: **Mushola Pondok Pesantren Putri** — sarana ibadah yang bersifat **eksklusif** khusus santriwati mukim di dalam asrama putri, terjaga privasi syar'i 24 jam.
 ${facilitiesStr || "- Lab Komputer & CBT 80 workstation\n- Lab IPA Terpadu\n- Mushola Pondok Pesantren Putra (Utama & Ngaji Bersama Alumni)\n- Mushola Pondok Pesantren Putri (Eksklusif Santriwati Mukim)\n- Asrama Putra & Putri Berstandar Nyaman\n- Perpustakaan Santri & Ruang Literasi\n- Pos Kesehatan Pesantren (Poskestren)\n- Sarana Olahraga & Kantin Higienis"}
 
-8. JADWAL PELAYANAN & PENDAFTARAN SANTRI BARU (PPDB 2026/2027):
-- Pendaftaran Online: 24 Jam via portal resmi di menu "PSB Online" (psb.html).
-- Pendaftaran Offline (Hadir Langsung):
-  * Jam Pelayanan Lembaga: **Sabtu – Kamis pukul 07.00 s.d. 14.00 WIB (Jam 2 Siang)**.
-  * **HARI JUM'AT LIBUR** untuk seluruh kantor pelayanan lembaga / unit formal yayasan.
-  * **Pondok Pesantren (Ponpes)**: **BUKA SETIAP HARI (Siaga 24 Jam Penuh)** untuk asrama santri, pembinaan ibadah, dan khidmah kepesantrenan.
-  * Lokasi pendaftaran: Kantor Sekretariat Pusat PSB YTPAI Lamongan atau Kantor Unit Formal (KB s.d. SMA).
-- Alur: Mengisi data online / serah berkas fisik -> Memilih unit & opsi mondok/reguler -> Mendapatkan Kupon Bukti Registrasi Berbarcode Resmi -> Verifikasi & konsultasi peminatan.
-- Program Beasiswa: Beasiswa Tahfidz Al-Qur'an (keringanan s.d. bebas SPP) dan Beasiswa Prestasi Akademik/Perlombaan.
+8. SISTEM PENERIMAAN MURID BARU (SPMB TA. 2027/2028):
+- Lembaga Penyelenggara: **YAYASAN TAMAN PENDIDIKAN AGAMA ISLAM RAUDLATUL MUTA'ALLIMIN LAMONGAN**
+- Jenjang Pendidikan (Hanya 10 Jenjang Ini yang Boleh Disebutkan untuk SPMB):
+  * **KB, TK, MI, MTs, SMP, MA, SMA, MADIN, PONPES PA & PI**
+- Jadwal Pendaftaran Resmi SPMB TA. 2027/2028:
+  * **INDENT**: 1 November 2026 - 6 Januari 2027
+  * **GELOMBANG 1**: 7 Januari - 31 Maret 2027
+  * **GELOMBANG 2**: 1 April - 8 Juli 2027
+- Slogan Resmi: **#SEKOLAH UNGGULAN BERBASIS PESANTREN**
+- Informasi Pendaftaran (WhatsApp / Telepon): **0856-4884-7070**
+- Kantor YTPAI RML: **Jalan Raya Babat - Surabaya, Dsn. Tegalrejo, Ds. Datinawong, Kec. Babat, Kab. Lamongan, Prov. Jawa Timur**
+- Jam Pelayanan Kantor: Sabtu – Kamis pukul 07.00 s.d. 14.00 WIB (Jum'at Libur Lembaga), Asrama Pondok Pesantren Buka 24 Jam Setiap Hari.
 
 9. EKSTRAKURIKULER & PRESTASI:
 - Ekstrakurikuler: ${ekskulStr || "Pramuka, Hadrah/Banjari, Qari'/Tilawah, Olahraga Santri (Futsal & Voli), Jurnalistik/Multimedia Santri, Ro'an Khidmah, English & Arabic Club"}.
@@ -759,7 +762,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
       return {
         text: `Alhamdulillah, aku adalah **${meta.chatbotName || "Raudly"}**—asisten kecerdasan digital mandiri yang dirancang dan dikembangkan secara khusus oleh **Tim IT YTPAI Raudlatul Muta'allimin Lamongan** 🌿✨\n\nSeluruh data dan basis pengetahuan ${meta.chatbotName || "Raudly"} dihimpun secara mandiri dari kurikulum dan ekosistem pesantren kami untuk melayani adik-adik santri, Ayah & Bunda, serta masyarakat umum.\n\nAda informasi seputar pendaftaran santri baru (PPDB), 7 unit sekolah formal (KB–SMA), atau asrama **Pondok Pesantren Raudlatul Muta'allimin Tegalrejo** yang ingin ditanyakan? ${meta.chatbotName || "Raudly"} siap bantu sepenuh hati! 😊`,
         actions: [
-          { icon: "📋", text: "Alur & Syarat PPDB 2026", query: "Bagaimana alur dan syarat pendaftaran santri baru PPDB?" },
+          { icon: "📋", text: "Alur & Syarat PPDB 2026", query: "Bagaimana alur dan jadwal pendaftaran SPMB TA. 2027/2028?" },
           { icon: "🏫", text: "7 Satuan Pendidikan Formal", query: "Apa saja 7 unit pendidikan formal di YTPAI Lamongan?" },
           { icon: "🕌", text: "Pondok Pesantren Putra & Putri", query: "Bagaimana sistem asrama di Pondok Pesantren Raudlatul Muta'allimin Tegalrejo?" }
         ]
@@ -771,7 +774,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
       return {
         text: "Assalamu’alaikum Warahmatullahi Wabarakatuh! 🌿✨\n\nAhlan wa Sahlan! Kenalkan, aku **RAUDLY**, maskot santri cerdas sekaligus asisten digital resmi **YTPAI Raudlatul Muta'allimin Lamongan** 🎒\n\n**Mengenal RAUDLY Lebih Dekat:**\n- 🌟 **Sosok**: Santri cilik yang santun, ramah, berakhlakul karimah, berwawasan luas, serta cinta ilmu agama dan sains teknologi.\n- 🤝 **Tugas Utama RAUDLY**: Membantu Sahabat Muta'allimin mendapatkan informasi resmi dan cepat seputar:\n  1. 📋 **PPDB Online 2026/2027** (syarat, alur registrasi, & beasiswa tahfidz)\n  2. 🏫 **7 Satuan Pendidikan Formal** (KB, TK, MI, MTs, MA, SMP, SMA berakreditasi A)\n  3. 🕌 **Pondok Pesantren Raudlatul Muta'allimin Tegalrejo** (asrama mukim 24 jam, tahfidz 30 juz bersanad, & kajian kitab kuning salaf)\n  4. 🚀 **LBB Sukses PTN & CBT** (bimbingan belajar SNBT/UTBK & Kedinasan)\n  5. 🕋 **KBIHU Haji & Umrah** resmi Kemenag RI\n\nSenang sekali bisa berkenalan dengan kamu! Ada info apa yang ingin kamu ketahui hari ini? 😊",
         actions: [
-          { icon: "📋", text: "Alur & Syarat PPDB 2026", query: "Bagaimana alur dan syarat pendaftaran santri baru PPDB?" },
+          { icon: "📋", text: "Alur & Syarat PPDB 2026", query: "Bagaimana alur dan jadwal pendaftaran SPMB TA. 2027/2028?" },
           { icon: "🏫", text: "7 Satuan Pendidikan Formal", query: "Apa saja 7 unit formal di yayasan?" },
           { icon: "🕌", text: "Kegiatan Pondok Pesantren", query: "Bagaimana sistem asrama di Pondok Pesantren Raudlatul Muta'allimin Tegalrejo?" },
           { icon: "💬", text: "WhatsApp Panitia PPDB", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
@@ -946,7 +949,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
 
     if (q.includes('neng endi') || q.includes('panggone neng endi') || q.includes('lokasine neng endi') || q.includes('alamate ngendi')) {
       return {
-        text: `Pondok Pesantren lan sekolah formal **YTPAI Raudlatul Muta'allimin Lamongan** mapan wonten **${meta.address || "Jalan Raya Gembong - Surabaya, Dusun Tegalrejo, Desa Datinawong, Kec. Babat, Kab. Lamongan"}** 😊\n\nPapanipun kepenak sanget amargi pas wonten pinggir margi ageng Babat–Surabaya. Menawi panjenengan badhe rawuh sowan silaturahmi utawi mriksani suasana pesantren, kantor sekretariat tansah bikak nampi kanthi bungahing manah. Titik Google Maps sampun cumawis ing ngandhap menika nggih! 🌿`,
+        text: `Pondok Pesantren lan sekolah formal **YTPAI Raudlatul Muta'allimin Lamongan** mapan wonten **${meta.address || "Jalan Raya Babat - Surabaya, Dsn. Tegalrejo, Ds. Datinawong, Kec. Babat, Kab. Lamongan, Prov. Jawa Timur"}** 😊\n\nPapanipun kepenak sanget amargi pas wonten pinggir margi ageng Babat–Surabaya. Menawi panjenengan badhe rawuh sowan silaturahmi utawi mriksani suasana pesantren, kantor sekretariat tansah bikak nampi kanthi bungahing manah. Titik Google Maps sampun cumawis ing ngandhap menika nggih! 🌿`,
         actions: [
           { icon: "🗺️", text: "Pitedah Margi Google Maps", url: meta.mapsUrl || "https://maps.app.goo.gl/ePeaKwX8PnkgPYGy9" },
           { icon: "💬", text: "Kontak Panitia via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
@@ -1048,7 +1051,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
     // 5. PPDB & Pendaftaran Santri Baru
     if (q.includes('daftar') || q.includes('ppdb') || q.includes('psb') || q.includes('registrasi') || q.includes('cara daftar') || q.includes('syarat') || q.includes('kupon') || q.includes('formulir')) {
       return {
-        text: "Penerimaan Santri Baru (PPDB) **YTPAI Raudlatul Muta'allimin Lamongan Tahun Ajaran 2027/2028** telah resmi dibuka!\n\nPendaftaran dapat dilakukan melalui **2 cara praktis**:\n\n1. 💻 **Pendaftaran Online (24 Jam)**: Kunjungi portal **PSB Online**, isi formulir biodata lengkap calon santri dan wali, pilih jenjang satuan formal serta opsi mondok di asrama pesantren, lalu simpan Kupon Registrasi Resmi.\n\n2. 🏢 **Pendaftaran Offline (Hadir Langsung)**:\n   - **Kantor Sekretariat Pusat PSB YTPAI Lamongan**: Kompleks Pesantren, Jl. Raya Gembong - Surabaya, Dusun Tegalrejo, Desa Datinawong, Babat, Lamongan (Buka Sabtu s.d. Kamis 07.00 s.d. 14.00 WIB, **Hari Jum'at Libur Lembaga**).\n   - **Kantor Unit Pendidikan Formal Masing-Masing**: Datang langsung ke kantor tata usaha unit pilihan Anda (**KB, TK, MI, MTs, SMP, MA, hingga SMA Raudlatul Muta'allimin**) pada jam pelayanan lembaga (Sabtu s.d. Kamis 07.00 s.d. 14.00 WIB, Hari Jum'at Libur) dengan membawa berkas fotokopi KK, Akta Kelahiran, dan NISN.\n   - *Catatan*: **Pondok Pesantren tetap buka setiap hari (24 Jam)**.\n\nPanitia kami siap menyambut dan memandu proses pendaftaran dengan senang hati! 😊",
+        text: "Sistem Penerimaan Murid Baru (SPMB) **YTPAI Raudlatul Muta'allimin Lamongan TA. 2027/2028** telah resmi dibuka!\n\nPendaftaran dapat dilakukan melalui **2 cara praktis**:\n\n1. 💻 **Pendaftaran Online (24 Jam)**: Kunjungi portal **PSB Online**, isi formulir biodata lengkap calon santri dan wali, pilih jenjang satuan formal serta opsi mondok di asrama pesantren, lalu simpan Kupon Registrasi Resmi.\n\n2. 🏢 **Pendaftaran Offline (Hadir Langsung)**:\n   - **Kantor Sekretariat Pusat PSB YTPAI Lamongan**: Kompleks Pesantren, Jalan Raya Babat - Surabaya, Dsn. Tegalrejo, Ds. Datinawong, Kec. Babat, Kab. Lamongan, Prov. Jawa Timur (Buka Sabtu s.d. Kamis 07.00 s.d. 14.00 WIB, **Hari Jum'at Libur Lembaga**).\n   - **Kantor Unit Pendidikan Formal Masing-Masing**: Datang langsung ke kantor tata usaha unit pilihan Anda (**KB, TK, MI, MTs, SMP, MA, hingga SMA Raudlatul Muta'allimin**) pada jam pelayanan lembaga (Sabtu s.d. Kamis 07.00 s.d. 14.00 WIB, Hari Jum'at Libur) dengan membawa berkas fotokopi KK, Akta Kelahiran, dan NISN.\n   - *Catatan*: **Pondok Pesantren tetap buka setiap hari (24 Jam)**.\n\nPanitia kami siap menyambut dan memandu proses pendaftaran dengan senang hati! 😊",
         actions: [
           { icon: "📝", text: "Buka Formulir PPDB Online", url: "psb.html" },
           { icon: "💬", text: "Konsultasi WhatsApp Panitia", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
@@ -2227,7 +2230,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
     if (btnChips) {
       btnChips.addEventListener('click', () => {
         if (input) {
-          input.value = "Info alur dan syarat PPDB santri baru 2026/2027";
+          input.value = "Info alur dan jadwal SPMB TA. 2027/2028";
           input.focus();
         }
       });

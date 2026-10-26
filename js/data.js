@@ -150,8 +150,8 @@ const DEFAULT_YAYASAN_DATA = {
     Bagi orang tua/wali yang ingin berkonsultasi langsung dan menyerahkan berkas fisik (Fotokopi KK, Akta Kelahiran, KTP Orang Tua, dan NISN), dapat hadir langsung ke salah satu kantor berikut:
     <ul style="margin:6px 0 0 16px; padding-left:0; line-height:1.55;">
       <li style="margin-bottom:4px;">
-        <strong>Kantor Sekretariat Pusat PSB YTPAI Raudlatul Muta'allimin Lamongan:</strong><br>
-        Kompleks Yayasan, Jl. Raya Gembong - Surabaya, Dusun Tegalrejo, Desa Datinawong, Kec. Babat, Kab. Lamongan, Jawa Timur 62271 (Buka Sabtu s.d. Kamis pukul 07.00 s.d. 14.00 WIB. Hari Jum'at Libur Lembaga).
+        <strong>Kantor YTPAI RML:</strong><br>
+        Jalan Raya Babat - Surabaya, Dsn. Tegalrejo, Ds. Datinawong, Kec. Babat, Kab. Lamongan, Prov. Jawa Timur (Buka Sabtu s.d. Kamis pukul 07.00 s.d. 14.00 WIB. Hari Jum'at Libur Lembaga).
       </li>
       <li>
         <strong>Kantor Pelayanan Unit Pendidikan Formal Pilihan Anda:</strong><br>
@@ -402,7 +402,7 @@ const DEFAULT_YAYASAN_DATA = {
     speakerName: "Masyayikh & Dewan Pengasuh Pesantren YTPAI",
     youtubeUrl: "https://www.youtube.com/watch?v=M7lc1UVf-VE",
     youtubeId: "M7lc1UVf-VE",
-    ctaText: "Daftar Santri Baru (PSB Online)",
+    ctaText: "Daftar Murid Baru (SPMB Online)",
   },
 
   // 7 Satuan Pendidikan Formal Mandiri di bawah naungan YTPAI Raudlatul Muta'allimin Lamongan
@@ -805,7 +805,7 @@ Terima kasih atas kepercayaan yang diberikan kepada Lembaga Bimbingan Belajar.
 Wassalamu’alaikum warahmatullahi wabarakatuh.`,
       whatsapp: "+62 813-5789-2244",
       whatsappClean: "6281357892244",
-      phone: "(0322) 321-789 ext. 109",
+      phone: "0856-4884-7070",
       office: "Gedung Pusat Pembelajaran Digital & LBB Raudlatul Muta'allimin (Kompleks Pusat YTPAI)",
       serviceHours: "Sabtu – Kamis: 07.00 – 14.00 WIB (Hari Jum'at Libur) • Sesi Belajar: 13.40 – Ashar",
       quota: "Terbuka Siswa Luar & Santri Internal",
@@ -842,7 +842,7 @@ Wassalamu’alaikum warahmatullahi wabarakatuh.`,
       role: "Koordinator Pelayanan & Pendaftaran Calon Jamaah",
       whatsapp: "+62 856-0630-7911",
       whatsappClean: "6285606307911",
-      phone: "(0322) 321-789 ext. 108",
+      phone: "0856-4884-7070",
       office: "Gedung Pusat Manasik & Sekretariat KBIHU (Sayap Timur Mushola Pondok Pesantren Putra YTPAI)",
       serviceHours: "Sabtu – Kamis: 07.00 – 14.00 WIB (Jum'at Libur) • Konsultasi Manasik: Ahad Pagi",
       quota: "Terbuka Calon Jamaah Haji & Umrah",
@@ -924,10 +924,10 @@ Wassalamu’alaikum warahmatullahi wabarakatuh.`,
     role: "Koordinator Pelayanan & Pendaftaran Calon Jamaah KBIHU",
     whatsapp: "+62 856-0630-7911",
     whatsappClean: "6285606307911",
-    phone: "(0322) 321-789 (Ext. 108)",
+    phone: "0856-4884-7070",
     email: "kbihu@ytpai-lamongan.sch.id",
     office: "Gedung Pusat Manasik & Sekretariat KBIHU (Sayap Timur Mushola Pondok Pesantren Putra YTPAI)",
-    address: "Jalan Raya Gembong - Babat, Dusun Tegalrejo, Datinawong, Babat, Lamongan",
+    address: "Jalan Raya Babat - Surabaya, Dsn. Tegalrejo, Ds. Datinawong, Kec. Babat, Kab. Lamongan, Prov. Jawa Timur",
     serviceHours: "Sabtu – Kamis: 07.00 – 14.00 WIB (Hari Jum'at Libur)",
     hero: {
       badge: "LAYANAN KHIDMAH KEUMATAN • IZIN RESMI KEMENAG RI",
@@ -998,10 +998,10 @@ Wassalamu’alaikum warahmatullahi wabarakatuh.`,
     role: "Koordinator Pelayanan & Pendaftaran Siswa LBB",
     whatsapp: "+62 813-5789-2244",
     whatsappClean: "6281357892244",
-    phone: "(0322) 321-789 (Ext. 109)",
+    phone: "0856-4884-7070",
     email: "lbb@ytpai-lamongan.sch.id",
     office: "Gedung Pusat Pembelajaran Digital & LBB Raudlatul Muta'allimin (Kompleks Pusat YTPAI)",
-    address: "Jalan Raya Gembong - Babat, Dusun Tegalrejo, Datinawong, Babat, Lamongan",
+    address: "Jalan Raya Babat - Surabaya, Dsn. Tegalrejo, Ds. Datinawong, Kec. Babat, Kab. Lamongan, Prov. Jawa Timur",
     serviceHours: "Sabtu – Kamis: 07.00 – 14.00 WIB (Hari Jum'at Libur) • Sesi Belajar LBB: 13.40 – Ashar",
     highlights: [
       { title: "Laboratorium CBT & Tryout Terjadwal", desc: "Simulasi ujian komputer berstandar nasional dengan analisis skor dan ranking instan" },

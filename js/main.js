@@ -772,7 +772,7 @@ window.openAgendaModal = function(eventId) {
 
       <div style="display:flex; gap:12px; justify-content:flex-end; flex-wrap:wrap; border-top:1px solid var(--color-border); padding-top:16px;">
         <button class="btn btn-outline btn-sm" onclick="closeGenericModal()">Tutup</button>
-        <a href="https://wa.me/6281234567890?text=Assalamu%27alaikum%20Panitia%20YTPAI,%20saya%20ingin%20bertanya%20mengenai%20agenda:%20${encodeURIComponent(agenda.title)}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+        <a href="https://wa.me/6285648847070?text=Assalamu%27alaikum%20Panitia%20YTPAI,%20saya%20ingin%20bertanya%20mengenai%20agenda:%20${encodeURIComponent(agenda.title)}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.04 2c-5.464 0-9.914 4.45-9.914 9.914 0 1.745.455 3.447 1.319 4.953L2 22l5.253-1.378a9.86 9.86 0 0 0 4.787 1.226h.004c5.464 0 9.914-4.45 9.914-9.914 0-2.648-1.031-5.137-2.9-7.006A9.82 9.82 0 0 0 12.04 2zm5.432 12.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
           Konfirmasi Keikutsertaan via WA
         </a>
@@ -3928,7 +3928,22 @@ window.handlePublicTestimonialSubmit = function(e) {
 function populateUnitSelects(db) {
   const select = document.getElementById('selectUnit');
   if (!select) return;
-  select.innerHTML = db.units.map(u => `<option value="${u.name}">${u.name} — [${u.category}]</option>`).join('');
+  // 10 Jenjang Pendidikan Resmi SPMB TA. 2027/2028: KB, TK, MI, MTs, SMP, MA, SMA, MADIN, PONPES PA & PI
+  const spmbUnits = [
+    { value: "KB", label: "KB Raudlatul Muta'allimin", cat: "Pendidikan Anak Usia Dini" },
+    { value: "TK", label: "TK Raudlatul Muta'allimin", cat: "Taman Kanak-Kanak" },
+    { value: "MI", label: "MI Raudlatul Muta'allimin", cat: "Madrasah Ibtidaiyah" },
+    { value: "MTs", label: "MTs Raudlatul Muta'allimin", cat: "Madrasah Tsanawiyah" },
+    { value: "SMP", label: "SMP Raudlatul Muta'allimin", cat: "Sekolah Menengah Pertama" },
+    { value: "MA", label: "MA Raudlatul Muta'allimin", cat: "Madrasah Aliyah" },
+    { value: "SMA", label: "SMA Raudlatul Muta'allimin", cat: "Sekolah Menengah Atas" },
+    { value: "Madin", label: "Madrasah Diniyah Takmiliyah (MDT)", cat: "Pendidikan Diniyah Salafiyah" },
+    { value: "Ponpes PA", label: "Pondok Pesantren Putra", cat: "Santri Mukim Putra 24 Jam" },
+    { value: "Ponpes PI", label: "Pondok Pesantren Putri", cat: "Santri Mukim Putri 24 Jam" }
+  ];
+  select.innerHTML = spmbUnits.map(u => 
+    `<option value="${u.value}" ${u.value === 'MTs' ? 'selected' : ''}>${u.label} — [${u.cat}]</option>`
+  ).join('');
 }
 
 /* INTERACTIVE BOARDING & GENDER HANDLERS */
@@ -4214,90 +4229,74 @@ function renderPsbWaveHeader(db) {
     }
   }
 
-  // Render Visualisasi Jadwal 2 Gelombang di Seksi Informasi
+  // Render Visualisasi Jadwal 3 Tahap SPMB TA. 2027/2028 di Seksi Informasi
   const waveTableBody = document.querySelector('#info .psb-table tbody');
-  if (waveTableBody && waveCfg.wave1 && waveCfg.wave2) {
-    const w1 = waveCfg.wave1;
-    const w2 = waveCfg.wave2;
+  if (waveTableBody) {
     waveTableBody.innerHTML = `
-      <tr style="${activeWaveNum === 1 ? 'background:rgba(251,191,36,0.08); font-weight:600;' : ''}">
+      <tr style="background:rgba(251,191,36,0.08); font-weight:600;">
         <td align="center">1</td>
-        <td><strong>${w1.dateRange || '02 Jan – 31 Mar 2026'}</strong></td>
+        <td><strong style="color:var(--color-gold-dark, #C59B27);">1 November 2026 – 6 Januari 2027</strong></td>
         <td>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            <strong>${w1.name || 'Gelombang I (Jalur Prestasi & Inden)'}</strong>
-            ${activeWaveNum === 1 ? '<span class="psb-wave-badge" style="background:#10B981; color:#FFF; font-size:0.68rem; font-weight:800; padding:2px 7px; border-radius:4px; letter-spacing:0.02em;">🟢 SEDANG DIBUKA</span>' : (activeWaveNum === 2 ? '<span class="psb-wave-badge" style="background:#64748B; color:#FFF; font-size:0.68rem; font-weight:700; padding:2px 6px; border-radius:4px; letter-spacing:0.02em;">SELESAI</span>' : '')}
+            <strong>JALUR INDENT SPMB TA. 2027/2028</strong>
+            <span class="psb-wave-badge" style="background:#10B981; color:#FFF; font-size:0.68rem; font-weight:800; padding:2px 7px; border-radius:4px; letter-spacing:0.02em;">🟢 DIBUKA SEKARANG</span>
           </div>
-          <small style="color:#64748B;">Kuota: ${w1.status || 'Kuota Terbatas'}</small>
+          <small style="color:#64748B;">Pendaftaran awal kuota prioritas kamar asrama &amp; penempatan satuan pilihan</small>
         </td>
         <td align="center">
-          ${activeWaveNum === 1 ? '<a href="#formulir" class="btn btn-primary btn-sm">Daftar Gel. I</a>' : '<span style="font-size:0.75rem; color:#94A3B8; font-weight:600;">Selesai</span>'}
+          <a href="#formulir" class="btn btn-primary btn-sm">Daftar Indent</a>
         </td>
       </tr>
-      <tr style="${activeWaveNum === 2 ? 'background:rgba(56,189,248,0.08); font-weight:600;' : ''}">
+      <tr>
         <td align="center">2</td>
-        <td><strong>${w2.dateRange || '01 Apr – 30 Jun 2026'}</strong></td>
+        <td><strong style="color:var(--color-primary, #0F4C81);">7 Januari – 31 Maret 2027</strong></td>
         <td>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            <strong>${w2.name || 'Gelombang II (Jalur Reguler)'}</strong>
-            ${activeWaveNum === 2 ? '<span class="psb-wave-badge" style="background:#0284C7; color:#FFF; font-size:0.68rem; font-weight:800; padding:2px 7px; border-radius:4px; letter-spacing:0.02em;">🟡 SEDANG DIBUKA</span>' : (activeWaveNum === 1 ? '<span class="psb-wave-badge" style="background:#F59E0B; color:#FFF; font-size:0.68rem; font-weight:700; padding:2px 6px; border-radius:4px; letter-spacing:0.02em;">TAHAP BERIKUTNYA</span>' : '')}
+            <strong>GELOMBANG 1 SPMB TA. 2027/2028</strong>
+            <span class="psb-wave-badge" style="background:#0284C7; color:#FFF; font-size:0.68rem; font-weight:700; padding:2px 6px; border-radius:4px; letter-spacing:0.02em;">TAHAP 1</span>
           </div>
-          <small style="color:#64748B;">Kuota: ${w2.status || 'Pengisian Sisa Kuota'}</small>
+          <small style="color:#64748B;">Pendaftaran reguler tahap pertama seluruh 10 jenjang pendidikan</small>
         </td>
         <td align="center">
-          ${activeWaveNum === 2 ? '<a href="#formulir" class="btn btn-primary btn-sm" style="background:#0284C7;">Daftar Gel. II</a>' : (activeWaveNum === 1 ? '<span style="font-size:0.75rem; color:#64748B; font-weight:600;">Segera Dibuka</span>' : '<span style="font-size:0.75rem; color:#94A3B8; font-weight:600;">Ditutup</span>')}
+          <a href="#formulir" class="btn btn-primary btn-sm">Daftar Gel. 1</a>
         </td>
       </tr>
       <tr>
         <td align="center">3</td>
-        <td>15-01-2026</td>
-        <td>Jadwal Tryout & Simulasi Tes Potensi Akademik Berbasis CBT</td>
-        <td align="center"><a href="#cara" class="btn btn-outline btn-sm">Lihat Alur</a></td>
-      </tr>
-      <tr>
-        <td align="center">4</td>
-        <td>01-02-2026</td>
-        <td>Petunjuk Teknis Jalur Beasiswa Tahfidz Sanad & Olimpiade Sains</td>
-        <td align="center"><a href="#biaya" class="btn btn-outline btn-sm">Lihat Beasiswa</a></td>
+        <td><strong style="color:var(--color-primary-dark, #0A2540);">1 April – 8 Juli 2027</strong></td>
+        <td>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <strong>GELOMBANG 2 SPMB TA. 2027/2028</strong>
+            <span class="psb-wave-badge" style="background:#64748B; color:#FFF; font-size:0.68rem; font-weight:700; padding:2px 6px; border-radius:4px; letter-spacing:0.02em;">TAHAP 2</span>
+          </div>
+          <small style="color:#64748B;">Pendaftaran reguler tahap kedua penutupan kuota tahun ajaran 2027/2028</small>
+        </td>
+        <td align="center">
+          <a href="#formulir" class="btn btn-primary btn-sm">Daftar Gel. 2</a>
+        </td>
       </tr>
     `;
   }
 
   // Update Conversion Booster Card (Panel Status Gelombang & Kuota Asrama)
   const boosterW1Title = document.getElementById('psbBoosterWave1Title');
-  if (boosterW1Title) boosterW1Title.textContent = w1.name || 'Gelombang I (Prioritas Utama)';
+  if (boosterW1Title) boosterW1Title.textContent = 'Gelombang 1 (Reguler Utama)';
   const boosterW1Date = document.getElementById('psbBoosterWave1Date');
-  if (boosterW1Date) boosterW1Date.textContent = w1.dateRange || '02 Jan – 31 Mar 2026';
+  if (boosterW1Date) boosterW1Date.textContent = '7 Januari – 31 Maret 2027';
   const boosterW1Badge = document.getElementById('psbBoosterWave1Badge');
   if (boosterW1Badge) {
-    if (activeWaveNum === 1) {
-      boosterW1Badge.textContent = 'Buka';
-      boosterW1Badge.className = 'psb-wave-badge-active';
-    } else if (activeWaveNum === 2) {
-      boosterW1Badge.textContent = 'Selesai';
-      boosterW1Badge.className = 'psb-wave-badge-secondary';
-    } else {
-      boosterW1Badge.textContent = 'Tutup';
-      boosterW1Badge.className = 'psb-wave-badge-secondary';
-    }
+    boosterW1Badge.textContent = 'Tahap 1';
+    boosterW1Badge.className = 'psb-wave-badge-active';
   }
 
   const boosterW2Title = document.getElementById('psbBoosterWave2Title');
-  if (boosterW2Title) boosterW2Title.textContent = w2.name || 'Gelombang II (Sisa Kuota)';
+  if (boosterW2Title) boosterW2Title.textContent = 'Gelombang 2 (Penutupan Kuota)';
   const boosterW2Date = document.getElementById('psbBoosterWave2Date');
-  if (boosterW2Date) boosterW2Date.textContent = w2.dateRange || '01 Apr – 30 Jun 2026';
+  if (boosterW2Date) boosterW2Date.textContent = '1 April – 8 Juli 2027';
   const boosterW2Badge = document.getElementById('psbBoosterWave2Badge');
   if (boosterW2Badge) {
-    if (activeWaveNum === 2) {
-      boosterW2Badge.textContent = 'Buka';
-      boosterW2Badge.className = 'psb-wave-badge-active';
-    } else if (activeWaveNum === 1) {
-      boosterW2Badge.textContent = 'Next';
-      boosterW2Badge.className = 'psb-wave-badge-secondary';
-    } else {
-      boosterW2Badge.textContent = 'Tutup';
-      boosterW2Badge.className = 'psb-wave-badge-secondary';
-    }
+    boosterW2Badge.textContent = 'Tahap 2';
+    boosterW2Badge.className = 'psb-wave-badge-secondary';
   }
 }
 
@@ -4561,7 +4560,7 @@ function showRegistrationReceipt(data) {
           YAYASAN TAMAN PENDIDIKAN AGAMA ISLAM RAUDLATUL MUTA'ALLIMIN
         </div>
         <div style="font-size:0.75rem; color:var(--color-text-muted);">
-          Dusun Tegalrejo, Desa Datinawong, Kec. Babat, Lamongan • Hotline: (0322) 321-789
+          Dusun Tegalrejo, Desa Datinawong, Kec. Babat, Lamongan • WhatsApp / Telepon: 0856-4884-7070
         </div>
         <div class="receipt-reg-number">${data.regNumber}</div>
         <div style="font-size:0.8rem; color:var(--color-success); font-weight:700;">
@@ -4714,7 +4713,7 @@ window.handleAnnouncementSearch = function(e) {
           <p>Kombinasi <strong>Nomor Registrasi (${regQuery})</strong> dan <strong>Tanggal Lahir</strong> tidak cocok dengan data pendaftaran kami.<br>
           Pastikan Anda memasukkan nomor registrasi dan tanggal lahir sesuai bukti pendaftaran Anda.</p>
           <div style="margin-top:16px;">
-            <a href="https://wa.me/6281234567890?text=Assalamu%27alaikum%20Panitia%20PSB,%20saya%20kesulitan%20mengecek%20pengumuman%20dengan%20No%20Registrasi:%20${regQuery}" target="_blank" class="btn btn-outline btn-sm" style="color:#B91C1C; border-color:#FCA5A5;">
+            <a href="https://wa.me/6285648847070?text=Assalamu%27alaikum%20Panitia%20PSB,%20saya%20kesulitan%20mengecek%20pengumuman%20dengan%20No%20Registrasi:%20${regQuery}" target="_blank" class="btn btn-outline btn-sm" style="color:#B91C1C; border-color:#FCA5A5;">
               💬 Bantuan Panitia PSB via WhatsApp
             </a>
           </div>
@@ -4740,7 +4739,7 @@ window.handleAnnouncementSearch = function(e) {
               <h4 class="result-banner-title">
                 <span>🎉</span> SELAMAT! ANANDA DINYATAKAN DITERIMA
               </h4>
-              <p class="result-banner-sub">Lulus Seleksi Penerimaan Santri Baru YTPAI Raudlatul Muta'allimin Lamongan TP. 2026/2027</p>
+              <p class="result-banner-sub">Lulus Seleksi Penerimaan Santri Baru YTPAI Raudlatul Muta'allimin Lamongan TP. 2027/2028</p>
             </div>
             <span class="badge-accepted-pill">LULUS SELEKSI</span>
           </div>
@@ -4801,7 +4800,7 @@ window.handleAnnouncementSearch = function(e) {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                 <span>Cetak Surat Keputusan Penerimaan Resmi (SKPSB)</span>
               </button>
-              <a href="https://wa.me/6281234567890?text=Assalamu%27alaikum%20Panitia%20PPDB%20YTPAI%20Lamongan,%20Alhamdulillah%20ananda%20*${encodeURIComponent(lead.fullName)}*%20dengan%20No%20Reg%20*${lead.regNumber}*%20telah%20DINYATAKAN%20DITERIMA%20pada%20*${encodeURIComponent(lead.unit)}*.%20Kami%20bermaksud%20konfirmasi%20daftar%20ulang." target="_blank" class="btn-confirm-wa">
+              <a href="https://wa.me/6285648847070?text=Assalamu%27alaikum%20Panitia%20PPDB%20YTPAI%20Lamongan,%20Alhamdulillah%20ananda%20*${encodeURIComponent(lead.fullName)}*%20dengan%20No%20Reg%20*${lead.regNumber}*%20telah%20DINYATAKAN%20DITERIMA%20pada%20*${encodeURIComponent(lead.unit)}*.%20Kami%20bermaksud%20konfirmasi%20daftar%20ulang." target="_blank" class="btn-confirm-wa">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
                 <span>Konfirmasi Daftar Ulang (WhatsApp Panitia)</span>
               </a>
@@ -4831,7 +4830,7 @@ window.handleAnnouncementSearch = function(e) {
               <strong>Waktu Sidang Kelulusan:</strong> Pengumuman hasil akhir diterbitkan secara berkala setiap hari Sabtu pukul 14.00 WIB.
             </div>
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <a href="https://wa.me/6281234567890?text=Assalamu%27alaikum%20Panitia%20PPDB,%20mohon%20informasi%20kelanjutan%20seleksi%20No%20Reg:%20${lead.regNumber}%20atas%20nama%20${encodeURIComponent(lead.fullName)}" target="_blank" class="btn btn-outline btn-sm" style="color:#1D4ED8; border-color:#93C5FD;">
+              <a href="https://wa.me/6285648847070?text=Assalamu%27alaikum%20Panitia%20PPDB,%20mohon%20informasi%20kelanjutan%20seleksi%20No%20Reg:%20${lead.regNumber}%20atas%20nama%20${encodeURIComponent(lead.fullName)}" target="_blank" class="btn btn-outline btn-sm" style="color:#1D4ED8; border-color:#93C5FD;">
                 💬 Tanyakan Status Seleksi ke Panitia
               </a>
             </div>
@@ -4844,13 +4843,13 @@ window.handleAnnouncementSearch = function(e) {
           <div style="font-size:2rem; margin-bottom:6px;">📋</div>
           <h4 style="color:#9F1239;">Informasi Hasil Seleksi Santri Baru</h4>
           <p style="color:#881337; margin-bottom:14px;">
-            Mohon maaf, berdasarkan sidang penentuan kuota penerimaan tahun ajaran 2026/2027, berkas calon santri atas nama <strong>${lead.fullName}</strong> (${lead.regNumber}) saat ini <strong>belum dapat diterima</strong> pada satuan ${lead.unit} dikarenakan kapasitas kuota asrama/kelas reguler telah terpenuhi.
+            Mohon maaf, berdasarkan sidang penentuan kuota penerimaan tahun ajaran 2027/2028, berkas calon santri atas nama <strong>${lead.fullName}</strong> (${lead.regNumber}) saat ini <strong>belum dapat diterima</strong> pada satuan ${lead.unit} dikarenakan kapasitas kuota asrama/kelas reguler telah terpenuhi.
           </p>
           <p style="font-size:0.84rem; color:#9F1239;">
             Orang tua/wali dapat berkonsultasi mengenai opsi daftar tunggu (Cadangan Gelombang II) atau pengalihan satuan pendidikan yang masih tersedia melalui Sekretariat Panitia.
           </p>
           <div style="margin-top:16px;">
-            <a href="https://wa.me/6281234567890?text=Assalamu%27alaikum%20Panitia%20PPDB,%20saya%20wali%20dari%20${encodeURIComponent(lead.fullName)}%20(${lead.regNumber})%20ingin%20berkonsultasi%20terkait%20kuota%20cadangan/alternatif." target="_blank" class="btn btn-outline btn-sm" style="color:#9F1239; border-color:#FDA4AF;">
+            <a href="https://wa.me/6285648847070?text=Assalamu%27alaikum%20Panitia%20PPDB,%20saya%20wali%20dari%20${encodeURIComponent(lead.fullName)}%20(${lead.regNumber})%20ingin%20berkonsultasi%20terkait%20kuota%20cadangan/alternatif." target="_blank" class="btn btn-outline btn-sm" style="color:#9F1239; border-color:#FDA4AF;">
               💬 Hubungi Sekretariat Panitia
             </a>
           </div>
@@ -4879,7 +4878,7 @@ window.handleAnnouncementSearch = function(e) {
               <strong>Status Verifikasi:</strong> Menunggu peninjauan dokumen berkas oleh Panitia Penerimaan Santri Baru.
             </div>
             <div>
-              <a href="https://wa.me/6281234567890?text=Assalamu%27alaikum%20Panitia%20PPDB,%20saya%20sudah%20mendaftar%20dengan%20No%20Reg:%20${lead.regNumber}%20atas%20nama%20${encodeURIComponent(lead.fullName)}.%20Mohon%20verifikasi%20berkasnya." target="_blank" class="btn btn-outline btn-sm" style="color:#B45309; border-color:#FCD34D;">
+              <a href="https://wa.me/6285648847070?text=Assalamu%27alaikum%20Panitia%20PPDB,%20saya%20sudah%20mendaftar%20dengan%20No%20Reg:%20${lead.regNumber}%20atas%20nama%20${encodeURIComponent(lead.fullName)}.%20Mohon%20verifikasi%20berkasnya." target="_blank" class="btn btn-outline btn-sm" style="color:#B45309; border-color:#FCD34D;">
                 💬 Konfirmasi Pengiriman Berkas ke WhatsApp Panitia
               </a>
             </div>
@@ -4963,7 +4962,7 @@ window.printAcceptanceLetter = function(regNumber) {
           <div class="kop-yayasan">RAUDLATUL MUTA'ALLIMIN LAMONGAN</div>
           <div class="kop-alamat">
             Sekretariat: Dusun Tegalrejo, Desa Datinawong, Kec. Babat, Kab. Lamongan, Jawa Timur 62271<br>
-            Hotline PPDB: (0322) 321-789 • Website: www.ytpai-mutaallimin.sch.id • Email: info@ytpai-mutaallimin.sch.id
+            Informasi Pendaftaran (WhatsApp / Telepon): 0856-4884-7070 • Website: www.ytpai-mutaallimin.sch.id • Email: info@ytpai-mutaallimin.sch.id
           </div>
         </div>
         <img src="assets/logo.png" alt="Logo" class="kop-logo" style="visibility:hidden;">
@@ -4975,7 +4974,7 @@ window.printAcceptanceLetter = function(regNumber) {
       </div>
 
       <p style="text-align:justify; margin-bottom:8px;">
-        <em>Bismillaahirrohmaanirrohiim.</em> Panitia Penerimaan Santri Baru (PPDB) Yayasan Taman Pendidikan Agama Islam Raudlatul Muta'allimin Lamongan Tahun Pelajaran 2026/2027, berdasarkan hasil verifikasi berkas administrasi dan sidang seleksi calon santri, menerangkan bahwa:
+        <em>Bismillaahirrohmaanirrohiim.</em> Panitia Penerimaan Santri Baru (PPDB) Yayasan Taman Pendidikan Agama Islam Raudlatul Muta'allimin Lamongan Tahun Pelajaran 2027/2028, berdasarkan hasil verifikasi berkas administrasi dan sidang seleksi calon santri, menerangkan bahwa:
       </p>
 
       <div style="display:flex; gap:16px; align-items:flex-start;">
@@ -5966,7 +5965,7 @@ window.openUnitModal = function(unitId, initialTabId) {
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
             </div>
             <div>
-              <h4 class="unit-psb-title">Penerimaan Santri Baru (PSB) 2026/2027</h4>
+              <h4 class="unit-psb-title">Penerimaan Murid Baru (SPMB) TA. 2027/2028</h4>
               <p class="unit-psb-subtitle">Online & Sekretariat Yayasan, Babat Lamongan</p>
             </div>
           </div>
@@ -5992,7 +5991,7 @@ window.openUnitModal = function(unitId, initialTabId) {
   }
 
   // WhatsApp Pre-filled message
-  const waPhone = unit.whatsappClean || (db.meta && db.meta.phoneClean) || '6281234567890';
+  const waPhone = unit.whatsappClean || (db.meta && db.meta.phoneClean) || '6285648847070';
   const waText = encodeURIComponent(`Assalamu'alaikum Warahmatullahi Wabarakatuh. Saya ingin berkonsultasi mengenai informasi dan fasilitas di ${unit.name}...`);
   const waUrl = `https://wa.me/${waPhone}?text=${waText}`;
 
@@ -7474,7 +7473,7 @@ function renderPopupContentFromData(data) {
   if (dateEl) dateEl.textContent = data.date || 'Terkini';
   if (headEl) headEl.textContent = data.title || 'Warta Resmi YTPAI Raudlatul Muta\'allimin Lamongan';
   if (excEl) excEl.textContent = data.excerpt || '';
-  if (tag1El) tag1El.textContent = data.tag1 || 'PSB 2026/2027 Terbuka';
+  if (tag1El) tag1El.textContent = data.tag1 || 'SPMB TA. 2027/2028 Terbuka';
   if (tag2El) tag2El.textContent = data.tag2 || 'Tahfidz & Sains Unggul';
   if (btnTextEl) btnTextEl.textContent = data.actionText || 'Baca Selengkapnya';
 }
@@ -7494,7 +7493,7 @@ function getActivePopupData(db) {
       excerpt: cfg.excerpt || '',
       actionText: cfg.actionText || 'Baca Selengkapnya',
       actionLink: cfg.actionLink || '#berita',
-      tag1: cfg.tag1 || 'PSB 2026/2027 Terbuka',
+      tag1: cfg.tag1 || 'SPMB TA. 2027/2028 Terbuka',
       tag2: cfg.tag2 || 'Tahfidz & Sains Unggul'
     };
   }
@@ -7515,7 +7514,7 @@ function getActivePopupData(db) {
     excerpt: topNews.excerpt || (topNews.content ? topNews.content.substring(0, 150) + '...' : ''),
     actionText: 'Baca Selengkapnya',
     actionLink: '#berita',
-    tag1: cfg.tag1 || 'PSB 2026/2027 Terbuka',
+    tag1: cfg.tag1 || 'SPMB TA. 2027/2028 Terbuka',
     tag2: cfg.tag2 || 'Tahfidz & Sains Unggul'
   };
 }
@@ -7601,7 +7600,7 @@ window.openLatestInfoPopup = function(newsId) {
         excerpt: item.excerpt || (item.content ? item.content.substring(0, 150) + '...' : ''),
         actionText: 'Baca Selengkapnya',
         actionLink: '#berita',
-        tag1: 'PSB 2026/2027 Terbuka',
+        tag1: 'SPMB TA. 2027/2028 Terbuka',
         tag2: 'Tahfidz & Sains Unggul'
       };
     }
