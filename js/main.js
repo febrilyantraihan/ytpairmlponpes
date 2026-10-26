@@ -2527,7 +2527,7 @@ window.openNewsModal = function(newsId) {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             Daftar Santri Baru (PSB) →
           </a>
-          <a href="https://wa.me/6285704332952?text=Halo%20Humas%20YTPAI%20Raudlatul%20Mutaallimin,%20saya%20ingin%20berkonsultasi%20terkait%20warta:%20${encodeURIComponent(item.title)}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" style="display:inline-flex; align-items:center; gap:6px;">
+          <a href="https://wa.me/6285648847070?text=Halo%20Humas%20YTPAI%20Raudlatul%20Mutaallimin,%20saya%20ingin%20berkonsultasi%20terkait%20warta:%20${encodeURIComponent(item.title)}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" style="display:inline-flex; align-items:center; gap:6px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.04 2c-5.464 0-9.914 4.45-9.914 9.914 0 1.745.455 3.447 1.319 4.953L2 22l5.253-1.378a9.86 9.86 0 0 0 4.787 1.226h.004c5.464 0 9.914-4.45 9.914-9.914 0-2.648-1.031-5.137-2.9-7.006A9.82 9.82 0 0 0 12.04 2zm5.432 12.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
             Tanya Humas
           </a>
@@ -3999,14 +3999,16 @@ function renderPsbWaveHeader(db) {
   if (!waveCfg) return;
 
   const activeWaveNum = (typeof waveCfg.activeWave !== 'undefined') ? waveCfg.activeWave : 1;
-  const isWave2Active = (activeWaveNum === 2);
   const isClosed = (activeWaveNum === 0 || waveCfg.isOpen === false);
 
-  const w1 = waveCfg.wave1 || { name: 'Gelombang I (Jalur Prestasi & Inden)', dateRange: '02 Jan – 31 Mar 2026', status: 'Kuota Terbatas', isOpen: true };
-  const w2 = waveCfg.wave2 || { name: 'Gelombang II (Jalur Reguler)', dateRange: '01 Apr – 30 Jun 2026', status: 'Pengisian Sisa Kuota', isOpen: false };
+  const wIndent = waveCfg.indent || { name: 'Jalur Indent', shortName: 'INDENT', dateRange: '01 Nov 2026 – 06 Jan 2027', status: 'Segera Dibuka', isOpen: true };
+  const w1 = waveCfg.wave1 || { name: 'Gelombang 1', shortName: 'GELOMBANG 1', dateRange: '07 Jan – 31 Mar 2027', status: 'Tahap 1', isOpen: false };
+  const w2 = waveCfg.wave2 || { name: 'Gelombang 2', shortName: 'GELOMBANG 2', dateRange: '01 Apr – 08 Jul 2027', status: 'Tahap 2', isOpen: false };
 
   // Ambil objek gelombang yang sedang aktif
-  const currentWave = isWave2Active ? w2 : w1;
+  let currentWave = wIndent;
+  if (activeWaveNum === 2) currentWave = w1;
+  else if (activeWaveNum === 3) currentWave = w2;
 
   const academicYearEl = document.getElementById('psbAcademicYearBadge');
   if (academicYearEl && waveCfg.academicYear) {
@@ -4025,7 +4027,37 @@ function renderPsbWaveHeader(db) {
     }
   }
 
-  // 1. UPDATE GELOMBANG I DI BADGE
+  // 1. UPDATE JALUR INDENT DI BADGE
+  const cardIndent = document.getElementById('psbWaveCardIndent');
+  const titleIndent = document.getElementById('psbWaveIndentTitle');
+  const statusIndent = document.getElementById('psbWaveIndentStatusText');
+  const dateIndent = document.getElementById('psbWaveIndentDateText');
+  if (cardIndent) {
+    if (activeWaveNum === 1) {
+      cardIndent.classList.remove('dimmed');
+      cardIndent.classList.add('active');
+    } else {
+      cardIndent.classList.add('dimmed');
+      cardIndent.classList.remove('active');
+    }
+  }
+  if (titleIndent) {
+    let ti = (wIndent.shortName || wIndent.name || 'INDENT').toUpperCase();
+    if (!ti.endsWith(':')) ti += ':';
+    titleIndent.textContent = ti;
+  }
+  if (dateIndent) dateIndent.textContent = wIndent.dateRange || '01 Nov 2026 – 06 Jan 2027';
+  if (statusIndent) {
+    if (activeWaveNum === 1) {
+      statusIndent.textContent = (wIndent.status || 'SEGERA BUKA').toUpperCase();
+      statusIndent.className = 'psb-period-status';
+    } else {
+      statusIndent.textContent = 'SELESAI';
+      statusIndent.className = 'psb-period-status status-subtle';
+    }
+  }
+
+  // 2. UPDATE GELOMBANG 1 DI BADGE
   const card1 = document.getElementById('psbWaveCard1');
   const title1 = document.getElementById('psbWave1Title');
   const status1 = document.getElementById('psbWave1StatusText');
@@ -4033,7 +4065,7 @@ function renderPsbWaveHeader(db) {
   const quota1 = document.getElementById('psbWave1QuotaText');
 
   if (card1) {
-    if (activeWaveNum === 1) {
+    if (activeWaveNum === 2) {
       card1.classList.remove('dimmed');
       card1.classList.add('active');
     } else {
@@ -4042,26 +4074,26 @@ function renderPsbWaveHeader(db) {
     }
   }
   if (title1) {
-    let t1 = (w1.shortName || w1.name || 'GELOMBANG I').toUpperCase();
+    let t1 = (w1.shortName || w1.name || 'GELOMBANG 1').toUpperCase();
     if (!t1.endsWith(':')) t1 += ':';
     title1.textContent = t1;
   }
-  if (date1) date1.textContent = w1.dateRange || '02 Jan – 31 Mar 2026';
-  if (quota1) quota1.textContent = w1.status || 'Kuota Terbatas';
+  if (date1) date1.textContent = w1.dateRange || '07 Jan – 31 Mar 2027';
+  if (quota1) quota1.textContent = w1.status || 'Tahap 1';
   if (status1) {
-    if (activeWaveNum === 1) {
-      status1.textContent = (w1.status || 'KUOTA TERBATAS').toUpperCase();
+    if (activeWaveNum === 2) {
+      status1.textContent = (w1.status || 'SEDANG DIBUKA').toUpperCase();
       status1.className = 'psb-period-status';
-    } else if (activeWaveNum === 2) {
-      status1.textContent = 'SELESAI';
+    } else if (activeWaveNum === 1) {
+      status1.textContent = 'TAHAP 1';
       status1.className = 'psb-period-status status-subtle';
     } else {
-      status1.textContent = 'DITUTUP';
+      status1.textContent = 'SELESAI';
       status1.className = 'psb-period-status status-subtle';
     }
   }
 
-  // 2. UPDATE GELOMBANG II DI BADGE
+  // 3. UPDATE GELOMBANG 2 DI BADGE
   const card2 = document.getElementById('psbWaveCard2');
   const title2 = document.getElementById('psbWave2Title');
   const status2 = document.getElementById('psbWave2StatusText');
@@ -4069,7 +4101,7 @@ function renderPsbWaveHeader(db) {
   const quota2 = document.getElementById('psbWave2QuotaText');
 
   if (card2) {
-    if (activeWaveNum === 2) {
+    if (activeWaveNum === 3) {
       card2.classList.remove('dimmed');
       card2.classList.add('active');
     } else {
@@ -4078,21 +4110,18 @@ function renderPsbWaveHeader(db) {
     }
   }
   if (title2) {
-    let t2 = (w2.shortName || w2.name || 'GELOMBANG II').toUpperCase();
+    let t2 = (w2.shortName || w2.name || 'GELOMBANG 2').toUpperCase();
     if (!t2.endsWith(':')) t2 += ':';
     title2.textContent = t2;
   }
-  if (date2) date2.textContent = w2.dateRange || '01 Apr – 30 Jun 2026';
-  if (quota2) quota2.textContent = w2.status || 'Pengisian Sisa Kuota';
+  if (date2) date2.textContent = w2.dateRange || '01 Apr – 08 Jul 2027';
+  if (quota2) quota2.textContent = w2.status || 'Tahap 2';
   if (status2) {
-    if (activeWaveNum === 2) {
+    if (activeWaveNum === 3) {
       status2.textContent = (w2.status || 'SEDANG DIBUKA').toUpperCase();
       status2.className = 'psb-period-status';
-    } else if (activeWaveNum === 1) {
-      status2.textContent = 'TAHAP BERIKUTNYA';
-      status2.className = 'psb-period-status status-subtle';
     } else {
-      status2.textContent = 'DITUTUP';
+      status2.textContent = 'TAHAP 2';
       status2.className = 'psb-period-status status-subtle';
     }
   }
@@ -4139,7 +4168,7 @@ function renderPsbWaveHeader(db) {
               <span class="psb-chip-icon">💬</span>
               <div class="psb-chip-body">
                 <span class="psb-chip-title">Layanan Panitia</span>
-                <span class="psb-chip-desc"><a href="https://wa.me/6285704332952" target="_blank" style="color:#0F4C81; font-weight:700;">WhatsApp Panitia PSB / SPMB (0857-0433-2952)</a></span>
+                <span class="psb-chip-desc"><a href="https://wa.me/6285648847070" target="_blank" style="color:#0F4C81; font-weight:700;">WhatsApp Panitia SPMB (0856-4884-7070)</a></span>
               </div>
             </div>
           </div>
@@ -4585,10 +4614,10 @@ function showRegistrationReceipt(data) {
   const dbCurrent = (typeof getDB === 'function') ? getDB() : null;
     const panitiaWaClean = (dbCurrent && dbCurrent.meta && dbCurrent.meta.whatsappClean)
       ? dbCurrent.meta.whatsappClean
-      : ((dbCurrent && dbCurrent.meta && dbCurrent.meta.whatsapp) ? dbCurrent.meta.whatsapp.replace(/[^0-9]/g, '') : '6285704332952');
+      : ((dbCurrent && dbCurrent.meta && dbCurrent.meta.whatsapp) ? dbCurrent.meta.whatsapp.replace(/[^0-9]/g, '') : '6285648847070');
 
     const formattedWaMsg = encodeURIComponent(
-      `*KONFIRMASI PENDAFTARAN SANTRI BARU (PPDB 2026/2027)*\n` +
+      `*KONFIRMASI PENDAFTARAN MURID BARU (SPMB T.A. 2027/2028)*\n` +
       `*YTPAI RAUDLATUL MUTA'ALLIMIN LAMONGAN*\n\n` +
       `Assalamu'alaikum Warahmatullahi Wabarakatuh,\n` +
       `Kepada Yth. Panitia PPDB YTPAI Lamongan,\n\n` +
@@ -5971,7 +6000,7 @@ window.openUnitModal = function(unitId, initialTabId) {
   let ctaButtonsHtml = '';
   let extraBtn = '';
   if (isPoskestren) {
-    const waMedisUrl = `https://wa.me/${unit.whatsappClean || '6285704332952'}?text=${encodeURIComponent("Assalamu'alaikum Warahmatullahi Wabarakatuh. Saya ingin berkonsultasi mengenai fasilitas dan layanan kesehatan Poskestren YTPAI Raudlatul Muta'allimin...")}`;
+    const waMedisUrl = `https://wa.me/${unit.whatsappClean || '6285648847070'}?text=${encodeURIComponent("Assalamu'alaikum Warahmatullahi Wabarakatuh. Saya ingin berkonsultasi mengenai fasilitas dan layanan kesehatan Poskestren YTPAI Raudlatul Muta'allimin...")}`;
     ctaButtonsHtml = `
       <a href="${waMedisUrl}" target="_blank" rel="noopener" class="btn-unit-primary-cta" style="background:#059669; border-color:#059669; color:#FFFFFF;">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.04 2c-5.464 0-9.914 4.45-9.914 9.914 0 1.745.455 3.447 1.319 4.953L2 22l5.253-1.378a9.86 9.86 0 0 0 4.787 1.226h.004c5.464 0 9.914-4.45 9.914-9.914 0-2.648-1.031-5.137-2.9-7.006A9.82 9.82 0 0 0 12.04 2zm5.432 12.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
@@ -6691,12 +6720,12 @@ window.openFacilityDetail = function(identifier, fallbackDesc) {
       <div class="facility-dialog-footer">
         <div class="dialog-footer-actions">
           ${fac.id === 'fac-poskestren' ? `
-            <a href="https://wa.me/6285704332952?text=Assalamu%27alaikum%20Petugas%20Medis%20Poskestren%20YTPAI%20Lamongan,%20saya%20ingin%20berkonsultasi%20seputar%20fasilitas%20dan%20penanganan%20kesehatan%20santri..." target="_blank" class="btn btn-outline btn-sm dialog-wa-btn" style="color:#059669; border-color:#10B981;">
+            <a href="https://wa.me/6285648847070?text=Assalamu%27alaikum%20Petugas%20Medis%20Poskestren%20YTPAI%20Lamongan,%20saya%20ingin%20berkonsultasi%20seputar%20fasilitas%20dan%20penanganan%20kesehatan%20santri..." target="_blank" class="btn btn-outline btn-sm dialog-wa-btn" style="color:#059669; border-color:#10B981;">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.04 2c-5.464 0-9.914 4.45-9.914 9.914 0 1.745.455 3.447 1.319 4.953L2 22l5.253-1.378a9.86 9.86 0 0 0 4.787 1.226h.004c5.464 0 9.914-4.45 9.914-9.914 0-2.648-1.031-5.137-2.9-7.006A9.82 9.82 0 0 0 12.04 2zm5.432 12.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
               Hubungi Petugas Medis (WA)
             </a>
           ` : `
-            <a href="https://wa.me/${(db.yayasan && db.yayasan.wa ? db.yayasan.wa.replace(/[^0-9]/g, '') : '6285704332952')}?text=Halo%20Humas%20YTPAI%20Lamongan,%20saya%20ingin%20berkonsultasi%20dan%20menjadwalkan%20kunjungan/survei%20ke%20sarana%20*${encodeURIComponent(fac.name)}*..." target="_blank" class="btn btn-outline btn-sm dialog-wa-btn">
+            <a href="https://wa.me/${(db.yayasan && db.yayasan.wa ? db.yayasan.wa.replace(/[^0-9]/g, '') : '6285648847070')}?text=Halo%20Humas%20YTPAI%20Lamongan,%20saya%20ingin%20berkonsultasi%20dan%20menjadwalkan%20kunjungan/survei%20ke%20sarana%20*${encodeURIComponent(fac.name)}*..." target="_blank" class="btn btn-outline btn-sm dialog-wa-btn">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.04 2c-5.464 0-9.914 4.45-9.914 9.914 0 1.745.455 3.447 1.319 4.953L2 22l5.253-1.378a9.86 9.86 0 0 0 4.787 1.226h.004c5.464 0 9.914-4.45 9.914-9.914 0-2.648-1.031-5.137-2.9-7.006A9.82 9.82 0 0 0 12.04 2zm5.432 12.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
               Jadwalkan Kunjungan Survei
             </a>
@@ -7402,7 +7431,7 @@ Nama / Hamba Allah:
 Asal Alumni / Wali Santri / Jamaah: 
 Mohon bimbingan konfirmasi dan titip doa mahabbah. Terima kasih.`;
 
-  const phone = '6285704332952';
+  const phone = '6285648847070';
   btn.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 }
 

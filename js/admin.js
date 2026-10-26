@@ -3573,7 +3573,7 @@ function renderTabLeads(db, container) {
 
             <div class="form-group" style="margin:0;">
               <label class="form-label" style="font-weight:800; font-size:0.82rem; color:#0A2540;">📅 Tahun Ajaran Resmi (T.A.) *</label>
-              <input type="text" id="adminWaveAcademicYear" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.academicYear) || 'T.A. 2026/2027 (1447–1448 H)').replace(/"/g, '&quot;')}" placeholder="Contoh: T.A. 2026/2027 (1447–1448 H)" required style="border-radius:6px; font-weight:700;">
+              <input type="text" id="adminWaveAcademicYear" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.academicYear) || 'T.A. 2027/2028 (1447–1448 H)').replace(/"/g, '&quot;')}" placeholder="Contoh: T.A. 2027/2028 (1447–1448 H)" required style="border-radius:6px; font-weight:700;">
               <small style="color:#64748B; font-size:0.72rem;">Format kalender akademik nasional & penanggalan hijriyah.</small>
             </div>
           </div>
@@ -5129,7 +5129,7 @@ window.savePsbWaveConfigForm = function() {
   const wave2Announce = document.getElementById('adminWave2Announcement');
 
   const activeWaveVal = activeWaveSelect ? parseInt(activeWaveSelect.value, 10) : 1;
-  const academicYearVal = yearInput ? (yearInput.value.trim() || 'T.A. 2026/2027 (1447–1448 H)') : 'T.A. 2026/2027 (1447–1448 H)';
+  const academicYearVal = yearInput ? (yearInput.value.trim() || 'T.A. 2027/2028 (1447–1448 H)') : 'T.A. 2027/2028 (1447–1448 H)';
 
   const wave1Obj = {
     name: wave1Name ? (wave1Name.value.trim() || 'Gelombang I (Jalur Prestasi & Inden)') : 'Gelombang I (Jalur Prestasi & Inden)',
@@ -11656,7 +11656,7 @@ function renderTabSettings(db, container) {
             <span>☎️</span>
             <span class="settings-contact-box-title">Telepon Kantor / Sekretariat</span>
           </div>
-          <input type="text" id="setPhone" class="form-input" value="${db.meta.phone}" placeholder="(0322) 321-789" style="font-weight:700;">
+          <input type="text" id="setPhone" class="form-input" value="${db.meta.phone}" placeholder="0856-4884-7070" style="font-weight:700;">
           <small style="color:#64748B; font-size:0.72rem; margin-top:4px; display:block;">Buka Sabtu s.d. Kamis 07.00 - 14.00 WIB</small>
         </div>
 

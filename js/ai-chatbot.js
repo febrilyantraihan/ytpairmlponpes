@@ -498,7 +498,7 @@ PANDUAN PERSONALITAS, ADAB & GAYA BICARA (SANGAT MANUSIAWI):
      * Buatlah tampilan pesan bersih, rapi, santun, dan sangat nyaman dibaca tanpa ada simbol pagar '#'.
    - HINDARI menyusun format formulir kaku atau daftar inventaris kaku jika tidak diminta. Jangan menulis kalimat mekanis seperti: "kompleks yayasan beralamat lengkap di: 📍 Alamat Kompleks: ... Untuk memudahkan rute perjalanan... * Google Maps...".
    - Bicaralah dengan kalimat mengalir alami yang enak dibaca. Contoh saat ditanya letak/lokasi:
-     "Sekolah formal dan **Pondok Pesantren Raudlatul Muta'allimin Tegalrejo** di bawah naungan **YTPAI Raudlatul Muta'allimin Lamongan** berada di **Jalan Raya Gembong - Surabaya, Dusun Tegalrejo, Desa Datinawong, Kec. Babat, Kab. Lamongan, Jawa Timur** 😊
+     "Sekolah formal dan **Pondok Pesantren Raudlatul Muta'allimin Tegalrejo** di bawah naungan **YTPAI Raudlatul Muta'allimin Lamongan** berada di **Jalan Raya Babat - Surabaya, Dsn. Tegalrejo, Ds. Datinawong, Kec. Babat, Kab. Lamongan, Prov. Jawa Timur** 😊
      
      Lokasi kami sangat strategis karena terletak tepat di pinggir jalan raya utama Babat–Surabaya, sehingga sangat mudah dijangkau baik dengan kendaraan pribadi maupun angkutan umum. Jika Ayah/Bunda atau Sahabat Santri ingin berkunjung, bersilaturahmi, atau melihat langsung suasana pesantren, kantor sekretariat kami selalu terbuka menyambut dengan senang hati. Titik Google Maps dan kontak panitia juga sudah tersedia di tombol tautan di bawah ini ya! 🌿"
 
@@ -577,11 +577,11 @@ BASIS DATA RESMI SELURUH EKOSISTEM YAYASAN (REAL-TIME DATA):
 - Nama Yayasan: ${meta.name || "YTPAI Raudlatul Muta'allimin Lamongan"}
 - Legalitas Badan Hukum: ${meta.legal || "Yayasan Taman Pendidikan Agama Islam Raudlatul Muta'allimin Lamongan"}
 - Sejarah Singkat: Berdiri sejak 1984 di Babat, Lamongan.
-- Slogan Resmi: "${meta.slogan || "Unggul dalam Prestasi, Berkarakter dalam Budaya"}"
+- Slogan Resmi: "${meta.slogan || "#SEKOLAH UNGGULAN BERBASIS PESANTREN"}"
 - Visi: "${meta.vision || "Menjadi lembaga dakwah dan pendidikan yang terkemuka dalam membentuk Generasi mukmin yang terampil, berbudi tinggi, dan berpengetahuan luas untuk mewujudkan kesejahteraan umat dan bangsa"}"
 - 5 Pilar Misi:
 ${(meta.missionList || []).map((m, i) => `  ${i + 1}. ${m}`).join('\n')}
-- Alamat Kompleks Yayasan: ${meta.address || "Jalan Raya Gembong - Surabaya, Dusun Tegalrejo, Desa Datinawong, Kec. Babat, Kab. Lamongan, Jawa Timur"}
+- Alamat Kompleks Yayasan: ${meta.address || "Jalan Raya Babat - Surabaya, Dsn. Tegalrejo, Ds. Datinawong, Kec. Babat, Kab. Lamongan, Prov. Jawa Timur"}
 - Telepon Kantor: ${meta.phone || "(0322) 321-789"}
 - WhatsApp Hotline PPDB: ${meta.whatsapp || "+62 857-0433-2952"}
 - Email Resmi: ${meta.email || "sekretariat@ytpai-lamongan.sch.id"}
@@ -774,7 +774,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
           { icon: "📋", text: "Alur & Syarat PPDB 2026", query: "Bagaimana alur dan syarat pendaftaran santri baru PPDB?" },
           { icon: "🏫", text: "7 Satuan Pendidikan Formal", query: "Apa saja 7 unit formal di yayasan?" },
           { icon: "🕌", text: "Kegiatan Pondok Pesantren", query: "Bagaimana sistem asrama di Pondok Pesantren Raudlatul Muta'allimin Tegalrejo?" },
-          { icon: "💬", text: "WhatsApp Panitia PPDB", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "WhatsApp Panitia PPDB", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -814,7 +814,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
           { icon: "📝", text: "Alur & Syarat PPDB 2026", query: "Bagaimana cara daftar PPDB online?" },
           { icon: "🚀", text: "Bimbel LBB Sukses PTN", query: "Kapan jadwal belajar bimbingan LBB?" },
           { icon: "🕌", text: "Kegiatan Pondok Pesantren", query: "Bagaimana kegiatan santri mukim di pondok?" },
-          { icon: "💬", text: "WhatsApp Panitia PPDB", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "WhatsApp Panitia PPDB", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -918,7 +918,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
           { icon: "📝", text: "Alur Pendaftaran Santri Enggal", query: "Kados pundi caranipun daftar santri enggal?" },
           { icon: "🏫", text: "7 Satuan Sekolah Formal", query: "Menapa kemawon 7 unit formal yayasan?" },
           { icon: "🕌", text: "Pondok Pesantren Tegalrejo", query: "Kados pundi pasinaon wonten Pondok Pesantren Tegalrejo?" },
-          { icon: "💬", text: "Matur Panitia via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "Matur Panitia via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -929,7 +929,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
         text: "Alhamdulillah, pendaftaran santri enggal (PPDB) wonten **YTPAI Raudlatul Muta'allimin Lamongan** sampun dipun bikak kanthi gampil, Bapak/Ibu 🌿\n\nPanjenengan saget ndaftaraken putra/putri lumantar **2 cara**:\n\n1. 💻 **Pendaftaran Online (24 Jam)**: Saget langsung mlebet wonten menu formulir online ing website menika, ngisi data biodata lan milih sekolah formal (KB–SMA) ugi asrama pondok.\n2. 🏢 **Rawuh Langsung (Offline)**: Sowan langsung dateng Kantor Sekretariat PPDB Kompleks Pesantren, Dusun Tegalrejo, Desa Datinawong, Kec. Babat (Bikak dinten Setu ngantos Kemis, tabuh 07.00 - 14.00 WIB, dinten Jemuwah libur lembaga).\n\nSyarat ingkang dipun betahaken: fotokopi KK, Akta Kelahiran, lan pas foto. Wonten ingkang badhe dipun tangletaken malih, Bapak/Ibu? 😊",
         actions: [
           { icon: "📝", text: "Bikak Formulir PPDB Online", url: "psb.html" },
-          { icon: "💬", text: "Matur Panitia via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "Matur Panitia via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -938,7 +938,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
       return {
         text: "Babagan ragad utawi biaya pendidikan wonten **YTPAI Raudlatul Muta'allimin Lamongan**, sedaya dipun tata kanthi terjangkau lan barokah, Bapak/Ibu 🤲\n\nWonten ugi program **Beasiswa Tahfidz Al-Qur'an** lan **Beasiswa Prestasi** kagem santri ingkang gadhah prestasi akademik utawi hafalan Qur'an. Rincian biaya seragam, infaq, lan SPP dipun sesuaikaken kaliyan jenjang sekolah formal ingkang dipun kersakaken.\n\nSupados pikantuk rincian brosur biaya resmi ingkang paling jangkep, panjenengan saget langsung ngubungi panitia PPDB lumantar tombol WhatsApp ing ngandhap menika nggih! 🌿",
         actions: [
-          { icon: "💬", text: "Nyuwun Brosur via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` },
+          { icon: "💬", text: "Nyuwun Brosur via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` },
           { icon: "📝", text: "Formulir Pendaftaran Online", url: "psb.html" }
         ]
       };
@@ -949,7 +949,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
         text: `Pondok Pesantren lan sekolah formal **YTPAI Raudlatul Muta'allimin Lamongan** mapan wonten **${meta.address || "Jalan Raya Gembong - Surabaya, Dusun Tegalrejo, Desa Datinawong, Kec. Babat, Kab. Lamongan"}** 😊\n\nPapanipun kepenak sanget amargi pas wonten pinggir margi ageng Babat–Surabaya. Menawi panjenengan badhe rawuh sowan silaturahmi utawi mriksani suasana pesantren, kantor sekretariat tansah bikak nampi kanthi bungahing manah. Titik Google Maps sampun cumawis ing ngandhap menika nggih! 🌿`,
         actions: [
           { icon: "🗺️", text: "Pitedah Margi Google Maps", url: meta.mapsUrl || "https://maps.app.goo.gl/ePeaKwX8PnkgPYGy9" },
-          { icon: "💬", text: "Kontak Panitia via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "Kontak Panitia via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -967,7 +967,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
           { icon: "📝", text: "Alur & Syarat PPDB 2026", query: "Bagaimana cara daftar PPDB online?" },
           { icon: "🏫", text: "7 Sekolah Formal (KB–SMA)", query: "Apa saja 7 unit formal di yayasan?" },
           { icon: "🚀", text: "Bimbel LBB Sukses PTN", query: "Siapa ketua dan tentor bimbingan belajar LBB?" },
-          { icon: "💬", text: "Hubungi WhatsApp Panitia", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "Hubungi WhatsApp Panitia", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -978,7 +978,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
         text: "Lembaga Bimbingan Belajar (LBB) Sukses PTN & CBT YTPAI Raudlatul Muta'allimin Lamongan dipimpin langsung oleh:\n\n👑 **Ketua LBB**: **Ibu Novin Mayang Arum, S.Pd.**\n\nBeliau memimpin jajaran Dewan Tentor Master berpengalaman:\n- 👩‍🏫 **Bu Dinda**: Tentor Master Bahasa Inggris & Literasi Bahasa\n- 👩‍🏫 **Miss Muhim**: Tentor Master Matematika & Penalaran Matematika\n- 👨‍🏫 **Pak Isroil**: Tentor Master Sains Terpadu & TKA 2026\n- Serta didukung tentor spesialis: **Pak Wildan**, **Pak Fauzan**, **Kak Sarah**, **Kak Nabila**, dan **Kak Ilham**.\n\n⏰ **Jadwal Belajar**: Dimulai pukul **13.40 WIB s.d. Ashar** (jeda istirahat 20 menit setelah kepulangan sekolah reguler 13.20 WIB).\n💻 **Fasilitas**: Laboratorium CBT 80 workstation dan bank soal adaptif SNBT, Kedinasan & TKA 2026.\n✨ **Catatan**: Program bimbingan belajar ini juga **terbuka untuk siswa umum/eksternal** di luar yayasan.",
         actions: [
           { icon: "🚀", text: "Buka Portal Bimbingan LBB", url: "lbb.html" },
-          { icon: "💬", text: "Konsultasi Tentor via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "Konsultasi Tentor via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -989,7 +989,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
         text: "Ketua Yayasan **YTPAI (Yayasan Taman Pendidikan Agama Islam) Raudlatul Muta'allimin Lamongan** saat ini dipimpin oleh **Bapak Abdus Shomad, M.Pd.**\n\nBeliau memegang amanah memimpin tata kelola strategis, kelembagaan, serta transformasi pendidikan terpadu di lingkungan yayasan.\n\nSedangkan untuk Ketua Dewan Pengasuh **Pondok Pesantren Raudlatul Muta'allimin Tegalrejo** diasuh oleh **KH. Miftahul Falah, S.Pd.**",
         actions: [
           { icon: "🏛️", text: "Profil Pimpinan Yayasan", url: "index.html#pengasuh" },
-          { icon: "💬", text: "Hubungi Sekretariat Yayasan", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "Hubungi Sekretariat Yayasan", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -1006,7 +1006,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
         text: `Masyayikh dan Dewan Pengasuh **Pondok Pesantren Raudlatul Muta'allimin Tegalrejo** dibina oleh jajaran ulama dan tokoh terkemuka:\n\n${leaderListStr}\n\nAdapun Ketua Yayasan YTPAI Raudlatul Muta'allimin Lamongan adalah **Bapak Abdus Shomad, M.Pd.** Beliau bersama segenap pimpinan senantiasa membimbing santri dengan keteladanan akhlaqul karimah.`,
         actions: [
           { icon: "🕌", text: "Profil Lengkap Dewan Pengasuh", url: "index.html#pengasuh" },
-          { icon: "💬", text: "Hubungi Sekretariat Yayasan", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "Hubungi Sekretariat Yayasan", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -1017,7 +1017,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
         text: "Untuk saat ini, di **Pondok Pesantren Raudlatul Muta'allimin Tegalrejo** **belum ada pengajian khusus bersama masyarakat umum** secara tersendiri, Kak/Bapak/Ibu. 🌿\n\nNamun, kami memiliki rutinitas ngaji kitab yang berjalan berkala bersama alumni dan santri, dan sangat terbuka apabila bapak/ibu atau jamaah luar ingin ikut bergabung menimba ilmu:\n\n1. 📖 **Ngaji Kitab Arba'in Nawawi**\n   - **Pengasuh**: **KH. Miftahul Falah, S.Pd** (Ketua Dewan Pengasuh)\n   - **Jadwal**: Ngaji bulanan bersama para alumni di akhir bulan, biasanya pada **Sabtu malam Minggu akhir bulan, pukul 20.30 WIB (jam setengah 9 malam) s.d. selesai**.\n\n2. 📜 **Ngaji Kitab Al-Hikam (Tasawuf)**\n   - **Pengasuh**: **Dr. KH. Ghozi, Lc., M.Fil.I** (Sekretaris Dewan Pengasuh)\n   - **Jadwal**: Diadakan **setiap 2 minggu sekali, pukul 20.30 WIB (jam setengah 9 malam) s.d. selesai**, bertempat di **ndalem KH. Moh. Ghozi** bersama santri jenjang SLTA (MA & SMA) serta para alumni.\n   - ✨ **Keterbukaan Jamaah Luar**: Meskipun utamanya diikuti santri SLTA & alumni, **namun jika masyarakat umum, bapak/ibu, atau jamaah dari luar ingin hadir bergabung atau sowan ngaji menimba ilmu, SANGAT DIPERSILAKAN DENGAN TANGAN TERBUKA**.\n\nJika bapak/ibu ingin informasi tanggal pelaksanaan terdekat atau ingin bersilaturahmi ke ndalem pengasuh, silakan hubungi kontak sekretariat kami ya! 😊",
         actions: [
           { icon: "🕌", text: "Profil Dewan Pengasuh", url: "index.html#pengasuh" },
-          { icon: "💬", text: "Hubungi WhatsApp Sekretariat", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` },
+          { icon: "💬", text: "Hubungi WhatsApp Sekretariat", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` },
           { icon: "📍", text: "Lokasi Pondok Pesantren", url: "index.html#kontak" }
         ]
       };
@@ -1048,10 +1048,10 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
     // 5. PPDB & Pendaftaran Santri Baru
     if (q.includes('daftar') || q.includes('ppdb') || q.includes('psb') || q.includes('registrasi') || q.includes('cara daftar') || q.includes('syarat') || q.includes('kupon') || q.includes('formulir')) {
       return {
-        text: "Penerimaan Santri Baru (PPDB) **YTPAI Raudlatul Muta'allimin Lamongan Tahun Ajaran 2026/2027** telah resmi dibuka!\n\nPendaftaran dapat dilakukan melalui **2 cara praktis**:\n\n1. 💻 **Pendaftaran Online (24 Jam)**: Kunjungi portal **PSB Online**, isi formulir biodata lengkap calon santri dan wali, pilih jenjang satuan formal serta opsi mondok di asrama pesantren, lalu simpan Kupon Registrasi Resmi.\n\n2. 🏢 **Pendaftaran Offline (Hadir Langsung)**:\n   - **Kantor Sekretariat Pusat PSB YTPAI Lamongan**: Kompleks Pesantren, Jl. Raya Gembong - Surabaya, Dusun Tegalrejo, Desa Datinawong, Babat, Lamongan (Buka Sabtu s.d. Kamis 07.00 s.d. 14.00 WIB, **Hari Jum'at Libur Lembaga**).\n   - **Kantor Unit Pendidikan Formal Masing-Masing**: Datang langsung ke kantor tata usaha unit pilihan Anda (**KB, TK, MI, MTs, SMP, MA, hingga SMA Raudlatul Muta'allimin**) pada jam pelayanan lembaga (Sabtu s.d. Kamis 07.00 s.d. 14.00 WIB, Hari Jum'at Libur) dengan membawa berkas fotokopi KK, Akta Kelahiran, dan NISN.\n   - *Catatan*: **Pondok Pesantren tetap buka setiap hari (24 Jam)**.\n\nPanitia kami siap menyambut dan memandu proses pendaftaran dengan senang hati! 😊",
+        text: "Penerimaan Santri Baru (PPDB) **YTPAI Raudlatul Muta'allimin Lamongan Tahun Ajaran 2027/2028** telah resmi dibuka!\n\nPendaftaran dapat dilakukan melalui **2 cara praktis**:\n\n1. 💻 **Pendaftaran Online (24 Jam)**: Kunjungi portal **PSB Online**, isi formulir biodata lengkap calon santri dan wali, pilih jenjang satuan formal serta opsi mondok di asrama pesantren, lalu simpan Kupon Registrasi Resmi.\n\n2. 🏢 **Pendaftaran Offline (Hadir Langsung)**:\n   - **Kantor Sekretariat Pusat PSB YTPAI Lamongan**: Kompleks Pesantren, Jl. Raya Gembong - Surabaya, Dusun Tegalrejo, Desa Datinawong, Babat, Lamongan (Buka Sabtu s.d. Kamis 07.00 s.d. 14.00 WIB, **Hari Jum'at Libur Lembaga**).\n   - **Kantor Unit Pendidikan Formal Masing-Masing**: Datang langsung ke kantor tata usaha unit pilihan Anda (**KB, TK, MI, MTs, SMP, MA, hingga SMA Raudlatul Muta'allimin**) pada jam pelayanan lembaga (Sabtu s.d. Kamis 07.00 s.d. 14.00 WIB, Hari Jum'at Libur) dengan membawa berkas fotokopi KK, Akta Kelahiran, dan NISN.\n   - *Catatan*: **Pondok Pesantren tetap buka setiap hari (24 Jam)**.\n\nPanitia kami siap menyambut dan memandu proses pendaftaran dengan senang hati! 😊",
         actions: [
           { icon: "📝", text: "Buka Formulir PPDB Online", url: "psb.html" },
-          { icon: "💬", text: "Konsultasi WhatsApp Panitia", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "Konsultasi WhatsApp Panitia", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -1073,7 +1073,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
         text: "**Pondok Pesantren Raudlatul Muta'allimin Tegalrejo** menyelenggarakan **Sistem Pendidikan Asrama Mukim 24 Jam (Buka Setiap Hari)** yang terbagi menjadi:\n\n- 🕌 **Pondok Pesantren Putra**: Dibina langsung oleh jajaran Masyayikh, fokus kajian Kitab Kuning Turats Salafiyah, Tahfidzul Qur'an 30 Juz Bersanad, dan pembiasaan sholat berjamaah di Mushola Utama Pesantren.\n- 🧕 **Pondok Pesantren Putri**: Lingkungan asri dan aman, pembinaan adab santriwati, tahfidz bersanad, serta ekstrakurikuler keputrian dan bahasa asing.\n\nSantri mukim mendapatkan bimbingan ibadah 24 jam serta asupan nutrisi katering sehat.",
         actions: [
           { icon: "🕌", text: "Profil Lengkap Pondok Pesantren", url: "index.html#pesantren" },
-          { icon: "💬", text: "Hubungi Pengurus Pondok", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "Hubungi Pengurus Pondok", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -1093,10 +1093,10 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
     // 9. Lokasi, Alamat & Kontak (Bahasa Manusiawi & Alami - Tanpa Kata Kampus)
     if (q.includes('letak') || q.includes('lokasi') || q.includes('alamat') || q.includes('dimana') || q.includes('di mana') || q.includes('daerah') || q.includes('kontak') || q.includes('telepon') || q.includes('wa') || q.includes('maps') || q.includes('babat')) {
       return {
-        text: `Sekolah formal dan **Pondok Pesantren Raudlatul Muta'allimin Tegalrejo** di bawah naungan **YTPAI Raudlatul Muta'allimin Lamongan** beralamat di **${meta.address || "Jalan Raya Gembong - Surabaya, Dusun Tegalrejo, Desa Datinawong, Kec. Babat, Kab. Lamongan, Jawa Timur"}** 😊\n\nLokasi kami sangat strategis berada tepat di pinggir jalan raya utama Babat–Surabaya, sehingga sangat mudah dijangkau dengan kendaraan pribadi maupun angkutan umum.\n\nJika Ayah/Bunda atau Sahabat Santri ingin berkunjung atau berkonsultasi, kantor pelayanan lembaga buka **Sabtu s.d. Kamis pukul 07.00 s.d. 14.00 WIB (Hari Jum'at Libur Lembaga)**. Adapun **Pondok Pesantren buka setiap hari (24 Jam)**. Untuk rute Google Maps dan nomor WhatsApp panitia bisa langsung klik tombol di bawah ini ya! 🌿`,
+        text: `Sekolah formal dan **Pondok Pesantren Raudlatul Muta'allimin Tegalrejo** di bawah naungan **YTPAI Raudlatul Muta'allimin Lamongan** beralamat di **${meta.address || "Jalan Raya Babat - Surabaya, Dsn. Tegalrejo, Ds. Datinawong, Kec. Babat, Kab. Lamongan, Prov. Jawa Timur"}** 😊\n\nLokasi kami sangat strategis berada tepat di pinggir jalan raya utama Babat–Surabaya, sehingga sangat mudah dijangkau dengan kendaraan pribadi maupun angkutan umum.\n\nJika Ayah/Bunda atau Sahabat Santri ingin berkunjung atau berkonsultasi, kantor pelayanan lembaga buka **Sabtu s.d. Kamis pukul 07.00 s.d. 14.00 WIB (Hari Jum'at Libur Lembaga)**. Adapun **Pondok Pesantren buka setiap hari (24 Jam)**. Untuk rute Google Maps dan nomor WhatsApp panitia bisa langsung klik tombol di bawah ini ya! 🌿`,
         actions: [
           { icon: "🗺️", text: "Petunjuk Rute Google Maps", url: meta.mapsUrl || "https://maps.app.goo.gl/ePeaKwX8PnkgPYGy9" },
-          { icon: "💬", text: "Hubungi Hotline Panitia", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "Hubungi Hotline Panitia", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -1111,7 +1111,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
           actions: [
             { icon: "📱", text: "Panduan Login Junio Smart", query: "Bagaimana cara mengecek tagihan di aplikasi Junio Smart?" },
             { icon: "🔑", text: "Aturan Password Huruf Kapital", query: "Mengapa kata sandi gagal saat login Junio Smart?" },
-            { icon: "💬", text: "Hubungi Tata Usaha / Admin", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+            { icon: "💬", text: "Hubungi Tata Usaha / Admin", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
           ]
         };
       }
@@ -1122,7 +1122,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
           text: `*YTPAI RAUDLATUL MUTA'ALLIMIN LAMONGAN*\n\nAssalamu'alaikum Warahmatullahi Wabarakatuh,\n\nBagi Bapak/Ibu wali santri yang mengalami kendala saat login ke aplikasi **Junio Smart**, mohon perhatikan catatan penting berikut:\n\n📌 **Solusi Login Aplikasi Junio Smart:**\n1. 🏫 **Kode Sekolah**: Wajib diisi angka **1600**.\n2. 🔑 **Ketentuan Kata Sandi**: **Huruf pertama pada kata sandi WAJIB menggunakan huruf kapital (huruf besar)**! Contoh: jika kata sandi ananda *Santri123*, huruf 'S' harus berupa huruf kapital.\n3. 👤 **Username**: Pastikan sesuai yang diberikan oleh wali kelas atau tata usaha unit masing-masing.\n\nJika Bapak/Ibu lupa kata sandi atau akun belum aktif, silakan menghubungi wali kelas atau Tata Usaha unit sekolah ananda untuk bantuan reset akun ya 🌿`,
           actions: [
             { icon: "📱", text: "Langkah Pembayaran Tagihan", query: "Bagaimana cara membayar tagihan di aplikasi Junio Smart?" },
-            { icon: "💬", text: "Hubungi Tata Usaha via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+            { icon: "💬", text: "Hubungi Tata Usaha via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
           ]
         };
       }
@@ -1134,7 +1134,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
           { icon: "💳", text: "Cara Bayar via BRImo / ATM", query: "Bagaimana cara bayar BRIVA lewat BRImo atau ATM BRI?" },
           { icon: "🔑", text: "Catatan Huruf Kapital Sandi", query: "Mengapa kata sandi gagal saat login Junio Smart?" },
           { icon: "🏫", text: "Kode Sekolah (1600)", query: "Berapa kode sekolah Junio Smart YTPAI?" },
-          { icon: "💬", text: "Chat WhatsApp Tata Usaha", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "Chat WhatsApp Tata Usaha", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -1144,7 +1144,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
       return {
         text: "Biaya pendidikan di **YTPAI Raudlatul Muta'allimin Lamongan** sangat terjangkau dengan skema subsidi silang dan berbagai program **Beasiswa Prestasi & Tahfidz**:\n\n- 🌟 **Beasiswa Tahfidz Al-Qur'an**: Keringanan SPP hingga pembebasan biaya bagi santri penghafal Al-Qur'an.\n- 🏆 **Beasiswa Prestasi**: Penghargaan bagi santri berprestasi akademik maupun perlombaan kejuaraan.\n- Rincian biaya seragam, infaq pembangunan, dan SPP disesuaikan dengan jenjang satuan formal yang dipilih.\n\nUntuk mendapatkan brosur rincian estimasi biaya resmi terupdate, Anda dapat menghubungi panitia PPDB langsung.",
         actions: [
-          { icon: "💬", text: "Minta Brosur Biaya via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` },
+          { icon: "💬", text: "Minta Brosur Biaya via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` },
           { icon: "📝", text: "Isi Formulir PPDB Online", url: "psb.html" }
         ]
       };
@@ -1156,7 +1156,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
         text: "**YTPAI Raudlatul Muta'allimin Lamongan** bersama **Pondok Pesantren Raudlatul Muta'allimin Tegalrejo** menyediakan sarana dan prasarana terpadu berstandar modern (catatan: di lingkungan pesantren tidak ada masjid jami'):\n\n- 🕌 **Mushola Pondok Pesantren Putra (Utama)**: Sarana ibadah utama pesantren untuk sholat fardhu berjamaah santri putra, qiyamul lail, kajian kitab kuning salaf, dan tempat kegiatan ngaji bersama alumni.\n- 🌸 **Mushola Pondok Pesantren Putri**: Sarana ibadah yang bersifat eksklusif khusus santriwati mukim di dalam asrama putri dengan privasi syar'i 24 jam.\n- 💻 **Laboratorium CBT & Komputer**: 80 unit workstation berkecepatan tinggi untuk ujian CBT, SNBT & IT.\n- 🏰 **Asrama Mukim Putra-Putri**: Kamar santri representatif, ventilasi sejuk, dan katering higienis.\n- 🔬 **Laboratorium Sains & IPA**: Sarana riset praktikum fisika, kimia, dan biologi.\n- 📚 **Perpustakaan Santri & Ruang Literasi**: Koleksi kitab kuning salaf dan buku referensi modern.",
         actions: [
           { icon: "🏛️", text: "Lihat Fasilitas di Beranda", url: "index.html#fasilitas" },
-          { icon: "💬", text: "Tanya Fasilitas via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` }
+          { icon: "💬", text: "Tanya Fasilitas via WhatsApp", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` }
         ]
       };
     }
@@ -1473,7 +1473,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
           }
           if (lower.includes('wa') || lower.includes('whatsapp') || lower.includes('kontak') || lower.includes('tanya')) {
             const meta = db.meta || {};
-            actions.push({ icon: "💬", text: "Konsultasi WhatsApp Panitia", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` });
+            actions.push({ icon: "💬", text: "Konsultasi WhatsApp Panitia", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` });
           }
           if (lower.includes('lbb') || lower.includes('snbt') || lower.includes('cbt') || lower.includes('bimbel')) {
             actions.push({ icon: "🚀", text: "Portal Bimbingan LBB & CBT", url: "lbb.html" });
@@ -1737,7 +1737,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
               }
               if (lower.includes('wa') || lower.includes('whatsapp') || lower.includes('kontak') || lower.includes('tanya')) {
                 const meta = db.meta || {};
-                actions.push({ icon: "💬", text: "Konsultasi WhatsApp Panitia", url: `https://wa.me/${(meta.whatsapp || '6285704332952').replace(/[^0-9]/g, '')}` });
+                actions.push({ icon: "💬", text: "Konsultasi WhatsApp Panitia", url: `https://wa.me/${(meta.whatsapp || '6285648847070').replace(/[^0-9]/g, '')}` });
               }
               if (lower.includes('lbb') || lower.includes('snbt') || lower.includes('cbt') || lower.includes('bimbel')) {
                 actions.push({ icon: "🚀", text: "Portal Bimbingan LBB & CBT", url: "lbb.html" });

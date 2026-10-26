@@ -6,8 +6,8 @@
 const DEFAULT_YAYASAN_DATA = {
   meta: {
     name: "YTPAI Raudlatul Muta'allimin Lamongan",
-    legal: "Yayasan Taman Pendidikan Agama Islam Raudlatul Muta'allimin",
-    slogan: "Unggul dalam Prestasi, Berkarakter dalam Budaya",
+    legal: "Yayasan Taman Pendidikan Agama Islam Raudlatul Muta'allimin Lamongan",
+    slogan: "#SEKOLAH UNGGULAN BERBASIS PESANTREN",
     history: "Didirikan pada tahun 1984 di Babat, Lamongan, YTPAI Raudlatul Muta’allimin telah berkiprah selama lebih dari empat dekade mencetak generasi muslim berilmu, berakhlak mulia, dan siap berkontribusi nyata bagi agama, bangsa, dan negara.",
     vision: "Menjadi lembaga dakwah dan pendidikan yang terkemuka dalam membentuk Generasi mukmin yang terampil, berbudi tinggi, dan berpengetahuan luas untuk mewujudkan kesejahteraan umat dan bangsa",
     missionList: [
@@ -18,24 +18,24 @@ const DEFAULT_YAYASAN_DATA = {
       "Mendorong tercapainya persatuan dan kesatuan umat untuk kesejahteraan seluruh masyarakat Indonesia."
     ],
     mission: "1. Menyelenggarakan dan mengelola pendidikan secara profesional\n2. Membina dan mengembangkan dakwah dan pendidikan islam dalam arti seluas-luasnya dengan semangat amar ma’ruf dan nahi mungkar\n3. Menegakkan nilai-nilai kemanusiaan sesuai dengan nilai-nilai islam demi kesejahteran umat dan bangsa\n4. Meningkatkan kualitas sumber daya manusia melalui peningkatan IPTEK dan IMTAK untuk mewujudkan masyarakat yang beriman, berilmu, beramal, dan bertaqwa sesuai dengan Ahlussunnah Waljama’ah\n5. Mendorong tercapainya persatuan dan kesatuan umat untuk kesejahteraan seluruh masyarakat Indonesia.",
-    phone: "(0322) 321-789",
-    phoneClean: "6285704332952",
-    whatsapp: "+62 857-0433-2952",
-    whatsappClean: "6285704332952",
+    phone: "0856-4884-7070",
+    phoneClean: "6285648847070",
+    whatsapp: "+62 856-4884-7070",
+    whatsappClean: "6285648847070",
     email: "sekretariat@ytpai-lamongan.sch.id",
-    address: "Jalan Raya Gembong - Surabaya, Dusun Tegalrejo, Desa Datinawong, Kecamatan Babat, Kabupaten Lamongan, Provinsi Jawa Timur",
+    address: "Jalan Raya Babat - Surabaya, Dsn. Tegalrejo, Ds. Datinawong, Kec. Babat, Kab. Lamongan, Prov. Jawa Timur",
     mapsUrl: "https://maps.app.goo.gl/ePeaKwX8PnkgPYGy9",
     mapsEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.0438!2d112.2202677!3d-7.1029391!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e778d0048138027%3A0x144631bc49f71d65!2sYTPAI%20RAUDLATUL%20MUTA'ALLIMIN%20LAMONGAN!5e0!3m2!1sid!2sid!4v1710000000000!5m2!1sid!2sid",
     stats: {
       santri: "2.500+",
       teachers: "150+",
-      units: "7 Unit Formal",
+      units: "10 Jenjang Pendidikan",
       accreditation: "A (Unggul)"
     },
     serviceHours: "Sabtu – Kamis: 07.00 – 14.00 WIB (Jum'at Libur)",
     ponpesHours: "Buka Setiap Hari (24 Jam)",
     holiday: "Hari Jum'at",
-    runningText: "⭐ Penerimaan Santri Baru (PSB / SPMB) 2026/2027 Telah Dibuka • 🎓 Pendaftaran Online 24 Jam via Portal Web Resmi & Sekretariat Yayasan • 📖 Program Unggulan: Tahfidzul Qur'an 30 Juz Bersanad & Kajian Kitab Kuning Turats Salaf • 🚀 Bimbingan Intensif LBB Sukses PTN, SNBT, Kedinasan & Simulasi CBT • 🕋 Pelayanan Bimbingan Ibadah Haji & Umrah KBIHU Resmi Kemenag RI",
+    runningText: "⭐ Sistem Penerimaan Murid Baru (SPMB) T.A. 2027/2028 Telah Dibuka • 🎓 Pendaftaran Online 24 Jam via Portal Web Resmi & Sekretariat Yayasan • 📖 #SEKOLAH UNGGULAN BERBASIS PESANTREN • 🏫 Jenjang Pendidikan: KB, TK, MI, MTs, SMP, MA, SMA, MADIN, PONPES PA & PI • 📞 WhatsApp / Telepon: 0856-4884-7070",
     googleSheetWebhookUrl: "",
     gaId: "",
     geminiApiKey: "",
@@ -69,35 +69,45 @@ const DEFAULT_YAYASAN_DATA = {
     ]
   },
 
-  // Konfigurasi Sistem 2 Gelombang & Periode PSB (Header Portal PSB)
+  // Konfigurasi Sistem Jadwal Pendaftaran SPMB (Indent, Gelombang 1, Gelombang 2)
   psbWaveConfig: {
-    activeWave: 1, // 1 = Gelombang I aktif, 2 = Gelombang II aktif, 0 = Ditutup
-    academicYear: "T.A. 2026/2027 (1447–1448 H)",
+    activeWave: 1, // 1 = Indent aktif, 2 = Gelombang 1 aktif, 3 = Gelombang 2 aktif, 0 = Ditutup
+    academicYear: "T.A. 2027/2028",
     heroBackground: "assets/banner_ppdb_hero.jpg",
-    // Gelombang I (Jalur Prestasi & Inden)
-    wave1: {
-      name: "Gelombang I (Jalur Prestasi & Inden)",
-      shortName: "Gelombang I",
-      dateRange: "02 Jan – 31 Mar 2026",
-      status: "Kuota Terbatas",
+    slogan: "#SEKOLAH UNGGULAN BERBASIS PESANTREN",
+    // Jalur Indent: 1 November 2026 - 6 Januari 2027
+    indent: {
+      name: "Jalur Indent (Pemesanan Kuota Awal)",
+      shortName: "INDENT",
+      dateRange: "01 Nov 2026 – 06 Jan 2027",
+      status: "Segera Dibuka",
       isOpen: true,
-      announcementText: "Periode Gelombang I: 02 Januari s/d 31 Maret 2026. Kuota asrama putra dan putri terbatas. Pendaftaran online buka 24 jam. Pelayanan langsung hadir ke Kantor Sekretariat Pusat PSB YTPAI Lamongan atau Kantor Unit Formal (KB–SMA) buka Sabtu s.d. Kamis pukul 07.00 – 14.00 WIB (Hari Jum'at Libur Lembaga)."
+      announcementText: "Jalur Indent SPMB T.A. 2027/2028: 01 November 2026 s/d 06 Januari 2027. Kuota asrama putra dan putri terbatas. Pendaftaran online buka 24 jam. Pelayanan tatap muka hadir ke Kantor Sekretariat Pusat SPMB YTPAI Lamongan atau Kantor Unit Formal (KB–SMA) buka Sabtu s.d. Kamis pukul 07.00 – 14.00 WIB (Hari Jum'at Libur Lembaga)."
     },
-    // Gelombang II (Jalur Reguler)
-    wave2: {
-      name: "Gelombang II (Jalur Reguler)",
-      shortName: "Gelombang II",
-      dateRange: "01 Apr – 30 Jun 2026",
-      status: "Pengisian Kuota Tersisa",
+    // Gelombang 1: 7 Januari - 31 Maret 2027
+    wave1: {
+      name: "Gelombang 1 (Jalur Reguler Tahap I)",
+      shortName: "GELOMBANG 1",
+      dateRange: "07 Jan – 31 Mar 2027",
+      status: "Tahap 1",
       isOpen: false,
-      announcementText: "Periode Gelombang II: 01 April s/d 30 Juni 2026. Dibuka untuk kuota reguler yang masih tersedia. Pendaftaran dapat dilakukan secara online atau hadir langsung ke Kantor Sekretariat Pusat PSB YTPAI Lamongan."
+      announcementText: "Periode Gelombang 1: 07 Januari s/d 31 Maret 2027. Kuota asrama putra dan putri tersedia. Pendaftaran online buka 24 jam via portal web resmi."
     },
-    // Properti Kompatibilitas Legacy (Merujuk ke Gelombang I secara default)
-    name: "Gelombang I",
-    dateRange: "02 Jan – 31 Mar 2026",
-    status: "Kuota Terbatas",
+    // Gelombang 2: 1 April - 8 Juli 2027
+    wave2: {
+      name: "Gelombang 2 (Jalur Reguler Tahap II)",
+      shortName: "GELOMBANG 2",
+      dateRange: "01 Apr – 08 Jul 2027",
+      status: "Tahap 2",
+      isOpen: false,
+      announcementText: "Periode Gelombang 2: 01 April s/d 08 Juli 2027. Pengisian sisa kuota murid baru untuk seluruh jenjang pendidikan."
+    },
+    // Properti Kompatibilitas Legacy
+    name: "Jalur Indent",
+    dateRange: "01 Nov 2026 – 06 Jan 2027",
+    status: "Segera Dibuka",
     isOpen: true,
-    announcementText: "Periode 02 Januari 2026 s/d 31 Maret 2026. Kuota asrama putra dan putri terbatas. Pendaftaran online buka 24 jam. Pelayanan langsung hadir ke Kantor Sekretariat Pusat PSB YTPAI Lamongan atau Kantor Unit Formal (KB–SMA) buka Sabtu s.d. Kamis pukul 07.00 – 14.00 WIB (Hari Jum'at Libur Lembaga)."
+    announcementText: "Jalur Indent SPMB T.A. 2027/2028: 01 November 2026 s/d 06 Januari 2027. Kuota asrama putra dan putri terbatas. Pendaftaran online buka 24 jam."
   },
 
   // Konfigurasi Pop-Up Pengumuman & Informasi Website (Dikelola Penuh via Admin CMS)
@@ -867,9 +877,9 @@ Wassalamu’alaikum warahmatullahi wabarakatuh.`,
       coordinator: "Tim Medis & Pengelola Poskestren",
       headmaster: "Ustdzh. Siti Aminah, A.Md.Keb",
       role: "Penanggung Jawab Medis Poskestren",
-      whatsapp: "+62 857-0433-2952",
-      whatsappClean: "6285704332952",
-      phone: "(0322) 321-789 ext. 110",
+      whatsapp: "+62 856-4884-7070",
+      whatsappClean: "6285648847070",
+      phone: "0856-4884-7070",
       office: "Gedung Layanan Santri & Poskestren Kompleks Pusat YTPAI (Dekat Asrama)",
       serviceHours: "Siaga 24 Jam Santri Sakit • Pelayanan Harian: 07.00 – 21.00 WIB",
       quota: "Seluruh Santri, Siswa & Warga Pesantren",
@@ -2404,12 +2414,27 @@ function getDB() {
       parsed.meta.mapsEmbedUrl = DEFAULT_YAYASAN_DATA.meta.mapsEmbedUrl;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     }
-    // Auto-migrate default WhatsApp contact to active official number (085704332952)
-    if (!parsed.meta || !parsed.meta.whatsapp || parsed.meta.whatsapp.includes('812-3456-7890') || parsed.meta.whatsapp.includes('81234567890') || parsed.meta.whatsappClean !== '6285704332952') {
+    // Auto-migrate default WhatsApp contact to active official number (0856-4884-7070)
+    if (!parsed.meta || !parsed.meta.whatsapp || parsed.meta.whatsappClean !== '6285648847070') {
       if (!parsed.meta) parsed.meta = Object.assign({}, DEFAULT_YAYASAN_DATA.meta);
+      parsed.meta.phone = DEFAULT_YAYASAN_DATA.meta.phone;
+      parsed.meta.phoneClean = DEFAULT_YAYASAN_DATA.meta.phoneClean;
       parsed.meta.whatsapp = DEFAULT_YAYASAN_DATA.meta.whatsapp;
       parsed.meta.whatsappClean = DEFAULT_YAYASAN_DATA.meta.whatsappClean;
-      parsed.meta.phoneClean = DEFAULT_YAYASAN_DATA.meta.phoneClean;
+      parsed.meta.address = DEFAULT_YAYASAN_DATA.meta.address;
+      parsed.meta.slogan = DEFAULT_YAYASAN_DATA.meta.slogan;
+      parsed.meta.runningText = DEFAULT_YAYASAN_DATA.meta.runningText;
+      parsed.psbWaveConfig = Object.assign({}, DEFAULT_YAYASAN_DATA.psbWaveConfig);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+    }
+    // Auto-migrate SPMB 2027/2028 wave schedule and address
+    if (parsed.psbWaveConfig && parsed.psbWaveConfig.academicYear !== 'T.A. 2027/2028') {
+      parsed.psbWaveConfig = Object.assign({}, DEFAULT_YAYASAN_DATA.psbWaveConfig);
+      if (parsed.meta) {
+        parsed.meta.address = DEFAULT_YAYASAN_DATA.meta.address;
+        parsed.meta.slogan = DEFAULT_YAYASAN_DATA.meta.slogan;
+        parsed.meta.runningText = DEFAULT_YAYASAN_DATA.meta.runningText;
+      }
       localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     }
     // Auto-migrate institutional Google Gemini API Key & Model if empty or deprecated in localStorage
