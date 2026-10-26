@@ -2399,34 +2399,34 @@ function renderTabAnalytics(db, container) {
 
   container.innerHTML = `
     <!-- Top Action Bar -->
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
+    <div class="analytics-top-bar">
       <div>
         <div style="display:inline-flex; align-items:center; gap:6px; background:#ECFDF5; color:#047857; font-size:0.72rem; font-weight:800; padding:3px 10px; border-radius:999px; text-transform:uppercase; letter-spacing:0.04em; border:1px solid #A7F3D0;">
           <span style="width:7px; height:7px; border-radius:50%; background:#10B981; box-shadow:0 0 8px #10B981; display:inline-block;"></span>
           Telemetry & Geolocation Engine Aktif
         </div>
-        <h2 style="margin:6px 0 0; font-size:1.25rem; font-weight:800; color:#0A2540;">Analisis Kunjungan & Asal Wilayah Calon Santri</h2>
+        <h2 class="analytics-heading" style="margin:6px 0 0; font-size:1.25rem; font-weight:800; color:#0A2540;">Analisis Kunjungan & Asal Wilayah Calon Santri</h2>
       </div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn btn-outline btn-sm" onclick="exportAnalyticsCSV()" style="font-size:0.78rem; font-weight:700; padding:6px 12px; display:inline-flex; align-items:center; gap:5px;">
+      <div class="analytics-top-actions">
+        <button class="btn btn-outline btn-sm btn-analytics-action" onclick="exportAnalyticsCSV()" style="font-size:0.78rem; font-weight:700; padding:8px 12px; display:inline-flex; align-items:center; justify-content:center; gap:5px;">
           <span>📥 Unduh Laporan (.CSV)</span>
         </button>
-        <button class="btn btn-outline btn-sm" onclick="simulateVisitorTest()" style="font-size:0.78rem; font-weight:700; padding:6px 12px; display:inline-flex; align-items:center; gap:5px; background:#EFF6FF; color:#1D4ED8; border-color:#BFDBFE;">
-          <span>🔄 Uji Simulasi Kunjungan</span>
+        <button class="btn btn-outline btn-sm btn-analytics-action" onclick="simulateVisitorTest()" style="font-size:0.78rem; font-weight:700; padding:8px 12px; display:inline-flex; align-items:center; justify-content:center; gap:5px; background:#EFF6FF; color:#1D4ED8; border-color:#BFDBFE;">
+          <span>🔄 Uji Simulasi</span>
         </button>
-        <button class="btn btn-outline btn-sm" onclick="resetAnalyticsData()" style="font-size:0.78rem; font-weight:700; padding:6px 12px; color:#DC2626; border-color:#FECACA;">
+        <button class="btn btn-outline btn-sm btn-analytics-action" onclick="resetAnalyticsData()" style="font-size:0.78rem; font-weight:700; padding:8px 12px; color:#DC2626; border-color:#FECACA; display:inline-flex; align-items:center; justify-content:center; gap:5px;">
           <span>🗑️ Reset Log</span>
         </button>
       </div>
     </div>
 
     <!-- 6 KPI Metric Cards -->
-    <div class="admin-stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom: 24px;">
+    <div class="admin-stats-grid analytics-kpi-grid">
       <div class="admin-stat-card">
         <div class="admin-stat-icon-wrap" style="background:#EFF6FF; color:#2563EB;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
         </div>
-        <div>
+        <div style="min-width:0;">
           <div class="admin-stat-val">${totalViews.toLocaleString('id-ID')}</div>
           <div class="admin-stat-title">Total Kunjungan</div>
         </div>
@@ -2436,7 +2436,7 @@ function renderTabAnalytics(db, container) {
         <div class="admin-stat-icon-wrap" style="background:#ECFDF5; color:#059669;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
         </div>
-        <div>
+        <div style="min-width:0;">
           <div class="admin-stat-val">${uniqueVisitors.toLocaleString('id-ID')}</div>
           <div class="admin-stat-title">Pengunjung Unik</div>
         </div>
@@ -2446,7 +2446,7 @@ function renderTabAnalytics(db, container) {
         <div class="admin-stat-icon-wrap" style="background:#FEF3C7; color:#B45309;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
         </div>
-        <div>
+        <div style="min-width:0;">
           <div class="admin-stat-val">+${todayViews.toLocaleString('id-ID')}</div>
           <div class="admin-stat-title">Hari Ini (${todayUnique} Unik)</div>
         </div>
@@ -2456,8 +2456,8 @@ function renderTabAnalytics(db, container) {
         <div class="admin-stat-icon-wrap" style="background:#FDF2F8; color:#BE185D;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
         </div>
-        <div>
-          <div class="admin-stat-val" style="font-size:1.15rem;">${db.analytics.cities?.[0]?.name || 'Lamongan'}</div>
+        <div style="min-width:0;">
+          <div class="admin-stat-val" style="font-size:1.05rem;">${db.analytics.cities?.[0]?.name || 'Lamongan'}</div>
           <div class="admin-stat-title">Kota Dominan (${db.analytics.cities?.[0]?.percent || 42}%)</div>
         </div>
       </div>
@@ -2466,7 +2466,7 @@ function renderTabAnalytics(db, container) {
         <div class="admin-stat-icon-wrap" style="background:#FAF5FF; color:#9333EA;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
         </div>
-        <div>
+        <div style="min-width:0;">
           <div class="admin-stat-val">${db.analytics.devices?.mobile || 82}%</div>
           <div class="admin-stat-title">Pengguna Ponsel (HP)</div>
         </div>
@@ -2476,7 +2476,7 @@ function renderTabAnalytics(db, container) {
         <div class="admin-stat-icon-wrap" style="background:#F0FDF4; color:#16A34A;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
         </div>
-        <div>
+        <div style="min-width:0;">
           <div class="admin-stat-val" style="font-size:1.05rem;">WhatsApp</div>
           <div class="admin-stat-title">Rujukan PPDB Terbanyak</div>
         </div>
@@ -2484,11 +2484,11 @@ function renderTabAnalytics(db, container) {
     </div>
 
     <!-- 2-Column Grid: Sebaran Wilayah & Kanal Promosi -->
-    <div style="display:grid; grid-template-columns:1.2fr 1fr; gap:20px; margin-bottom:24px;">
+    <div class="analytics-two-col-grid">
       
       <!-- Card 1: Distribusi Wilayah / Kota Asal Pengunjung -->
-      <div class="admin-card" style="margin:0; padding:18px 20px;">
-        <div class="admin-card-header" style="margin-bottom:14px; border-bottom:1px solid #E2E8F0; padding-bottom:10px;">
+      <div class="admin-card">
+        <div class="admin-card-header" style="margin-bottom:14px; border-bottom:1px solid #E2E8F0; padding-bottom:10px; flex-wrap:wrap; gap:8px;">
           <div>
             <h3 style="margin:0; font-size:1.02rem; font-weight:800; color:#0A2540;">📍 Matriks Sebaran Kota & Wilayah Asal Pengunjung</h3>
             <p style="margin:2px 0 0; font-size:0.75rem; color:#64748B;">Data demografi calon santri & wali santri yang mengakses website.</p>
@@ -2496,7 +2496,8 @@ function renderTabAnalytics(db, container) {
           <span style="font-size:0.72rem; font-weight:700; background:#EFF6FF; color:#1D4ED8; padding:2px 8px; border-radius:4px;">${(db.analytics.cities || []).length} Wilayah Terpetakan</span>
         </div>
 
-        <div class="admin-table-wrap">
+        <!-- Desktop City Table -->
+        <div class="analytics-city-desktop-table admin-table-wrap">
           <table class="admin-table" style="font-size:0.8rem;">
             <thead>
               <tr>
@@ -2529,12 +2530,36 @@ function renderTabAnalytics(db, container) {
             </tbody>
           </table>
         </div>
+
+        <!-- Mobile City Touch Cards -->
+        <div class="analytics-city-mobile-list">
+          ${(db.analytics.cities || []).map((c, i) => `
+            <div class="analytics-city-card-mobile">
+              <div class="city-card-mobile-header">
+                <div class="city-name-wrap">
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <strong class="city-name-text">${c.name}</strong>
+                    ${i === 0 ? '<span class="city-badge-primary">UTAMA</span>' : ''}
+                  </div>
+                  <span class="city-region-tag">${c.region || 'Jawa Timur'}</span>
+                </div>
+                <div class="city-stat-wrap">
+                  <span class="city-count-text">${(c.count || 0).toLocaleString('id-ID')}</span>
+                  <span class="city-percent-text">${c.percent || 1}%</span>
+                </div>
+              </div>
+              <div class="city-progress-bar-wrap">
+                <div class="city-progress-fill" style="width:${Math.min((c.percent || 1) * 2.2, 100)}%;"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
       </div>
 
       <!-- Card 2: Kanal Rujukan & Konten Terfavorit -->
       <div style="display:flex; flex-direction:column; gap:20px;">
         <!-- Kanal Rujukan Promosi -->
-        <div class="admin-card" style="margin:0; padding:16px 18px;">
+        <div class="admin-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #E2E8F0; padding-bottom:8px;">
             <h4 style="margin:0; font-size:0.92rem; font-weight:800; color:#0A2540;">🔗 Sumber Trafik & Kanal Promosi</h4>
             <span style="font-size:0.7rem; color:#64748B;">Referrer Analysis</span>
@@ -2555,19 +2580,19 @@ function renderTabAnalytics(db, container) {
         </div>
 
         <!-- Halaman Terpopuler -->
-        <div class="admin-card" style="margin:0; padding:16px 18px;">
+        <div class="admin-card">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #E2E8F0; padding-bottom:8px;">
             <h4 style="margin:0; font-size:0.92rem; font-weight:800; color:#0A2540;">📄 Halaman Paling Sering Dibaca</h4>
             <span style="font-size:0.7rem; color:#64748B;">Top Pageviews</span>
           </div>
           <div style="display:flex; flex-direction:column; gap:8px;">
             ${(db.analytics.pages || []).slice(0, 4).map((p, idx) => `
-              <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; padding:6px 8px; background:#F8FAFC; border-radius:6px; border:1px solid #E2E8F0;">
-                <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:240px;">
-                  <strong style="color:#0A2540;">${idx + 1}. ${p.title}</strong>
-                  <div style="font-size:0.68rem; color:#64748B;"><code>/${p.path}</code></div>
+              <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; padding:8px 10px; background:#F8FAFC; border-radius:6px; border:1px solid #E2E8F0; gap:8px;">
+                <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; flex:1;">
+                  <strong style="color:#0A2540; font-size:0.8rem; display:block; overflow:hidden; text-overflow:ellipsis;">${idx + 1}. ${p.title}</strong>
+                  <div style="font-size:0.68rem; color:#64748B; overflow:hidden; text-overflow:ellipsis;"><code>/${p.path}</code></div>
                 </div>
-                <span style="font-weight:800; color:#1D4ED8; font-size:0.82rem; white-space:nowrap;">${(p.views || 0).toLocaleString('id-ID')} hits</span>
+                <span style="font-weight:800; color:#1D4ED8; font-size:0.78rem; white-space:nowrap; flex-shrink:0;">${(p.views || 0).toLocaleString('id-ID')} hits</span>
               </div>
             `).join('')}
           </div>
@@ -2577,7 +2602,7 @@ function renderTabAnalytics(db, container) {
     </div>
 
     <!-- Real-time Visitor Logs Table -->
-    <div class="admin-card" style="padding:18px 20px; margin-bottom:24px;">
+    <div class="admin-card">
       <div class="admin-card-header" style="flex-wrap:wrap; gap:10px; margin-bottom:14px;">
         <div>
           <h3 style="margin:0; font-size:1.05rem; font-weight:800; color:#0A2540;">🕒 Log Aktivitas Kunjungan Terbaru (Real-Time)</h3>
@@ -2588,7 +2613,8 @@ function renderTabAnalytics(db, container) {
         </span>
       </div>
 
-      <div class="admin-table-wrap">
+      <!-- Desktop Visitor Logs Table -->
+      <div class="analytics-logs-desktop-table admin-table-wrap">
         <table class="admin-table">
           <thead>
             <tr>
@@ -2624,10 +2650,28 @@ function renderTabAnalytics(db, container) {
           </tbody>
         </table>
       </div>
+
+      <!-- Mobile Visitor Logs Cards -->
+      <div class="analytics-logs-mobile-list">
+        ${(db.analytics.recentLogs && db.analytics.recentLogs.length > 0) ? db.analytics.recentLogs.map(log => `
+          <div class="analytics-log-card-mobile">
+            <div class="log-card-top">
+              <span class="log-timestamp">${log.timestamp}</span>
+              <span class="badge-status badge-verified" style="font-size:0.68rem; padding:1px 6px;">BERHASIL</span>
+            </div>
+            <div class="log-page-title">${log.page}</div>
+            <div class="log-meta-row">
+              <span class="log-meta-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> ${log.city}</span>
+              <span class="log-meta-tag">${log.device}</span>
+              <span class="log-meta-tag log-source-tag" style="color:${log.source.includes('WhatsApp') ? '#047857' : (log.source.includes('Google') ? '#B45309' : '#1D4ED8')}; font-weight:700;">${log.source}</span>
+            </div>
+          </div>
+        `).join('') : '<div style="padding:16px; text-align:center; color:#64748B;">Belum ada log aktivitas.</div>'}
+      </div>
     </div>
 
     <!-- Integrasi Google Analytics 4 (GA4) Configuration Box -->
-    <div class="admin-card" style="padding:18px 20px; border:1.5px solid #CBD5E1; background:#FFFFFF;">
+    <div class="admin-card" style="border:1.5px solid #CBD5E1; background:#FFFFFF;">
       <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
         <div>
           <div style="display:inline-flex; align-items:center; gap:6px; background:#FEF3C7; color:#92400E; font-size:0.7rem; font-weight:800; padding:2px 8px; border-radius:4px; text-transform:uppercase; margin-bottom:4px;">
@@ -2641,7 +2685,7 @@ function renderTabAnalytics(db, container) {
         </div>
       </div>
 
-      <div style="display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; max-width:600px;">
+      <div class="analytics-ga-form-wrap">
         <input type="text" id="analyticsGaInput" class="form-input" value="${gaId}" placeholder="Contoh: G-XXXXXXXXXX" style="font-family:ui-monospace, monospace; font-weight:700;">
         <button class="btn btn-primary" onclick="saveGaConfig()" style="font-size:0.82rem; font-weight:800; padding:8px 16px;">
           💾 Simpan ID GA4
