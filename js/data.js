@@ -114,57 +114,57 @@ const DEFAULT_YAYASAN_DATA = {
   psbCosts: {
     sectionBadge: "Transparan & Terjangkau",
     sectionTitle: "Rincian Estimasi Biaya Pendidikan",
-    sectionSubtitle: "Komitmen yayasan dalam memberikan layanan pendidikan Islam berkualitas dengan skema pembiayaan yang transparan dan dapat diangsur.",
+    sectionSubtitle: "Komitmen yayasan menyelenggarakan pendidikan Islam berkualitas dan terjangkau, memadukan kurikulum formal dan kepesantrenan tanpa biaya memberatkan.",
     scholarshipNote: "<strong>Program Beasiswa Pendidikan:</strong> Yayasan menyediakan <em>Beasiswa Bebas Biaya SPP & Masuk 100%</em> bagi santri hafidz Al-Qur'an 30 Juz bersanad muttashil, juara olimpiade sains minimal tingkat provinsi, serta santri yatim dhuafa berprestasi.",
     cards: [
       {
         id: "cost-card-1",
         name: "Infaq Formulir & Seleksi",
-        price: "Rp 150.000",
+        price: "Rp 140.000",
         period: "Sekali bayar saat registrasi awal",
         isPopular: false,
         popularBadge: "",
         btnText: "Pilih Jalur Reguler",
         btnLink: "#formulir",
         features: [
-          "Nomor Registrasi Resmi & Akses Sistem",
-          "Biaya Pelaksanaan Ujian Masuk & CBT",
-          "Tes Baca Al-Qur'an & Pemetaan Kamar",
-          "Layanan Konsultasi Psikologis Santri"
+          "Nomor Registrasi Resmi & Akses Sistem SPMB",
+          "Biaya Pelaksanaan Ujian Penempatan & Seleksi",
+          "Tes Baca Al-Qur'an & Pemetaan Kamar Asrama",
+          "Layanan Konsultasi & Orientasi Santri Baru"
         ]
       },
       {
         id: "cost-card-2",
-        name: "Infaq Pangkal & Fasilitas Masuk",
-        price: "Rp 4.850.000",
-        period: "Sekali selama masa jenjang pendidikan (Bisa Diangsur 3x)",
+        name: "Infaq Masuk & Seragam Lengkap",
+        price: "Mulai Rp 1.236.000",
+        period: "Sekali di awal masuk (Sudah Termasuk Seragam Lengkap)",
         isPopular: true,
         popularBadge: "Paling Populer",
         btnText: "Daftar Sekarang",
         btnLink: "#formulir",
         features: [
-          "Infaq Pengembangan Sarana & Prasarana",
-          "Fasilitas Asrama (Kasur Busa, Lemari Pribadi, Bantal)",
-          "Paket Seragam Lengkap 4 Stel (Termasuk Jubah & Olahraga)",
-          "Paket Kitab Kuning Salafiyah Awal Tahun",
-          "Kartu Tanda Santri (KTS) & Smart Card Digital"
+          "Biaya Awal Tahun Sekolah & Pondok Pesantren",
+          "Paket Seragam Lengkap Resmi (Pondok & Sekolah)",
+          "Hak Fasilitas Almari Santri Pribadi di Asrama",
+          "Buku Rapor Sekolah & Buku Rapor Madin",
+          "KTA Siswa / Smart Card Brizzi Digital & MOS"
         ]
       },
       {
         id: "cost-card-3",
         name: "Iuran SPP Bulanan Terpadu",
-        price: "Rp 1.050.000",
-        period: "Per bulan (Paket All-in-One Mukim Asrama)",
+        price: "Mulai Rp 281.000",
+        period: "Per bulan (Rp 281rb SLTP / Rp 330rb SLTA - Paket Mukim)",
         isPopular: false,
         popularBadge: "",
-        btnText: "Pelajari Selengkapnya",
-        btnLink: "#faq",
+        btnText: "Buka Rincian Biaya Resmi",
+        btnLink: "javascript:openOfficialCostsModal()",
         features: [
-          "Biaya Pendidikan Formal Madrasah / Sekolah",
-          "Makan 3x Sehari Menu Higienis & Bergizi",
-          "Bimbingan Asrama & Pengajian Kitab 24 Jam",
-          "Layanan Laundry Seragam Santri Bersih",
-          "Layanan Kesehatan Klinik & Poskestren"
+          "Infaq Pendidikan Madrasah / Sekolah Formal (12 Bulan)",
+          "Syahriyah Pondok & Bimbingan Kitab Salaf 24 Jam",
+          "Bebas Biaya Ujian PTS & PAS (2 Semester Penuh)",
+          "Ujian Semester Madin, KKM & Perawatan Lembaga",
+          "Layanan Kesehatan Santri Poskestren & HUT RI"
         ]
       }
     ]
@@ -3120,7 +3120,7 @@ function getDB() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     }
     // Auto-migrate psbCosts (Rincian Estimasi Biaya Pendidikan SPMB Dinamis)
-    if (!parsed.psbCosts || !parsed.psbCosts.cards || !Array.isArray(parsed.psbCosts.cards) || parsed.psbCosts.cards.length === 0) {
+    if (!parsed.psbCosts || !parsed.psbCosts.cards || !Array.isArray(parsed.psbCosts.cards) || parsed.psbCosts.cards.length === 0 || parsed.psbCosts.cards.some(c => c.price === "Rp 4.850.000" || c.price === "Rp 1.050.000" || c.price === "Rp 150.000")) {
       parsed.psbCosts = JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.psbCosts));
       localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     }

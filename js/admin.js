@@ -5792,22 +5792,22 @@ window.savePsbCostsForm = function() {
   };
 
   const c1_name = document.getElementById('c1_name') ? document.getElementById('c1_name').value.trim() : 'Infaq Formulir & Seleksi';
-  const c1_price = document.getElementById('c1_price') ? document.getElementById('c1_price').value.trim() : 'Rp 150.000';
+  const c1_price = document.getElementById('c1_price') ? document.getElementById('c1_price').value.trim() : 'Rp 140.000';
   const c1_period = document.getElementById('c1_period') ? document.getElementById('c1_period').value.trim() : 'Sekali bayar saat registrasi awal';
   const c1_btnText = document.getElementById('c1_btnText') ? document.getElementById('c1_btnText').value.trim() : 'Pilih Jalur Reguler';
   const c1_btnLink = document.getElementById('c1_btnLink') ? document.getElementById('c1_btnLink').value.trim() : '#formulir';
 
-  const c2_name = document.getElementById('c2_name') ? document.getElementById('c2_name').value.trim() : 'Infaq Pangkal & Fasilitas Masuk';
-  const c2_price = document.getElementById('c2_price') ? document.getElementById('c2_price').value.trim() : 'Rp 4.850.000';
-  const c2_period = document.getElementById('c2_period') ? document.getElementById('c2_period').value.trim() : 'Sekali selama masa jenjang pendidikan (Bisa Diangsur 3x)';
+  const c2_name = document.getElementById('c2_name') ? document.getElementById('c2_name').value.trim() : 'Infaq Masuk & Seragam Lengkap';
+  const c2_price = document.getElementById('c2_price') ? document.getElementById('c2_price').value.trim() : 'Mulai Rp 1.236.000';
+  const c2_period = document.getElementById('c2_period') ? document.getElementById('c2_period').value.trim() : 'Sekali di awal masuk (Sudah Termasuk Seragam Lengkap)';
   const c2_btnText = document.getElementById('c2_btnText') ? document.getElementById('c2_btnText').value.trim() : 'Daftar Sekarang';
   const c2_btnLink = document.getElementById('c2_btnLink') ? document.getElementById('c2_btnLink').value.trim() : '#formulir';
 
   const c3_name = document.getElementById('c3_name') ? document.getElementById('c3_name').value.trim() : 'Iuran SPP Bulanan Terpadu';
-  const c3_price = document.getElementById('c3_price') ? document.getElementById('c3_price').value.trim() : 'Rp 1.050.000';
-  const c3_period = document.getElementById('c3_period') ? document.getElementById('c3_period').value.trim() : 'Per bulan (Paket All-in-One Mukim Asrama)';
-  const c3_btnText = document.getElementById('c3_btnText') ? document.getElementById('c3_btnText').value.trim() : 'Pelajari Selengkapnya';
-  const c3_btnLink = document.getElementById('c3_btnLink') ? document.getElementById('c3_btnLink').value.trim() : '#faq';
+  const c3_price = document.getElementById('c3_price') ? document.getElementById('c3_price').value.trim() : 'Mulai Rp 281.000';
+  const c3_period = document.getElementById('c3_period') ? document.getElementById('c3_period').value.trim() : 'Per bulan (Rp 281rb SLTP / Rp 330rb SLTA - Paket Mukim)';
+  const c3_btnText = document.getElementById('c3_btnText') ? document.getElementById('c3_btnText').value.trim() : 'Buka Rincian Biaya Resmi';
+  const c3_btnLink = document.getElementById('c3_btnLink') ? document.getElementById('c3_btnLink').value.trim() : 'javascript:openOfficialCostsModal()';
 
   db.psbCosts = {
     sectionBadge: badge,

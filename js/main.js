@@ -4371,6 +4371,10 @@ function renderPsbCosts(db) {
     const btnClass = isHighlight ? 'btn btn-primary btn-sm' : 'btn btn-outline btn-sm';
     const featuresList = (card.features || []).map(f => `<li><span class="check">✔</span> ${f}</li>`).join('');
 
+    const isJs = (card.btnLink || '').startsWith('javascript:');
+    const hrefStr = isJs ? 'href="javascript:void(0)"' : `href="${card.btnLink || '#formulir'}"`;
+    const clickStr = isJs ? `onclick="${card.btnLink.replace(/^javascript:/, '')}"` : '';
+
     return `
       <div class="psb-cost-card ${isHighlight ? 'highlight' : ''} scroll-reveal ${staggerClass}">
         <div class="psb-cost-header">
@@ -4382,7 +4386,7 @@ function renderPsbCosts(db) {
         <ul class="psb-cost-list">
           ${featuresList}
         </ul>
-        <a href="${card.btnLink || '#formulir'}" class="${btnClass}" style="width:100%; justify-content:center;">${card.btnText || 'Daftar Sekarang'}</a>
+        <a ${hrefStr} ${clickStr} class="${btnClass}" style="width:100%; justify-content:center;">${card.btnText || 'Daftar Sekarang'}</a>
       </div>
     `;
   }).join('');
