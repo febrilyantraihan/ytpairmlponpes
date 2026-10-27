@@ -115,7 +115,7 @@ const DEFAULT_YAYASAN_DATA = {
     sectionBadge: "Transparan & Terjangkau",
     sectionTitle: "Rincian Estimasi Biaya Pendidikan",
     sectionSubtitle: "Komitmen yayasan menyelenggarakan pendidikan Islam berkualitas dan terjangkau, memadukan kurikulum formal dan kepesantrenan tanpa biaya memberatkan.",
-    scholarshipNote: "<strong>Program Beasiswa Pendidikan:</strong> Yayasan menyediakan <em>Beasiswa Bebas Biaya SPP & Masuk 100%</em> bagi santri hafidz Al-Qur'an 30 Juz bersanad muttashil, juara olimpiade sains minimal tingkat provinsi, serta santri yatim dhuafa berprestasi.",
+    scholarshipNote: "",
     cards: [
       {
         id: "cost-card-1",
@@ -3122,6 +3122,10 @@ function getDB() {
     // Auto-migrate psbCosts (Rincian Estimasi Biaya Pendidikan SPMB Dinamis)
     if (!parsed.psbCosts || !parsed.psbCosts.cards || !Array.isArray(parsed.psbCosts.cards) || parsed.psbCosts.cards.length === 0 || parsed.psbCosts.cards.some(c => c.price === "Rp 4.850.000" || c.price === "Rp 1.050.000" || c.price === "Rp 150.000")) {
       parsed.psbCosts = JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.psbCosts));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+    }
+    if (parsed.psbCosts && parsed.psbCosts.scholarshipNote) {
+      parsed.psbCosts.scholarshipNote = "";
       localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     }
     return parsed;

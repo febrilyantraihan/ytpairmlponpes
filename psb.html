@@ -691,13 +691,6 @@
           </div>
         </div>
 
-        <!-- Catatan Beasiswa -->
-        <div class="psb-beasiswa-banner">
-          <p class="psb-beasiswa-text" id="psbBeasiswaText">
-            <strong>Program Beasiswa Pendidikan:</strong> Yayasan menyediakan <em>Beasiswa Bebas Biaya SPP & Masuk 100%</em> bagi santri hafidz Al-Qur'an 30 Juz bersanad muttashil, juara olimpiade sains minimal tingkat provinsi, serta santri yatim dhuafa berprestasi.
-          </p>
-        </div>
-
         <!-- Banner Transparansi Rincian Biaya Resmi (SLTP, SLTA & Non-Mukim) -->
         <div class="psb-cost-official-card" style="margin-top:20px; background:linear-gradient(135deg, #0A2540 0%, #0F4C81 100%); border-radius:12px; padding:18px 22px; color:#FFFFFF; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; box-shadow:0 8px 20px rgba(10,37,64,0.12); border:1px solid rgba(251,191,36,0.35);">
           <div style="display:flex; align-items:center; gap:14px; min-width:260px; flex:1;">
@@ -2098,7 +2091,7 @@
   </div>
 
   <!-- MODAL TRANSPARANSI RINCIAN BIAYA PENDIDIKAN RESMI YTPAI -->
-  <div class="modal-overlay" id="officialCostsModal" role="dialog" aria-modal="true" aria-labelledby="officialCostsTitle" onclick="if(event.target === this) closeOfficialCostsModal()" style="display:none; position:fixed; inset:0; background:rgba(10,37,64,0.7); backdrop-filter:blur(5px); z-index:99999; justify-content:center; align-items:center; padding:16px;">
+  <div class="official-costs-modal-overlay" id="officialCostsModal" role="dialog" aria-modal="true" aria-labelledby="officialCostsTitle" onclick="if(event.target === this) closeOfficialCostsModal()" style="display:none; position:fixed; inset:0; background:rgba(10,37,64,0.78); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); z-index:999999; justify-content:center; align-items:center; padding:16px; opacity:1; visibility:visible; pointer-events:auto;">
     <div class="modal-dialog" style="background:#FFFFFF; border-radius:12px; max-width:880px; width:100%; max-height:92vh; display:flex; flex-direction:column; box-shadow:0 24px 48px rgba(10,37,64,0.3); border:1px solid #E2E8F0; overflow:hidden; animation:modalSlideUp 0.25s ease;">
       <!-- Modal Header -->
       <div style="background:linear-gradient(135deg, #0A2540 0%, #0F4C81 100%); color:#FFFFFF; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #FBBF24;">
@@ -2385,21 +2378,30 @@
 
   <script>
     /* LOGIKA TAB & KATEGORI MODAL RINCIAN BIAYA RESMI */
-    function openOfficialCostsModal() {
+    window.openOfficialCostsModal = function() {
       const modal = document.getElementById('officialCostsModal');
       if (modal) {
         modal.style.display = 'flex';
+        modal.style.opacity = '1';
+        modal.style.visibility = 'visible';
+        modal.style.pointerEvents = 'auto';
         document.body.style.overflow = 'hidden';
       }
-    }
+    };
 
-    function closeOfficialCostsModal() {
+    window.closeOfficialCostsModal = function() {
       const modal = document.getElementById('officialCostsModal');
       if (modal) {
         modal.style.display = 'none';
+        modal.style.opacity = '0';
+        modal.style.visibility = 'hidden';
+        modal.style.pointerEvents = 'none';
         document.body.style.overflow = '';
       }
-    }
+    };
+
+    function openOfficialCostsModal() { window.openOfficialCostsModal(); }
+    function closeOfficialCostsModal() { window.closeOfficialCostsModal(); }
 
     function switchOfficialCostsTab(tab) {
       const tabSltp = document.getElementById('contentTabSltp');

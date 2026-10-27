@@ -4393,10 +4393,39 @@ function renderPsbCosts(db) {
 
   // Render Catatan Beasiswa
   const noteEl = document.getElementById('psbBeasiswaText');
-  if (noteEl && costs.scholarshipNote) {
-    noteEl.innerHTML = costs.scholarshipNote;
+  if (noteEl) {
+    if (costs.scholarshipNote) {
+      noteEl.innerHTML = costs.scholarshipNote;
+      const parentBanner = noteEl.closest('.psb-beasiswa-banner');
+      if (parentBanner) parentBanner.style.display = 'block';
+    } else {
+      const parentBanner = noteEl.closest('.psb-beasiswa-banner');
+      if (parentBanner) parentBanner.style.display = 'none';
+    }
   }
 }
+
+window.openOfficialCostsModal = function() {
+  const modal = document.getElementById('officialCostsModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    modal.style.opacity = '1';
+    modal.style.visibility = 'visible';
+    modal.style.pointerEvents = 'auto';
+    document.body.style.overflow = 'hidden';
+  }
+};
+
+window.closeOfficialCostsModal = function() {
+  const modal = document.getElementById('officialCostsModal');
+  if (modal) {
+    modal.style.display = 'none';
+    modal.style.opacity = '0';
+    modal.style.visibility = 'hidden';
+    modal.style.pointerEvents = 'none';
+    document.body.style.overflow = '';
+  }
+};
 
 /* 9. ALUR PENDAFTARAN SANTRI BARU (PPDB ONLINE) */
 function initPPDBRegistration() {
