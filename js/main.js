@@ -72,6 +72,7 @@ function renderAllSections() {
   try { renderBimbinganTab(db); } catch (e) { console.error('Error renderBimbinganTab:', e); }
   try { renderPsbWaveHeader(db); } catch (e) { console.error('Error renderPsbWaveHeader:', e); }
   try { renderPsbFaq(db); } catch (e) { console.error('Error renderPsbFaq:', e); }
+  try { renderPsbCosts(db); } catch (e) { console.error('Error renderPsbCosts:', e); }
   if (typeof refreshScrollObserver === 'function') {
     refreshScrollObserver();
   }
@@ -4339,6 +4340,58 @@ function renderPsbFaq(db) {
       </div>
     `;
   }).join('');
+}
+
+/* 8D. RENDER ESTIMASI BIAYA PENDIDIKAN SPMB DINAMIS DARI DATABASE */
+function renderPsbCosts(db) {
+  const grid = document.getElementById('psbCostGrid');
+  if (!grid) return;
+  if (!db) db = (typeof getDB === 'function') ? getDB() : null;
+
+  const costs = (db && db.psbCosts) || ((typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.psbCosts) ? DEFAULT_YAYASAN_DATA.psbCosts : null);
+  if (!costs || !costs.cards || !Array.isArray(costs.cards) || costs.cards.length === 0) return;
+
+  // Render Section Header
+  const badgeEl = document.getElementById('psbCostBadge');
+  if (badgeEl && costs.sectionBadge) badgeEl.textContent = costs.sectionBadge;
+
+  const titleEl = document.getElementById('psbCostTitle');
+  if (titleEl && costs.sectionTitle) titleEl.textContent = costs.sectionTitle;
+
+  const subEl = document.getElementById('psbCostSub');
+  if (subEl && costs.sectionSubtitle) subEl.textContent = costs.sectionSubtitle;
+
+  // Render Cards
+  grid.innerHTML = costs.cards.map((card, idx) => {
+    const isHighlight = Boolean(card.isPopular);
+    const staggerClass = `stagger-${idx + 1}`;
+    const popBadge = (isHighlight && card.popularBadge)
+      ? `<span style="background:#FBBF24; color:#0A2540; font-size:0.75rem; font-weight:800; padding:3px 10px; border-radius:999px; text-transform:uppercase; margin-bottom:8px; display:inline-block;">${card.popularBadge}</span>`
+      : '';
+    const btnClass = isHighlight ? 'btn btn-primary btn-sm' : 'btn btn-outline btn-sm';
+    const featuresList = (card.features || []).map(f => `<li><span class="check">✔</span> ${f}</li>`).join('');
+
+    return `
+      <div class="psb-cost-card ${isHighlight ? 'highlight' : ''} scroll-reveal ${staggerClass}">
+        <div class="psb-cost-header">
+          ${popBadge}
+          <h3 class="psb-cost-name">${card.name || 'Paket Biaya'}</h3>
+          <div class="psb-cost-price">${card.price || 'Rp 0'}</div>
+          <span class="psb-cost-period">${card.period || ''}</span>
+        </div>
+        <ul class="psb-cost-list">
+          ${featuresList}
+        </ul>
+        <a href="${card.btnLink || '#formulir'}" class="${btnClass}" style="width:100%; justify-content:center;">${card.btnText || 'Daftar Sekarang'}</a>
+      </div>
+    `;
+  }).join('');
+
+  // Render Catatan Beasiswa
+  const noteEl = document.getElementById('psbBeasiswaText');
+  if (noteEl && costs.scholarshipNote) {
+    noteEl.innerHTML = costs.scholarshipNote;
+  }
 }
 
 /* 9. ALUR PENDAFTARAN SANTRI BARU (PPDB ONLINE) */

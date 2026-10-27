@@ -110,6 +110,66 @@ const DEFAULT_YAYASAN_DATA = {
     announcementText: "Jalur Indent SPMB T.A. 2027/2028: 01 November 2026 s/d 06 Januari 2027. Kuota asrama putra dan putri terbatas. Pendaftaran online buka 24 jam."
   },
 
+  // Rincian Skema & Estimasi Biaya Pendidikan SPMB (Transparansi Biaya Terpadu & Terintegrasi Admin CMS)
+  psbCosts: {
+    sectionBadge: "Transparan & Terjangkau",
+    sectionTitle: "Rincian Estimasi Biaya Pendidikan",
+    sectionSubtitle: "Komitmen yayasan dalam memberikan layanan pendidikan Islam berkualitas dengan skema pembiayaan yang transparan dan dapat diangsur.",
+    scholarshipNote: "<strong>Program Beasiswa Pendidikan:</strong> Yayasan menyediakan <em>Beasiswa Bebas Biaya SPP & Masuk 100%</em> bagi santri hafidz Al-Qur'an 30 Juz bersanad muttashil, juara olimpiade sains minimal tingkat provinsi, serta santri yatim dhuafa berprestasi.",
+    cards: [
+      {
+        id: "cost-card-1",
+        name: "Infaq Formulir & Seleksi",
+        price: "Rp 150.000",
+        period: "Sekali bayar saat registrasi awal",
+        isPopular: false,
+        popularBadge: "",
+        btnText: "Pilih Jalur Reguler",
+        btnLink: "#formulir",
+        features: [
+          "Nomor Registrasi Resmi & Akses Sistem",
+          "Biaya Pelaksanaan Ujian Masuk & CBT",
+          "Tes Baca Al-Qur'an & Pemetaan Kamar",
+          "Layanan Konsultasi Psikologis Santri"
+        ]
+      },
+      {
+        id: "cost-card-2",
+        name: "Infaq Pangkal & Fasilitas Masuk",
+        price: "Rp 4.850.000",
+        period: "Sekali selama masa jenjang pendidikan (Bisa Diangsur 3x)",
+        isPopular: true,
+        popularBadge: "Paling Populer",
+        btnText: "Daftar Sekarang",
+        btnLink: "#formulir",
+        features: [
+          "Infaq Pengembangan Sarana & Prasarana",
+          "Fasilitas Asrama (Kasur Busa, Lemari Pribadi, Bantal)",
+          "Paket Seragam Lengkap 4 Stel (Termasuk Jubah & Olahraga)",
+          "Paket Kitab Kuning Salafiyah Awal Tahun",
+          "Kartu Tanda Santri (KTS) & Smart Card Digital"
+        ]
+      },
+      {
+        id: "cost-card-3",
+        name: "Iuran SPP Bulanan Terpadu",
+        price: "Rp 1.050.000",
+        period: "Per bulan (Paket All-in-One Mukim Asrama)",
+        isPopular: false,
+        popularBadge: "",
+        btnText: "Pelajari Selengkapnya",
+        btnLink: "#faq",
+        features: [
+          "Biaya Pendidikan Formal Madrasah / Sekolah",
+          "Makan 3x Sehari Menu Higienis & Bergizi",
+          "Bimbingan Asrama & Pengajian Kitab 24 Jam",
+          "Layanan Laundry Seragam Santri Bersih",
+          "Layanan Kesehatan Klinik & Poskestren"
+        ]
+      }
+    ]
+  },
+
   // Konfigurasi Pop-Up Pengumuman & Informasi Website (Dikelola Penuh via Admin CMS)
   popupAnnouncement: {
     enabled: true,
@@ -3057,6 +3117,11 @@ function getDB() {
     // Auto-migrate facilities (Koreksi Faktual Fasilitas Riil & Pembersihan Klaim Hiperbolis)
     if (!parsed.facilities || !Array.isArray(parsed.facilities) || parsed.facilities.length === 0 || parsed.facilities.some(f => (f.capacity && f.capacity.includes("80 PC")) || (f.image && f.image.includes("belajar_santri_sma.jpg")) || (f.name && (f.name.includes("Laboratorium Terpadu Sains") || f.name.includes("Graha Serbaguna"))))) {
       parsed.facilities = JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.facilities));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+    }
+    // Auto-migrate psbCosts (Rincian Estimasi Biaya Pendidikan SPMB Dinamis)
+    if (!parsed.psbCosts || !parsed.psbCosts.cards || !Array.isArray(parsed.psbCosts.cards) || parsed.psbCosts.cards.length === 0) {
+      parsed.psbCosts = JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.psbCosts));
       localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     }
     return parsed;

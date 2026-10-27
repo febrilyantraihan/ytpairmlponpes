@@ -3755,6 +3755,10 @@ function renderTabLeads(db, container) {
     : ((typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.psbFaq) ? DEFAULT_YAYASAN_DATA.psbFaq : []);
   const sortedFaqs = [...faqsList].sort((a, b) => (parseInt(a.order, 10) || 0) - (parseInt(b.order, 10) || 0));
 
+  const costs = (db.psbCosts && db.psbCosts.cards && Array.isArray(db.psbCosts.cards))
+    ? db.psbCosts
+    : ((typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.psbCosts) ? DEFAULT_YAYASAN_DATA.psbCosts : { cards: [] });
+
   container.innerHTML = `
     ${isSuperAdmin ? `
       <!-- Panel Pengaturan Sistem 2 Gelombang PPDB & Periode PSB -->
@@ -3885,6 +3889,45 @@ function renderTabLeads(db, container) {
 
           </div>
         </form>
+      </div>
+
+      <!-- Panel Manajemen Rincian Biaya SPMB (Transparansi Biaya Terpadu & CRUD Dinamis) -->
+      <div class="admin-card" style="margin-bottom:22px; border-top:4px solid #10B981; background:#FFFFFF; box-shadow:0 4px 16px rgba(10,37,64,0.08); border-radius:10px;">
+        <div class="admin-card-header" style="flex-wrap:wrap; gap:12px; padding-bottom:12px; border-bottom:1px solid #E2E8F0;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:38px; height:38px; border-radius:8px; background:rgba(16,185,129,0.12); color:#047857; display:flex; align-items:center; justify-content:center; font-size:1.2rem; font-weight:800;">
+              💳
+            </div>
+            <div>
+              <h3 style="margin:0; font-size:1.05rem; color:#0A2540; font-weight:800;">Manajemen Rincian & Estimasi Biaya SPMB</h3>
+              <p style="margin:0; font-size:0.80rem; color:#64748B;">Kelola nominal formulir, infaq pangkal, SPP bulanan, dan catatan beasiswa yang tampil pada halaman pendaftaran (psb.html).</p>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" onclick="openPsbCostsModal()" style="background:#0F4C81; border-color:#0A2540; font-weight:700; padding:8px 16px; border-radius:6px; box-shadow:0 2px 6px rgba(15,76,129,0.25);">
+            ✏️ Kelola & Edit Biaya
+          </button>
+        </div>
+
+        <!-- Preview 3 Kartu Biaya -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px; margin-top:14px;">
+          ${(costs.cards || []).map((card, idx) => `
+            <div style="background:#F8FAFC; border:1px solid ${card.isPopular ? '#FBBF24' : '#E2E8F0'}; border-radius:8px; padding:14px; position:relative;">
+              ${card.isPopular ? '<span style="background:#FBBF24; color:#0A2540; font-size:0.68rem; font-weight:800; padding:2px 8px; border-radius:999px; text-transform:uppercase; display:inline-block; margin-bottom:6px;">PALING POPULER</span>' : ''}
+              <div style="font-weight:700; color:#0A2540; font-size:0.9rem;">${card.name}</div>
+              <div style="font-size:1.25rem; font-weight:800; color:${card.isPopular ? '#B45309' : '#0F4C81'}; margin:4px 0;">${card.price}</div>
+              <div style="font-size:0.75rem; color:#64748B; margin-bottom:8px;">${card.period}</div>
+              <ul style="margin:0; padding-left:16px; font-size:0.75rem; color:#475569; line-height:1.5;">
+                ${(card.features || []).slice(0, 3).map(f => `<li>${f}</li>`).join('')}
+                ${(card.features || []).length > 3 ? `<li><em>+ ${(card.features || []).length - 3} fasilitas lainnya</em></li>` : ''}
+              </ul>
+            </div>
+          `).join('')}
+        </div>
+        ${costs.scholarshipNote ? `
+          <div style="margin-top:12px; background:#EFF6FF; border:1px solid #BFDBFE; border-radius:6px; padding:10px 14px; font-size:0.78rem; color:#1E3A8A; line-height:1.5;">
+            ${costs.scholarshipNote}
+          </div>
+        ` : ''}
       </div>
 
       <!-- Panel Manajemen Tanya Jawab (FAQ) PPDB & Pesantren (CRUD Dinamis) -->
@@ -5566,6 +5609,251 @@ window.movePsbFaqOrder = function(id, direction) {
   db.psbFaq = list;
 
   saveDB(db);
+  const container = document.getElementById('adminContentArea');
+  if (container) {
+    renderTabLeads(db, container);
+  }
+};
+
+/* ========================================================
+   MODAL & LOGIKA PENGELOLAAN RINCIAN BIAYA SPMB (psb.html)
+   ======================================================== */
+window.openPsbCostsModal = function() {
+  const db = getDB();
+  const costs = (db.psbCosts && db.psbCosts.cards && Array.isArray(db.psbCosts.cards))
+    ? db.psbCosts
+    : ((typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.psbCosts) ? DEFAULT_YAYASAN_DATA.psbCosts : { cards: [] });
+
+  const c1 = (costs.cards && costs.cards[0]) || { name: 'Infaq Formulir & Seleksi', price: 'Rp 150.000', period: 'Sekali bayar saat registrasi awal', btnText: 'Pilih Jalur Reguler', btnLink: '#formulir', features: [] };
+  const c2 = (costs.cards && costs.cards[1]) || { name: 'Infaq Pangkal & Fasilitas Masuk', price: 'Rp 4.850.000', period: 'Sekali selama masa jenjang pendidikan (Bisa Diangsur 3x)', isPopular: true, popularBadge: 'Paling Populer', btnText: 'Daftar Sekarang', btnLink: '#formulir', features: [] };
+  const c3 = (costs.cards && costs.cards[2]) || { name: 'Iuran SPP Bulanan Terpadu', price: 'Rp 1.050.000', period: 'Per bulan (Paket All-in-One Mukim Asrama)', btnText: 'Pelajari Selengkapnya', btnLink: '#faq', features: [] };
+
+  const formHtml = `
+    <form id="psbCostsCrudForm" onsubmit="event.preventDefault(); savePsbCostsForm();">
+      <!-- Section Header Info -->
+      <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:12px 14px; margin-bottom:16px;">
+        <h4 style="margin:0 0 10px 0; font-size:0.86rem; color:#0A2540; font-weight:800;">Header Seksi Biaya (psb.html)</h4>
+        <div style="display:grid; grid-template-columns:1fr 2fr; gap:10px; margin-bottom:8px;">
+          <div>
+            <label class="form-label" style="font-weight:700; font-size:0.75rem;">Lencana Seksi</label>
+            <input type="text" id="costFormSectionBadge" class="form-input" value="${(costs.sectionBadge || 'Transparan & Terjangkau').replace(/"/g, '&quot;')}" style="font-size:0.82rem;">
+          </div>
+          <div>
+            <label class="form-label" style="font-weight:700; font-size:0.75rem;">Judul Utama Seksi</label>
+            <input type="text" id="costFormSectionTitle" class="form-input" value="${(costs.sectionTitle || 'Rincian Estimasi Biaya Pendidikan').replace(/"/g, '&quot;')}" style="font-size:0.82rem; font-weight:700;">
+          </div>
+        </div>
+        <div>
+          <label class="form-label" style="font-weight:700; font-size:0.75rem;">Subjudul / Deskripsi Seksi</label>
+          <input type="text" id="costFormSectionSub" class="form-input" value="${(costs.sectionSubtitle || '').replace(/"/g, '&quot;')}" style="font-size:0.82rem;">
+        </div>
+      </div>
+
+      <!-- Tab / Accordion 3 Kartu -->
+      <div style="display:flex; flex-direction:column; gap:14px; max-height:420px; overflow-y:auto; padding-right:4px;">
+        <!-- Card 1 -->
+        <div style="border:1px solid #CBD5E1; border-radius:8px; padding:12px; background:#FFF;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <strong style="color:#0F4C81; font-size:0.84rem;">Kartu 1: Biaya Pendaftaran / Seleksi</strong>
+            <span style="font-size:0.7rem; color:#64748B;">Reguler / Awal</span>
+          </div>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:8px; margin-bottom:8px;">
+            <div>
+              <label class="form-label" style="font-size:0.73rem; font-weight:600;">Nama Biaya *</label>
+              <input type="text" id="c1_name" class="form-input" value="${(c1.name || '').replace(/"/g, '&quot;')}" required style="font-size:0.8rem;">
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.73rem; font-weight:600;">Nominal Biaya (Format Rp) *</label>
+              <input type="text" id="c1_price" class="form-input" value="${(c1.price || '').replace(/"/g, '&quot;')}" required style="font-size:0.82rem; font-weight:700; color:#0F4C81;">
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.73rem; font-weight:600;">Keterangan Periode</label>
+              <input type="text" id="c1_period" class="form-input" value="${(c1.period || '').replace(/"/g, '&quot;')}" style="font-size:0.78rem;">
+            </div>
+          </div>
+          <div style="margin-bottom:8px;">
+            <label class="form-label" style="font-size:0.73rem; font-weight:600;">Daftar Fasilitas / Cakupan (1 baris per fasilitas)</label>
+            <textarea id="c1_features" class="form-textarea" rows="4" style="font-size:0.78rem; line-height:1.4;">${(c1.features || []).join('\n')}</textarea>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div>
+              <label class="form-label" style="font-size:0.73rem;">Teks Tombol Aksi</label>
+              <input type="text" id="c1_btnText" class="form-input" value="${(c1.btnText || 'Pilih Jalur Reguler').replace(/"/g, '&quot;')}" style="font-size:0.78rem;">
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.73rem;">Tautan Tombol (Anchor/URL)</label>
+              <input type="text" id="c1_btnLink" class="form-input" value="${(c1.btnLink || '#formulir').replace(/"/g, '&quot;')}" style="font-size:0.78rem;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div style="border:2px solid #FBBF24; border-radius:8px; padding:12px; background:#FFFBEB;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <strong style="color:#B45309; font-size:0.84rem;">Kartu 2: Infaq Pangkal & Fasilitas Masuk (Sorotan Utama)</strong>
+            <span style="background:#FBBF24; color:#0A2540; font-size:0.68rem; font-weight:800; padding:2px 8px; border-radius:999px;">HIGHLIGHT</span>
+          </div>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:8px; margin-bottom:8px;">
+            <div>
+              <label class="form-label" style="font-size:0.73rem; font-weight:600;">Nama Biaya *</label>
+              <input type="text" id="c2_name" class="form-input" value="${(c2.name || '').replace(/"/g, '&quot;')}" required style="font-size:0.8rem;">
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.73rem; font-weight:600;">Nominal Biaya (Format Rp) *</label>
+              <input type="text" id="c2_price" class="form-input" value="${(c2.price || '').replace(/"/g, '&quot;')}" required style="font-size:0.82rem; font-weight:700; color:#B45309;">
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.73rem; font-weight:600;">Keterangan Periode / Angsuran</label>
+              <input type="text" id="c2_period" class="form-input" value="${(c2.period || '').replace(/"/g, '&quot;')}" style="font-size:0.78rem;">
+            </div>
+          </div>
+          <div style="margin-bottom:8px;">
+            <label class="form-label" style="font-size:0.73rem; font-weight:600;">Daftar Fasilitas / Cakupan (1 baris per fasilitas)</label>
+            <textarea id="c2_features" class="form-textarea" rows="5" style="font-size:0.78rem; line-height:1.4;">${(c2.features || []).join('\n')}</textarea>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div>
+              <label class="form-label" style="font-size:0.73rem;">Teks Tombol Aksi</label>
+              <input type="text" id="c2_btnText" class="form-input" value="${(c2.btnText || 'Daftar Sekarang').replace(/"/g, '&quot;')}" style="font-size:0.78rem;">
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.73rem;">Tautan Tombol (Anchor/URL)</label>
+              <input type="text" id="c2_btnLink" class="form-input" value="${(c2.btnLink || '#formulir').replace(/"/g, '&quot;')}" style="font-size:0.78rem;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div style="border:1px solid #CBD5E1; border-radius:8px; padding:12px; background:#FFF;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <strong style="color:#0F4C81; font-size:0.84rem;">Kartu 3: SPP Bulanan Terpadu (All-in-One Mukim)</strong>
+            <span style="font-size:0.7rem; color:#64748B;">Bulanan</span>
+          </div>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:8px; margin-bottom:8px;">
+            <div>
+              <label class="form-label" style="font-size:0.73rem; font-weight:600;">Nama Biaya *</label>
+              <input type="text" id="c3_name" class="form-input" value="${(c3.name || '').replace(/"/g, '&quot;')}" required style="font-size:0.8rem;">
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.73rem; font-weight:600;">Nominal SPP (Format Rp) *</label>
+              <input type="text" id="c3_price" class="form-input" value="${(c3.price || '').replace(/"/g, '&quot;')}" required style="font-size:0.82rem; font-weight:700; color:#0F4C81;">
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.73rem; font-weight:600;">Keterangan Periode</label>
+              <input type="text" id="c3_period" class="form-input" value="${(c3.period || '').replace(/"/g, '&quot;')}" style="font-size:0.78rem;">
+            </div>
+          </div>
+          <div style="margin-bottom:8px;">
+            <label class="form-label" style="font-size:0.73rem; font-weight:600;">Daftar Fasilitas / Cakupan (1 baris per fasilitas)</label>
+            <textarea id="c3_features" class="form-textarea" rows="5" style="font-size:0.78rem; line-height:1.4;">${(c3.features || []).join('\n')}</textarea>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div>
+              <label class="form-label" style="font-size:0.73rem;">Teks Tombol Aksi</label>
+              <input type="text" id="c3_btnText" class="form-input" value="${(c3.btnText || 'Pelajari Selengkapnya').replace(/"/g, '&quot;')}" style="font-size:0.78rem;">
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.73rem;">Tautan Tombol (Anchor/URL)</label>
+              <input type="text" id="c3_btnLink" class="form-input" value="${(c3.btnLink || '#faq').replace(/"/g, '&quot;')}" style="font-size:0.78rem;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Beasiswa Note -->
+        <div style="background:#F0F9FF; border:1px solid #BAE6FD; border-radius:8px; padding:12px;">
+          <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#0369A1; margin-bottom:4px;">Catatan Beasiswa Pendidikan (Bebas Biaya 100%)</label>
+          <textarea id="costFormScholarshipNote" class="form-textarea" rows="3" style="font-size:0.8rem; line-height:1.5;">${(costs.scholarshipNote || '')}</textarea>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px; padding-top:12px; border-top:1px solid #E2E8F0;">
+        <button type="button" class="btn btn-outline" onclick="closeAdminModal()" style="font-weight:600; padding:8px 16px;">Batal</button>
+        <button type="submit" class="btn btn-primary" style="background:#0F4C81; border-color:#0A2540; font-weight:700; padding:8px 22px;">💾 Simpan Rincian Biaya</button>
+      </div>
+    </form>
+  `;
+
+  openAdminModal('Kelola Rincian & Estimasi Biaya SPMB', formHtml);
+};
+
+window.savePsbCostsForm = function() {
+  const db = getDB();
+  if (!db.psbCosts) db.psbCosts = {};
+
+  const badge = document.getElementById('costFormSectionBadge') ? document.getElementById('costFormSectionBadge').value.trim() : 'Transparan & Terjangkau';
+  const title = document.getElementById('costFormSectionTitle') ? document.getElementById('costFormSectionTitle').value.trim() : 'Rincian Estimasi Biaya Pendidikan';
+  const sub = document.getElementById('costFormSectionSub') ? document.getElementById('costFormSectionSub').value.trim() : '';
+  const scholarship = document.getElementById('costFormScholarshipNote') ? document.getElementById('costFormScholarshipNote').value.trim() : '';
+
+  const parseFeatures = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return [];
+    return el.value.split('\n').map(s => s.trim()).filter(Boolean);
+  };
+
+  const c1_name = document.getElementById('c1_name') ? document.getElementById('c1_name').value.trim() : 'Infaq Formulir & Seleksi';
+  const c1_price = document.getElementById('c1_price') ? document.getElementById('c1_price').value.trim() : 'Rp 150.000';
+  const c1_period = document.getElementById('c1_period') ? document.getElementById('c1_period').value.trim() : 'Sekali bayar saat registrasi awal';
+  const c1_btnText = document.getElementById('c1_btnText') ? document.getElementById('c1_btnText').value.trim() : 'Pilih Jalur Reguler';
+  const c1_btnLink = document.getElementById('c1_btnLink') ? document.getElementById('c1_btnLink').value.trim() : '#formulir';
+
+  const c2_name = document.getElementById('c2_name') ? document.getElementById('c2_name').value.trim() : 'Infaq Pangkal & Fasilitas Masuk';
+  const c2_price = document.getElementById('c2_price') ? document.getElementById('c2_price').value.trim() : 'Rp 4.850.000';
+  const c2_period = document.getElementById('c2_period') ? document.getElementById('c2_period').value.trim() : 'Sekali selama masa jenjang pendidikan (Bisa Diangsur 3x)';
+  const c2_btnText = document.getElementById('c2_btnText') ? document.getElementById('c2_btnText').value.trim() : 'Daftar Sekarang';
+  const c2_btnLink = document.getElementById('c2_btnLink') ? document.getElementById('c2_btnLink').value.trim() : '#formulir';
+
+  const c3_name = document.getElementById('c3_name') ? document.getElementById('c3_name').value.trim() : 'Iuran SPP Bulanan Terpadu';
+  const c3_price = document.getElementById('c3_price') ? document.getElementById('c3_price').value.trim() : 'Rp 1.050.000';
+  const c3_period = document.getElementById('c3_period') ? document.getElementById('c3_period').value.trim() : 'Per bulan (Paket All-in-One Mukim Asrama)';
+  const c3_btnText = document.getElementById('c3_btnText') ? document.getElementById('c3_btnText').value.trim() : 'Pelajari Selengkapnya';
+  const c3_btnLink = document.getElementById('c3_btnLink') ? document.getElementById('c3_btnLink').value.trim() : '#faq';
+
+  db.psbCosts = {
+    sectionBadge: badge,
+    sectionTitle: title,
+    sectionSubtitle: sub,
+    scholarshipNote: scholarship,
+    cards: [
+      {
+        id: "cost-card-1",
+        name: c1_name,
+        price: c1_price,
+        period: c1_period,
+        isPopular: false,
+        popularBadge: "",
+        btnText: c1_btnText,
+        btnLink: c1_btnLink,
+        features: parseFeatures('c1_features')
+      },
+      {
+        id: "cost-card-2",
+        name: c2_name,
+        price: c2_price,
+        period: c2_period,
+        isPopular: true,
+        popularBadge: "Paling Populer",
+        btnText: c2_btnText,
+        btnLink: c2_btnLink,
+        features: parseFeatures('c2_features')
+      },
+      {
+        id: "cost-card-3",
+        name: c3_name,
+        price: c3_price,
+        period: c3_period,
+        isPopular: false,
+        popularBadge: "",
+        btnText: c3_btnText,
+        btnLink: c3_btnLink,
+        features: parseFeatures('c3_features')
+      }
+    ]
+  };
+
+  saveDB(db);
+  closeAdminModal();
+  showToast('💾 Rincian estimasi biaya SPMB berhasil diperbarui dan disinkronkan!', 'success');
   const container = document.getElementById('adminContentArea');
   if (container) {
     renderTabLeads(db, container);
