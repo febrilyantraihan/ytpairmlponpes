@@ -47,5 +47,10 @@
    - Gunakan kurvatur sudut yang tegas, matang, dan modern (*semi-boxy clean elegance*):
      * Kartu, modal dialog, dan kontainer utama: radius sedang (`8px` s.d. `12px`, maksimal `14px`; dilarang sudut balon `24px` - `36px+`).
      * Tombol & input formulir: sudut rapi profesional (`6px` s.d. `8px`, dilarang bentuk kapsul/peluru lonjong penuh kecuali indikator status kecil khusus).
+11. **Standar Bebas Terpotong & Tata Letak Ringkas Tanpa Scroll Melelahkan (Zero Element Clipping, Anti-Over-Rounded & Compact Ergonomics)**:
+   - **Kewajiban Mutlak**: Pada setiap penambahan atau pembaruan fitur (khususnya modal dialog, tabel rincian biaya, kartu informasi, dan widget interaktif):
+     * **Dilarang Desain Terlalu Rounded / Over-Curved**: Dilarang menggunakan bentuk lonjong pil/kapsul ekstrem (`border-radius: 999px` atau `24px+`) pada kontainer, tombol aksi, filter, atau modal. Terapkan sudut semi-boxy tegas yang matang dan berwibawa (`6px` s.d. `10px`).
+     * **Dilarang Ada Elemen Terpotong (*Zero Clipping*)**: Header modal, judul, tombol tutup (✕), tab navigasi, tabel angka, dan tombol aksi footer (seperti Tutup dan Hubungi WhatsApp) WAJIB utuh terlihat jelas di layar sempit 360px tanpa terpotong batas layar atau tersembunyi di bawah lipatan footer.
+     * **Dilarang Scroll Menjulur Terlalu Panjang (*Zero Endless Scrolling*)**: Jangan menumpuk tabel atau blok data yang panjang secara vertikal ke bawah. Wajib menggunakan segmentasi kompak (segmented control / sub-tab interaktif per fase biaya / accordion) sehingga pengguna dapat beralih melihat rincian per tahap secara ringkas tanpa harus menggulir layar secara melelahkan di ponsel Samsung Galaxy A55 (360x800 px).
 
 

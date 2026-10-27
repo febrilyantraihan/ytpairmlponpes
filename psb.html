@@ -2091,271 +2091,438 @@
   </div>
 
   <!-- MODAL TRANSPARANSI RINCIAN BIAYA PENDIDIKAN RESMI YTPAI -->
-  <div class="official-costs-modal-overlay" id="officialCostsModal" role="dialog" aria-modal="true" aria-labelledby="officialCostsTitle" onclick="if(event.target === this) closeOfficialCostsModal()" style="display:none; position:fixed; inset:0; background:rgba(10,37,64,0.78); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); z-index:999999; justify-content:center; align-items:center; padding:16px; opacity:1; visibility:visible; pointer-events:auto;">
-    <div class="modal-dialog" style="background:#FFFFFF; border-radius:12px; max-width:880px; width:100%; max-height:92vh; display:flex; flex-direction:column; box-shadow:0 24px 48px rgba(10,37,64,0.3); border:1px solid #E2E8F0; overflow:hidden; animation:modalSlideUp 0.25s ease;">
+  <style id="officialCostsCustomStyles">
+    #officialCostsModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 37, 64, 0.82);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      z-index: 999999;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      box-sizing: border-box;
+      opacity: 1;
+      visibility: visible;
+    }
+    #officialCostsModal .modal-dialog {
+      background: #FFFFFF;
+      border-radius: 8px;
+      max-width: 860px;
+      width: 100%;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 36px rgba(10, 37, 64, 0.28);
+      border: 1px solid #CBD5E1;
+      overflow: hidden;
+      animation: modalSlideUp 0.22s ease-out;
+    }
+    .cost-tab-nav {
+      background: #F8FAFC;
+      border-bottom: 1px solid #E2E8F0;
+      padding: 8px 12px 0 12px;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+    .cost-tab-btn {
+      padding: 7px 12px;
+      border: 1px solid transparent;
+      border-bottom: none;
+      background: transparent;
+      color: #64748B;
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+      white-space: nowrap;
+      border-radius: 6px 6px 0 0;
+      transition: all 0.2s ease;
+    }
+    .cost-tab-btn.active {
+      background: #FFFFFF;
+      color: #0F4C81;
+      border-color: #E2E8F0;
+      border-bottom: 2px solid #0F4C81;
+      font-weight: 800;
+    }
+    .cost-filter-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .cost-filter-btn {
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.73rem;
+      font-weight: 700;
+      border: 1px solid #CBD5E1;
+      background: #F8FAFC;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .cost-filter-btn.active {
+      background: #0F4C81;
+      color: #FFFFFF;
+      border-color: #0F4C81;
+    }
+    .cost-phase-switcher {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 10px;
+      background: #F1F5F9;
+      padding: 3px;
+      border-radius: 6px;
+      border: 1px solid #E2E8F0;
+    }
+    .cost-phase-btn {
+      flex: 1;
+      padding: 6px 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      color: #475569;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .cost-phase-btn.active {
+      background: #0F4C81;
+      color: #FFFFFF;
+    }
+    .cost-grid-layout {
+      margin-bottom: 10px;
+    }
+    /* Mobile-first: Only show selected phase */
+    @media (max-width: 767px) {
+      .cost-phase-card {
+        display: none;
+      }
+      .cost-phase-card.active-phase {
+        display: block;
+      }
+    }
+    /* Desktop & Tablet: Panoramic 3 columns */
+    @media (min-width: 768px) {
+      .cost-phase-switcher {
+        display: none !important;
+      }
+      .cost-grid-layout {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .cost-phase-card {
+        display: block !important;
+      }
+    }
+    .cost-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.74rem;
+    }
+    .cost-table td {
+      padding: 5px 8px;
+    }
+    .cost-table tr:not(:last-child) {
+      border-bottom: 1px solid #F1F5F9;
+    }
+  </style>
+
+  <div class="official-costs-modal-overlay" id="officialCostsModal" role="dialog" aria-modal="true" aria-labelledby="officialCostsTitle" onclick="if(event.target === this) closeOfficialCostsModal()">
+    <div class="modal-dialog">
       <!-- Modal Header -->
-      <div style="background:linear-gradient(135deg, #0A2540 0%, #0F4C81 100%); color:#FFFFFF; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #FBBF24;">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <div style="width:36px; height:36px; border-radius:8px; background:rgba(251,191,36,0.18); color:#FBBF24; display:flex; align-items:center; justify-content:center; font-size:1.25rem;">
+      <div style="background:linear-gradient(135deg, #0A2540 0%, #0F4C81 100%); color:#FFFFFF; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #FBBF24;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div style="width:30px; height:30px; border-radius:6px; background:rgba(251,191,36,0.2); color:#FBBF24; display:flex; align-items:center; justify-content:center; font-size:1.05rem; flex-shrink:0;">
             📋
           </div>
           <div>
-            <h3 id="officialCostsTitle" style="margin:0; font-size:1.05rem; font-weight:800; color:#FFFFFF; letter-spacing:0.3px;">Rincian Resmi Pembayaran Biaya Pendidikan</h3>
-            <p style="margin:2px 0 0 0; font-size:0.75rem; color:#E2E8F0;">Berdasarkan Surat Keputusan & Dokumen Resmi Yayasan untuk Peserta Didik Baru</p>
+            <h3 id="officialCostsTitle" style="margin:0; font-size:0.92rem; font-weight:800; color:#FFFFFF; letter-spacing:0.2px; line-height:1.25;">Rincian Resmi Biaya Pendidikan</h3>
+            <p style="margin:2px 0 0 0; font-size:0.7rem; color:#CBD5E1; line-height:1.2;">SK & Dokumen Resmi Yayasan Santri Baru</p>
           </div>
         </div>
-        <button type="button" onclick="closeOfficialCostsModal()" aria-label="Tutup" style="background:rgba(255,255,255,0.15); border:none; color:#FFFFFF; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">✕</button>
+        <button type="button" onclick="closeOfficialCostsModal()" aria-label="Tutup" style="background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.25); color:#FFFFFF; width:28px; height:28px; border-radius:6px; cursor:pointer; font-size:0.88rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">✕</button>
       </div>
 
       <!-- Tab Navigation -->
-      <div style="background:#F8FAFC; border-bottom:1px solid #E2E8F0; padding:10px 18px 0 18px; display:flex; gap:8px; overflow-x:auto;">
-        <button type="button" class="official-tab-btn active" id="tabBtnSltp" onclick="switchOfficialCostsTab('sltp')" style="padding:9px 16px; border:none; background:transparent; border-bottom:3px solid #0F4C81; color:#0F4C81; font-weight:800; font-size:0.84rem; cursor:pointer; white-space:nowrap;">
-          🏫 Kelas 7 (MTs & SMP)
+      <div class="cost-tab-nav">
+        <button type="button" class="cost-tab-btn active" id="tabBtnSltp" onclick="switchOfficialCostsTab('sltp')">
+          🏫 Kelas 7 (MTs/SMP)
         </button>
-        <button type="button" class="official-tab-btn" id="tabBtnSlta" onclick="switchOfficialCostsTab('slta')" style="padding:9px 16px; border:none; background:transparent; border-bottom:3px solid transparent; color:#64748B; font-weight:700; font-size:0.84rem; cursor:pointer; white-space:nowrap;">
-          🎓 Kelas 10 (MA & SMA)
+        <button type="button" class="cost-tab-btn" id="tabBtnSlta" onclick="switchOfficialCostsTab('slta')">
+          🎓 Kelas 10 (MA/SMA)
         </button>
-        <button type="button" class="official-tab-btn" id="tabBtnSeragam" onclick="switchOfficialCostsTab('seragam')" style="padding:9px 16px; border:none; background:transparent; border-bottom:3px solid transparent; color:#64748B; font-weight:700; font-size:0.84rem; cursor:pointer; white-space:nowrap;">
-          👔 Rincian Seragam Lengkap
+        <button type="button" class="cost-tab-btn" id="tabBtnSeragam" onclick="switchOfficialCostsTab('seragam')">
+          👔 Seragam Lengkap
         </button>
       </div>
 
-      <!-- Modal Body (Scrollable) -->
-      <div style="padding:16px 20px; overflow-y:auto; flex:1; background:#FFFFFF;">
+      <!-- Modal Body (Scrollable with Compact Phase Tables) -->
+      <div style="padding:12px 14px; overflow-y:auto; flex:1; background:#FFFFFF;">
         <!-- TAB 1: KELAS 7 (SLTP) -->
         <div id="contentTabSltp">
           <!-- Filter Kategori Jalur -->
-          <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-items:center;">
-            <span style="font-size:0.75rem; font-weight:700; color:#64748B; margin-right:4px;">Pilih Jalur:</span>
-            <button type="button" class="official-cat-btn active" id="catBtnSltpReguler" onclick="switchOfficialCategory('sltp', 'reguler')" style="padding:5px 12px; border-radius:999px; font-size:0.75rem; font-weight:700; border:1px solid #0F4C81; background:#0F4C81; color:#FFFFFF; cursor:pointer;">
-              🟢 Putra / Putri Reguler (Mukim)
+          <div class="cost-filter-bar">
+            <span style="font-size:0.72rem; font-weight:700; color:#64748B;">Jalur:</span>
+            <button type="button" class="cost-filter-btn active" id="catBtnSltpReguler" onclick="switchOfficialCategory('sltp', 'reguler')">
+              🟢 Reguler (Mukim)
             </button>
-            <button type="button" class="official-cat-btn" id="catBtnSltpVip" onclick="switchOfficialCategory('sltp', 'vip')" style="padding:5px 12px; border-radius:999px; font-size:0.75rem; font-weight:700; border:1px solid #CBD5E1; background:#F8FAFC; color:#334155; cursor:pointer;">
-              🟡 Putri VIP (Mukim)
+            <button type="button" class="cost-filter-btn" id="catBtnSltpVip" onclick="switchOfficialCategory('sltp', 'vip')">
+              🟡 Putri VIP
             </button>
-            <button type="button" class="official-cat-btn" id="catBtnSltpMbajak" onclick="switchOfficialCategory('sltp', 'mbajak')" style="padding:5px 12px; border-radius:999px; font-size:0.75rem; font-weight:700; border:1px solid #CBD5E1; background:#F8FAFC; color:#334155; cursor:pointer;">
-              🚶 Non-Mukim / Mbajak (Pulang Pergi)
+            <button type="button" class="cost-filter-btn" id="catBtnSltpMbajak" onclick="switchOfficialCategory('sltp', 'mbajak')">
+              🚶 Non-Mukim (Mbajak)
             </button>
           </div>
 
           <!-- Highlight Box Pembulatan Tiap Bulan -->
-          <div id="sltpSummaryBox" style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:8px; padding:12px 16px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div id="sltpSummaryBox" style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:6px; padding:10px 14px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <div>
-              <span style="font-size:0.75rem; color:#15803D; font-weight:700; text-transform:uppercase;">Biaya Pendidikan Setiap Bulan (All-in-One)</span>
-              <div id="sltpMonthlyPrice" style="font-size:1.35rem; font-weight:800; color:#166534; margin-top:2px;">Rp 281.000 <span style="font-size:0.8rem; font-weight:600; color:#15803D;">/ bulan</span></div>
-              <div style="font-size:0.72rem; color:#4B5563; margin-top:2px;">Sudah termasuk: Syahriyah madrasah, infaq, PTS, PAS, PAS Madin, KKM, Perawatan, Poskestren & HUT RI.</div>
+              <span style="font-size:0.7rem; color:#15803D; font-weight:700; text-transform:uppercase; letter-spacing:0.3px;">Iuran Rutin per Bulan</span>
+              <div id="sltpMonthlyPrice" style="font-size:1.2rem; font-weight:800; color:#166534; line-height:1.2; margin-top:2px;">Rp 281.000 <span style="font-size:0.75rem; font-weight:600; color:#15803D;">/ bln</span></div>
+              <div style="font-size:0.68rem; color:#4B5563; margin-top:2px;">All-in: Syahriyah, infaq, PTS, PAS, KKM & poskestren.</div>
             </div>
             <div style="text-align:right;">
-              <span style="font-size:0.72rem; color:#6B7280;">Biaya Awal Tahun Masuk:</span>
-              <div id="sltpEntryPrice" style="font-size:1.15rem; font-weight:800; color:#0A2540;">Rp 410.000</div>
+              <span style="font-size:0.68rem; color:#64748B;">Awal Masuk:</span>
+              <div id="sltpEntryPrice" style="font-size:1.05rem; font-weight:800; color:#0A2540; line-height:1.2;">Rp 410.000</div>
             </div>
           </div>
 
+          <!-- Phase Switcher (Mobile) -->
+          <div class="cost-phase-switcher">
+            <button type="button" class="cost-phase-btn active" id="btnPhaseSltpAwal" onclick="switchCostPhase('sltp', 'awal')">1. Awal Masuk</button>
+            <button type="button" class="cost-phase-btn" id="btnPhaseSltpBulan" onclick="switchCostPhase('sltp', 'bulan')">2. Iuran Bulanan</button>
+            <button type="button" class="cost-phase-btn" id="btnPhaseSltpAkhir" onclick="switchCostPhase('sltp', 'akhir')">3. Akhir Tahun</button>
+          </div>
+
           <!-- Matriks 3 Tabel (Awal Tahun, Bulanan, Akhir Tahun) -->
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:14px; margin-bottom:14px;">
+          <div class="cost-grid-layout">
             <!-- Tabel 1: Biaya Awal Tahun -->
-            <div style="border:1px solid #E2E8F0; border-radius:8px; overflow:hidden;">
-              <div style="background:#0F4C81; color:#FFFFFF; padding:8px 12px; font-weight:700; font-size:0.8rem;">
-                1. BIAYA AWAL TAHUN
+            <div class="cost-phase-card active-phase" id="cardSltpAwal" style="border:1px solid #E2E8F0; border-radius:6px; overflow:hidden;">
+              <div style="background:#0F4C81; color:#FFFFFF; padding:6px 10px; font-weight:700; font-size:0.76rem; display:flex; justify-content:space-between; align-items:center;">
+                <span>1. BIAYA AWAL TAHUN</span>
+                <span style="font-size:0.68rem; opacity:0.85;">Sekali Bayar</span>
               </div>
-              <table style="width:100%; border-collapse:collapse; font-size:0.75rem;">
+              <table class="cost-table">
                 <tbody id="sltpTableAwal">
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 70.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Kesiswaan</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 100.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">MOS</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 40.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">KTA / Brizzi</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Pondok & Almari</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 110.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Madin</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-                  <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#0A2540;">TOTAL AWAL TAHUN</td><td id="sltpTotalAwalText" style="padding:7px 10px; text-align:right; color:#0A2540;">Rp 410.000</td></tr>
+                  <tr><td>PPDB Sekolah</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+                  <tr><td>Rapor Sekolah</td><td style="text-align:right; font-weight:600;">Rp 70.000</td></tr>
+                  <tr><td>Kesiswaan</td><td style="text-align:right; font-weight:600;">Rp 100.000</td></tr>
+                  <tr><td>MOS</td><td style="text-align:right; font-weight:600;">Rp 40.000</td></tr>
+                  <tr><td>KTA / Brizzi</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+                  <tr><td>PPDB Pondok & Almari</td><td style="text-align:right; font-weight:600;">Rp 110.000</td></tr>
+                  <tr><td>Rapor Madin</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+                  <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#0A2540;">TOTAL AWAL TAHUN</td><td id="sltpTotalAwalText" style="text-align:right; color:#0A2540;">Rp 410.000</td></tr>
                 </tbody>
               </table>
             </div>
 
             <!-- Tabel 2: Rincian Bulanan 1 Tahun -->
-            <div style="border:1px solid #E2E8F0; border-radius:8px; overflow:hidden;">
-              <div style="background:#0A2540; color:#FFFFFF; padding:8px 12px; font-weight:700; font-size:0.8rem;">
-                2. RINCIAN BIAYA BULANAN
+            <div class="cost-phase-card" id="cardSltpBulan" style="border:1px solid #E2E8F0; border-radius:6px; overflow:hidden;">
+              <div style="background:#0A2540; color:#FFFFFF; padding:6px 10px; font-weight:700; font-size:0.76rem; display:flex; justify-content:space-between; align-items:center;">
+                <span>2. RINCIAN BULANAN</span>
+                <span style="font-size:0.68rem; opacity:0.85;">Rutin / Bln</span>
               </div>
-              <table style="width:100%; border-collapse:collapse; font-size:0.75rem;">
+              <table class="cost-table">
                 <tbody id="sltpTableBulanan">
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Syahriyah (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 203.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Infaq Madrasah (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 47.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PTS (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 7.500</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PAS (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 9.167</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PAS Madin (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 4.167</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">KKM & Perawatan</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 6.667</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Muharram, Poskestren, HUT RI</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 3.500</td></tr>
-                  <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#166534;">IURAN PER BULAN</td><td id="sltpTotalBulananText" style="padding:7px 10px; text-align:right; color:#166534;">Rp 281.000</td></tr>
+                  <tr><td>Syahriyah (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 203.000</td></tr>
+                  <tr><td>Infaq Madrasah (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 47.000</td></tr>
+                  <tr><td>PTS (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 7.500</td></tr>
+                  <tr><td>PAS (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 9.167</td></tr>
+                  <tr><td>PAS Madin (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 4.167</td></tr>
+                  <tr><td>KKM & Perawatan</td><td style="text-align:right; font-weight:600;">Rp 6.667</td></tr>
+                  <tr><td>Muharram, Poskestren, HUT RI</td><td style="text-align:right; font-weight:600;">Rp 3.500</td></tr>
+                  <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#166534;">IURAN PER BULAN</td><td id="sltpTotalBulananText" style="text-align:right; color:#166534;">Rp 281.000</td></tr>
                 </tbody>
               </table>
             </div>
 
             <!-- Tabel 3: Biaya Akhir Tahun -->
-            <div style="border:1px solid #E2E8F0; border-radius:8px; overflow:hidden;">
-              <div style="background:#475569; color:#FFFFFF; padding:8px 12px; font-weight:700; font-size:0.8rem;">
-                3. BIAYA AKHIR TAHUN
+            <div class="cost-phase-card" id="cardSltpAkhir" style="border:1px solid #E2E8F0; border-radius:6px; overflow:hidden;">
+              <div style="background:#475569; color:#FFFFFF; padding:6px 10px; font-weight:700; font-size:0.76rem; display:flex; justify-content:space-between; align-items:center;">
+                <span>3. BIAYA AKHIR TAHUN</span>
+                <span style="font-size:0.68rem; opacity:0.85;">Tahunan</span>
               </div>
-              <table style="width:100%; border-collapse:collapse; font-size:0.75rem;">
+              <table class="cost-table">
                 <tbody id="sltpTableAkhir">
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Kesiswaan Akhir Tahun</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 100.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Kalender Yayasan</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 25.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Pondok Romadlon</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 25.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Haflah & Haul Masyayikh</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 125.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Perpustakaan</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 50.000</td></tr>
-                  <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#0A2540;">TOTAL AKHIR TAHUN</td><td style="padding:7px 10px; text-align:right; color:#0A2540;">Rp 325.000</td></tr>
+                  <tr><td>Kesiswaan Akhir Tahun</td><td style="text-align:right; font-weight:600;">Rp 100.000</td></tr>
+                  <tr><td>Kalender Yayasan</td><td style="text-align:right; font-weight:600;">Rp 25.000</td></tr>
+                  <tr><td>Pondok Romadlon</td><td style="text-align:right; font-weight:600;">Rp 25.000</td></tr>
+                  <tr><td>Haflah & Haul Masyayikh</td><td style="text-align:right; font-weight:600;">Rp 125.000</td></tr>
+                  <tr><td>Perpustakaan</td><td style="text-align:right; font-weight:600;">Rp 50.000</td></tr>
+                  <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#0A2540;">TOTAL AKHIR TAHUN</td><td style="text-align:right; color:#0A2540;">Rp 325.000</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
 
           <!-- Seragam Khusus Pondok -->
-          <div style="background:#FEF3C7; border:1px solid #FDE68A; border-radius:8px; padding:10px 14px; font-size:0.78rem; color:#92400E; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <div style="background:#FEF3C7; border:1px solid #FDE68A; border-radius:6px; padding:8px 12px; font-size:0.72rem; color:#92400E; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
             <div>
-              <strong>Seragam Khusus Pondok (Santri Mukim):</strong> Putra: Baju Taqwa (Rp 90.000) • Putri: Jubah & Kerudung (Rp 160.000).
+              <strong>Seragam Pondok (Mukim):</strong> Putra: Taqwa (Rp 90rb) • Putri: Jubah & Jilbab (Rp 160rb).
             </div>
-            <span style="font-size:0.72rem; font-style:italic; color:#78350F;">*Pembayaran dilaksanakan pada bulan Oktober</span>
+            <span style="font-size:0.68rem; font-style:italic; color:#78350F;">*Bulan Oktober</span>
           </div>
         </div>
 
         <!-- TAB 2: KELAS 10 (SLTA) -->
         <div id="contentTabSlta" style="display:none;">
           <!-- Filter Kategori Jalur -->
-          <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-items:center;">
-            <span style="font-size:0.75rem; font-weight:700; color:#64748B; margin-right:4px;">Pilih Jalur:</span>
-            <button type="button" class="official-cat-btn active" id="catBtnSltaReguler" onclick="switchOfficialCategory('slta', 'reguler')" style="padding:5px 12px; border-radius:999px; font-size:0.75rem; font-weight:700; border:1px solid #0F4C81; background:#0F4C81; color:#FFFFFF; cursor:pointer;">
-              🟢 Putra / Putri Reguler (Mukim)
+          <div class="cost-filter-bar">
+            <span style="font-size:0.72rem; font-weight:700; color:#64748B;">Jalur:</span>
+            <button type="button" class="cost-filter-btn active" id="catBtnSltaReguler" onclick="switchOfficialCategory('slta', 'reguler')">
+              🟢 Reguler (Mukim)
             </button>
-            <button type="button" class="official-cat-btn" id="catBtnSltaVip" onclick="switchOfficialCategory('slta', 'vip')" style="padding:5px 12px; border-radius:999px; font-size:0.75rem; font-weight:700; border:1px solid #CBD5E1; background:#F8FAFC; color:#334155; cursor:pointer;">
-              🟡 Putri VIP (Mukim)
+            <button type="button" class="cost-filter-btn" id="catBtnSltaVip" onclick="switchOfficialCategory('slta', 'vip')">
+              🟡 Putri VIP
             </button>
-            <button type="button" class="official-cat-btn" id="catBtnSltaMbajak" onclick="switchOfficialCategory('slta', 'mbajak')" style="padding:5px 12px; border-radius:999px; font-size:0.75rem; font-weight:700; border:1px solid #CBD5E1; background:#F8FAFC; color:#334155; cursor:pointer;">
-              🚶 Non-Mukim / Mbajak (Pulang Pergi)
+            <button type="button" class="cost-filter-btn" id="catBtnSltaMbajak" onclick="switchOfficialCategory('slta', 'mbajak')">
+              🚶 Non-Mukim (Mbajak)
             </button>
           </div>
 
           <!-- Highlight Box Pembulatan Tiap Bulan -->
-          <div id="sltaSummaryBox" style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:8px; padding:12px 16px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div id="sltaSummaryBox" style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:6px; padding:10px 14px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <div>
-              <span style="font-size:0.75rem; color:#15803D; font-weight:700; text-transform:uppercase;">Biaya Pendidikan Setiap Bulan (All-in-One)</span>
-              <div id="sltaMonthlyPrice" style="font-size:1.35rem; font-weight:800; color:#166534; margin-top:2px;">Rp 330.000 <span style="font-size:0.8rem; font-weight:600; color:#15803D;">/ bulan</span></div>
-              <div style="font-size:0.72rem; color:#4B5563; margin-top:2px;">Sudah termasuk: Syahriyah madrasah, infaq, PTS, PAS, PAS Madin, KKM, Perawatan, Poskestren & HUT RI.</div>
+              <span style="font-size:0.7rem; color:#15803D; font-weight:700; text-transform:uppercase; letter-spacing:0.3px;">Iuran Rutin per Bulan</span>
+              <div id="sltaMonthlyPrice" style="font-size:1.2rem; font-weight:800; color:#166534; line-height:1.2; margin-top:2px;">Rp 330.000 <span style="font-size:0.75rem; font-weight:600; color:#15803D;">/ bln</span></div>
+              <div style="font-size:0.68rem; color:#4B5563; margin-top:2px;">All-in: Syahriyah, infaq, PTS, PAS, KKM & poskestren.</div>
             </div>
             <div style="text-align:right;">
-              <span style="font-size:0.72rem; color:#6B7280;">Biaya Awal Tahun Masuk:</span>
-              <div id="sltaEntryPrice" style="font-size:1.15rem; font-weight:800; color:#0A2540;">Rp 420.000</div>
+              <span style="font-size:0.68rem; color:#64748B;">Awal Masuk:</span>
+              <div id="sltaEntryPrice" style="font-size:1.05rem; font-weight:800; color:#0A2540; line-height:1.2;">Rp 420.000</div>
             </div>
           </div>
 
+          <!-- Phase Switcher (Mobile) -->
+          <div class="cost-phase-switcher">
+            <button type="button" class="cost-phase-btn active" id="btnPhaseSltaAwal" onclick="switchCostPhase('slta', 'awal')">1. Awal Masuk</button>
+            <button type="button" class="cost-phase-btn" id="btnPhaseSltaBulan" onclick="switchCostPhase('slta', 'bulan')">2. Iuran Bulanan</button>
+            <button type="button" class="cost-phase-btn" id="btnPhaseSltaAkhir" onclick="switchCostPhase('slta', 'akhir')">3. Akhir Tahun</button>
+          </div>
+
           <!-- Matriks 3 Tabel (Awal Tahun, Bulanan, Akhir Tahun) -->
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:14px; margin-bottom:14px;">
+          <div class="cost-grid-layout">
             <!-- Tabel 1: Biaya Awal Tahun -->
-            <div style="border:1px solid #E2E8F0; border-radius:8px; overflow:hidden;">
-              <div style="background:#0F4C81; color:#FFFFFF; padding:8px 12px; font-weight:700; font-size:0.8rem;">
-                1. BIAYA AWAL TAHUN
+            <div class="cost-phase-card active-phase" id="cardSltaAwal" style="border:1px solid #E2E8F0; border-radius:6px; overflow:hidden;">
+              <div style="background:#0F4C81; color:#FFFFFF; padding:6px 10px; font-weight:700; font-size:0.76rem; display:flex; justify-content:space-between; align-items:center;">
+                <span>1. BIAYA AWAL TAHUN</span>
+                <span style="font-size:0.68rem; opacity:0.85;">Sekali Bayar</span>
               </div>
-              <table style="width:100%; border-collapse:collapse; font-size:0.75rem;">
+              <table class="cost-table">
                 <tbody id="sltaTableAwal">
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 40.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 70.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Kesiswaan</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 100.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">MOS</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 40.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">KTA / Brizzi</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Pondok & Almari</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 110.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Madin</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-                  <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#0A2540;">TOTAL AWAL TAHUN</td><td id="sltaTotalAwalText" style="padding:7px 10px; text-align:right; color:#0A2540;">Rp 420.000</td></tr>
+                  <tr><td>PPDB Sekolah</td><td style="text-align:right; font-weight:600;">Rp 40.000</td></tr>
+                  <tr><td>Rapor Sekolah</td><td style="text-align:right; font-weight:600;">Rp 70.000</td></tr>
+                  <tr><td>Kesiswaan</td><td style="text-align:right; font-weight:600;">Rp 100.000</td></tr>
+                  <tr><td>MOS</td><td style="text-align:right; font-weight:600;">Rp 40.000</td></tr>
+                  <tr><td>KTA / Brizzi</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+                  <tr><td>PPDB Pondok & Almari</td><td style="text-align:right; font-weight:600;">Rp 110.000</td></tr>
+                  <tr><td>Rapor Madin</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+                  <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#0A2540;">TOTAL AWAL TAHUN</td><td id="sltaTotalAwalText" style="text-align:right; color:#0A2540;">Rp 420.000</td></tr>
                 </tbody>
               </table>
             </div>
 
             <!-- Tabel 2: Rincian Bulanan 1 Tahun -->
-            <div style="border:1px solid #E2E8F0; border-radius:8px; overflow:hidden;">
-              <div style="background:#0A2540; color:#FFFFFF; padding:8px 12px; font-weight:700; font-size:0.8rem;">
-                2. RINCIAN BIAYA BULANAN
+            <div class="cost-phase-card" id="cardSltaBulan" style="border:1px solid #E2E8F0; border-radius:6px; overflow:hidden;">
+              <div style="background:#0A2540; color:#FFFFFF; padding:6px 10px; font-weight:700; font-size:0.76rem; display:flex; justify-content:space-between; align-items:center;">
+                <span>2. RINCIAN BULANAN</span>
+                <span style="font-size:0.68rem; opacity:0.85;">Rutin / Bln</span>
               </div>
-              <table style="width:100%; border-collapse:collapse; font-size:0.75rem;">
+              <table class="cost-table">
                 <tbody id="sltaTableBulanan">
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Syahriyah (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 203.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Infaq Madrasah (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 92.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PTS (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 9.167</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PAS (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 11.667</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PAS Madin (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 4.167</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">KKM & Perawatan</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 6.667</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Muharram, Poskestren, HUT RI</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 3.333</td></tr>
-                  <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#166534;">IURAN PER BULAN</td><td id="sltaTotalBulananText" style="padding:7px 10px; text-align:right; color:#166534;">Rp 330.000</td></tr>
+                  <tr><td>Syahriyah (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 203.000</td></tr>
+                  <tr><td>Infaq Madrasah (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 92.000</td></tr>
+                  <tr><td>PTS (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 9.167</td></tr>
+                  <tr><td>PAS (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 11.667</td></tr>
+                  <tr><td>PAS Madin (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 4.167</td></tr>
+                  <tr><td>KKM & Perawatan</td><td style="text-align:right; font-weight:600;">Rp 6.667</td></tr>
+                  <tr><td>Muharram, Poskestren, HUT RI</td><td style="text-align:right; font-weight:600;">Rp 3.333</td></tr>
+                  <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#166534;">IURAN PER BULAN</td><td id="sltaTotalBulananText" style="text-align:right; color:#166534;">Rp 330.000</td></tr>
                 </tbody>
               </table>
             </div>
 
             <!-- Tabel 3: Biaya Akhir Tahun -->
-            <div style="border:1px solid #E2E8F0; border-radius:8px; overflow:hidden;">
-              <div style="background:#475569; color:#FFFFFF; padding:8px 12px; font-weight:700; font-size:0.8rem;">
-                3. BIAYA AKHIR TAHUN
+            <div class="cost-phase-card" id="cardSltaAkhir" style="border:1px solid #E2E8F0; border-radius:6px; overflow:hidden;">
+              <div style="background:#475569; color:#FFFFFF; padding:6px 10px; font-weight:700; font-size:0.76rem; display:flex; justify-content:space-between; align-items:center;">
+                <span>3. BIAYA AKHIR TAHUN</span>
+                <span style="font-size:0.68rem; opacity:0.85;">Tahunan</span>
               </div>
-              <table style="width:100%; border-collapse:collapse; font-size:0.75rem;">
+              <table class="cost-table">
                 <tbody id="sltaTableAkhir">
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Kesiswaan Akhir Tahun</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 100.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Kalender Yayasan</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 25.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Pondok Romadlon</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 25.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Haflah & Haul Masyayikh</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 125.000</td></tr>
-                  <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Perpustakaan</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 60.000</td></tr>
-                  <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#0A2540;">TOTAL AKHIR TAHUN</td><td style="padding:7px 10px; text-align:right; color:#0A2540;">Rp 335.000</td></tr>
+                  <tr><td>Kesiswaan Akhir Tahun</td><td style="text-align:right; font-weight:600;">Rp 100.000</td></tr>
+                  <tr><td>Kalender Yayasan</td><td style="text-align:right; font-weight:600;">Rp 25.000</td></tr>
+                  <tr><td>Pondok Romadlon</td><td style="text-align:right; font-weight:600;">Rp 25.000</td></tr>
+                  <tr><td>Haflah & Haul Masyayikh</td><td style="text-align:right; font-weight:600;">Rp 125.000</td></tr>
+                  <tr><td>Perpustakaan</td><td style="text-align:right; font-weight:600;">Rp 60.000</td></tr>
+                  <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#0A2540;">TOTAL AKHIR TAHUN</td><td style="text-align:right; color:#0A2540;">Rp 335.000</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
 
           <!-- Seragam Khusus Pondok -->
-          <div style="background:#FEF3C7; border:1px solid #FDE68A; border-radius:8px; padding:10px 14px; font-size:0.78rem; color:#92400E; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <div style="background:#FEF3C7; border:1px solid #FDE68A; border-radius:6px; padding:8px 12px; font-size:0.72rem; color:#92400E; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
             <div>
-              <strong>Seragam Khusus Pondok (Santri Mukim):</strong> Putra: Baju Taqwa (Rp 90.000) • Putri: Jubah & Kerudung (Rp 160.000).
+              <strong>Seragam Pondok (Mukim):</strong> Putra: Taqwa (Rp 90rb) • Putri: Jubah & Jilbab (Rp 160rb).
             </div>
-            <span style="font-size:0.72rem; font-style:italic; color:#78350F;">*Pembayaran dilaksanakan pada bulan Oktober</span>
+            <span style="font-size:0.68rem; font-style:italic; color:#78350F;">*Bulan Oktober</span>
           </div>
         </div>
 
         <!-- TAB 3: RINCIAN SERAGAM LENGKAP -->
         <div id="contentTabSeragam" style="display:none;">
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:12px;">
             <!-- MTs - SMP -->
-            <div style="border:1px solid #E2E8F0; border-radius:8px; padding:14px; background:#F8FAFC;">
-              <h4 style="margin:0 0 10px 0; color:#0F4C81; font-size:0.9rem; font-weight:800; border-bottom:2px solid #0F4C81; padding-bottom:6px;">
+            <div style="border:1px solid #E2E8F0; border-radius:6px; padding:12px; background:#F8FAFC;">
+              <h4 style="margin:0 0 8px 0; color:#0F4C81; font-size:0.84rem; font-weight:800; border-bottom:2px solid #0F4C81; padding-bottom:4px;">
                 A. Seragam MTs & SMP (SLTP)
               </h4>
-              <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.8rem;">
+              <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.76rem;">
                 <span style="font-weight:700; color:#0A2540;">Putra Lengkap:</span>
-                <span style="font-weight:800; color:#047857; font-size:0.95rem;">Rp 736.000</span>
+                <span style="font-weight:800; color:#047857; font-size:0.88rem;">Rp 736.000</span>
               </div>
-              <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.8rem;">
+              <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.76rem;">
                 <span style="font-weight:700; color:#0A2540;">Putri Lengkap (+ 4 Jilbab):</span>
-                <span style="font-weight:800; color:#B45309; font-size:0.95rem;">Rp 897.000</span>
+                <span style="font-weight:800; color:#B45309; font-size:0.88rem;">Rp 897.000</span>
               </div>
-              <ul style="margin:0; padding-left:16px; font-size:0.73rem; color:#475569; line-height:1.5;">
+              <ul style="margin:0; padding-left:14px; font-size:0.7rem; color:#475569; line-height:1.45;">
                 <li>Atasan: Batik (80rb), Coklat (60rb), Putih (55rb), Olahraga (50rb)</li>
                 <li>Bawahan: Coklat (55rb), Putih (55rb), Hitam/Biru (55rb), Olahraga (35rb)</li>
-                <li>Perlengkapan: Tas Almamater (135rb), Sabuk (23rb), Kaos Kaki 2 pasang (25rb), Bed (35rb)</li>
+                <li>Perlengkapan: Tas (135rb), Sabuk (23rb), Kaos Kaki (25rb), Bed (35rb)</li>
                 <li>Kitab: Al-Qur'an Annahdliyah (50rb), Buku Manaqib (23rb)</li>
                 <li><em>Khusus Putri: 4 Jilbab (Putih, Coklat, Hitam/Biru, Olahraga)</em></li>
               </ul>
             </div>
 
             <!-- MA - SMA -->
-            <div style="border:1px solid #E2E8F0; border-radius:8px; padding:14px; background:#F8FAFC;">
-              <h4 style="margin:0 0 10px 0; color:#0A2540; font-size:0.9rem; font-weight:800; border-bottom:2px solid #FBBF24; padding-bottom:6px;">
+            <div style="border:1px solid #E2E8F0; border-radius:6px; padding:12px; background:#F8FAFC;">
+              <h4 style="margin:0 0 8px 0; color:#0A2540; font-size:0.84rem; font-weight:800; border-bottom:2px solid #FBBF24; padding-bottom:4px;">
                 B. Seragam MA & SMA (SLTA)
               </h4>
-              <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.8rem;">
+              <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.76rem;">
                 <span style="font-weight:700; color:#0A2540;">Putra Lengkap:</span>
-                <span style="font-weight:800; color:#047857; font-size:0.95rem;">Rp 759.000</span>
+                <span style="font-weight:800; color:#047857; font-size:0.88rem;">Rp 759.000</span>
               </div>
-              <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.8rem;">
+              <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.76rem;">
                 <span style="font-weight:700; color:#0A2540;">Putri Lengkap (+ 4 Jilbab):</span>
-                <span style="font-weight:800; color:#B45309; font-size:0.95rem;">Rp 938.000</span>
+                <span style="font-weight:800; color:#B45309; font-size:0.88rem;">Rp 938.000</span>
               </div>
-              <ul style="margin:0; padding-left:16px; font-size:0.73rem; color:#475569; line-height:1.5;">
-                <li>Atasan: Batik (83rb), Coklat (65rb), Putih (55rb), Olahraga (50rb/60rb)</li>
+              <ul style="margin:0; padding-left:14px; font-size:0.7rem; color:#475569; line-height:1.45;">
+                <li>Atasan: Batik (83rb), Coklat (65rb), Putih (55rb), Olahraga (50/60rb)</li>
                 <li>Bawahan: Coklat (60rb), Putih (60rb), Abu-abu (60rb), Olahraga (35rb)</li>
-                <li>Perlengkapan: Tas Almamater (135rb), Sabuk (23rb), Kaos Kaki 2 pasang (25rb), Bed (35rb)</li>
+                <li>Perlengkapan: Tas (135rb), Sabuk (23rb), Kaos Kaki (25rb), Bed (35rb)</li>
                 <li>Kitab: Al-Qur'an Annahdliyah (50rb), Buku Manaqib (23rb)</li>
                 <li><em>Khusus Putri: 4 Jilbab (Putih, Coklat, Abu-abu, Olahraga)</em></li>
               </ul>
@@ -2364,14 +2531,14 @@
         </div>
       </div>
 
-      <!-- Modal Footer -->
-      <div style="background:#F8FAFC; border-top:1px solid #E2E8F0; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-        <a href="https://wa.me/6285648847070?text=Assalamu%27alaikum%20Panitia%20SPMB,%20saya%20ingin%20berkonsultasi%20rincian%20biaya%20pendidikan%20ananda..." target="_blank" class="btn btn-sm" style="background:#25D366; color:#FFFFFF; font-weight:700; border:none; padding:7px 14px; border-radius:6px; display:inline-flex; align-items:center; gap:6px;">
-          <span>💬 Konsultasi via WhatsApp (0856-4884-7070)</span>
-        </a>
-        <button type="button" class="btn btn-outline btn-sm" onclick="closeOfficialCostsModal()" style="font-weight:600; padding:7px 18px;">
+      <!-- Modal Footer (Side-by-side Compact Zero-collision) -->
+      <div style="background:#F8FAFC; border-top:1px solid #E2E8F0; padding:10px 14px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeOfficialCostsModal()" style="font-weight:700; padding:8px 14px; border-radius:6px; flex:0 0 auto; font-size:0.78rem;">
           Tutup
         </button>
+        <a href="https://wa.me/6285648847070?text=Assalamu%27alaikum%20Panitia%20SPMB,%20saya%20ingin%20berkonsultasi%20rincian%20biaya%20pendidikan%20ananda..." target="_blank" class="btn btn-sm" style="background:#25D366; color:#FFFFFF; font-weight:700; border:none; padding:8px 12px; border-radius:6px; display:inline-flex; align-items:center; justify-content:center; gap:6px; flex:1; font-size:0.78rem; text-decoration:none; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">
+          <span>💬 Hubungi WhatsApp Panitia</span>
+        </a>
       </div>
     </div>
   </div>
@@ -2413,11 +2580,7 @@
       const btnSeragam = document.getElementById('tabBtnSeragam');
 
       [btnSltp, btnSlta, btnSeragam].forEach(btn => {
-        if (btn) {
-          btn.style.borderBottomColor = 'transparent';
-          btn.style.color = '#64748B';
-          btn.classList.remove('active');
-        }
+        if (btn) btn.classList.remove('active');
       });
 
       if (tabSltp) tabSltp.style.display = 'none';
@@ -2426,200 +2589,207 @@
 
       if (tab === 'sltp') {
         if (tabSltp) tabSltp.style.display = 'block';
-        if (btnSltp) { btnSltp.style.borderBottomColor = '#0F4C81'; btnSltp.style.color = '#0F4C81'; btnSltp.classList.add('active'); }
+        if (btnSltp) btnSltp.classList.add('active');
       } else if (tab === 'slta') {
         if (tabSlta) tabSlta.style.display = 'block';
-        if (btnSlta) { btnSlta.style.borderBottomColor = '#0F4C81'; btnSlta.style.color = '#0F4C81'; btnSlta.classList.add('active'); }
+        if (btnSlta) btnSlta.classList.add('active');
       } else if (tab === 'seragam') {
         if (tabSeragam) tabSeragam.style.display = 'block';
-        if (btnSeragam) { btnSeragam.style.borderBottomColor = '#0F4C81'; btnSeragam.style.color = '#0F4C81'; btnSeragam.classList.add('active'); }
+        if (btnSeragam) btnSeragam.classList.add('active');
       }
     }
 
+    function switchCostPhase(level, phase) {
+      const prefix = level === 'sltp' ? 'Sltp' : 'Slta';
+      const phases = ['Awal', 'Bulan', 'Akhir'];
+      const phaseMap = { awal: 'Awal', bulan: 'Bulan', akhir: 'Akhir' };
+      const selected = phaseMap[phase] || 'Awal';
+
+      phases.forEach(p => {
+        const btn = document.getElementById('btnPhase' + prefix + p);
+        const card = document.getElementById('card' + prefix + p);
+        if (btn) {
+          if (p === selected) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+        if (card) {
+          if (p === selected) card.classList.add('active-phase');
+          else card.classList.remove('active-phase');
+        }
+      });
+    }
+
     function switchOfficialCategory(level, cat) {
+      const prefix = level === 'sltp' ? 'Sltp' : 'Slta';
+      const btnReg = document.getElementById('catBtn' + prefix + 'Reguler');
+      const btnVip = document.getElementById('catBtn' + prefix + 'Vip');
+      const btnMbajak = document.getElementById('catBtn' + prefix + 'Mbajak');
+
+      [btnReg, btnVip, btnMbajak].forEach(b => {
+        if (b) b.classList.remove('active');
+      });
+
+      const activeBtn = cat === 'reguler' ? btnReg : (cat === 'vip' ? btnVip : btnMbajak);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const monthlyEl = document.getElementById(level + 'MonthlyPrice');
+      const entryEl = document.getElementById(level + 'EntryPrice');
+      const tableAwal = document.getElementById(level + 'TableAwal');
+      const tableBulanan = document.getElementById(level + 'TableBulanan');
+
       if (level === 'sltp') {
-        const btnReg = document.getElementById('catBtnSltpReguler');
-        const btnVip = document.getElementById('catBtnSltpVip');
-        const btnMbajak = document.getElementById('catBtnSltpMbajak');
-        [btnReg, btnVip, btnMbajak].forEach(b => {
-          if (b) { b.style.background = '#F8FAFC'; b.style.color = '#334155'; b.style.borderColor = '#CBD5E1'; }
-        });
-
-        const activeBtn = cat === 'reguler' ? btnReg : (cat === 'vip' ? btnVip : btnMbajak);
-        if (activeBtn) { activeBtn.style.background = '#0F4C81'; activeBtn.style.color = '#FFFFFF'; activeBtn.style.borderColor = '#0F4C81'; }
-
-        const monthlyEl = document.getElementById('sltpMonthlyPrice');
-        const entryEl = document.getElementById('sltpEntryPrice');
-        const tableAwal = document.getElementById('sltpTableAwal');
-        const tableBulanan = document.getElementById('sltpTableBulanan');
-
         if (cat === 'reguler') {
-          if (monthlyEl) monthlyEl.innerHTML = 'Rp 281.000 <span style="font-size:0.8rem; font-weight:600; color:#15803D;">/ bulan</span>';
+          if (monthlyEl) monthlyEl.innerHTML = 'Rp 281.000 <span style="font-size:0.75rem; font-weight:600; color:#15803D;">/ bln</span>';
           if (entryEl) entryEl.textContent = 'Rp 410.000';
           if (tableAwal) {
             tableAwal.innerHTML = `
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 70.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Kesiswaan</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 100.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">MOS</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 40.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">KTA / Brizzi</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Pondok & Almari</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 110.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Madin</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#0A2540;">TOTAL AWAL TAHUN</td><td style="padding:7px 10px; text-align:right; color:#0A2540;">Rp 410.000</td></tr>
+              <tr><td>PPDB Sekolah</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+              <tr><td>Rapor Sekolah</td><td style="text-align:right; font-weight:600;">Rp 70.000</td></tr>
+              <tr><td>Kesiswaan</td><td style="text-align:right; font-weight:600;">Rp 100.000</td></tr>
+              <tr><td>MOS</td><td style="text-align:right; font-weight:600;">Rp 40.000</td></tr>
+              <tr><td>KTA / Brizzi</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+              <tr><td>PPDB Pondok & Almari</td><td style="text-align:right; font-weight:600;">Rp 110.000</td></tr>
+              <tr><td>Rapor Madin</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#0A2540;">TOTAL AWAL TAHUN</td><td style="text-align:right; color:#0A2540;">Rp 410.000</td></tr>
             `;
           }
           if (tableBulanan) {
             tableBulanan.innerHTML = `
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Syahriyah (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 203.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Infaq Madrasah (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 47.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PTS (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 7.500</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PAS (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 9.167</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PAS Madin (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 4.167</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">KKM & Perawatan</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 6.667</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Muharram, Poskestren, HUT RI</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 3.500</td></tr>
-              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#166534;">IURAN PER BULAN</td><td style="padding:7px 10px; text-align:right; color:#166534;">Rp 281.000</td></tr>
+              <tr><td>Syahriyah (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 203.000</td></tr>
+              <tr><td>Infaq Madrasah (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 47.000</td></tr>
+              <tr><td>PTS (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 7.500</td></tr>
+              <tr><td>PAS (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 9.167</td></tr>
+              <tr><td>PAS Madin (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 4.167</td></tr>
+              <tr><td>KKM & Perawatan</td><td style="text-align:right; font-weight:600;">Rp 6.667</td></tr>
+              <tr><td>Muharram, Poskestren, HUT RI</td><td style="text-align:right; font-weight:600;">Rp 3.500</td></tr>
+              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#166534;">IURAN PER BULAN</td><td style="text-align:right; color:#166534;">Rp 281.000</td></tr>
             `;
           }
         } else if (cat === 'vip') {
-          if (monthlyEl) monthlyEl.innerHTML = 'Rp 301.000 <span style="font-size:0.8rem; font-weight:600; color:#15803D;">/ bulan</span>';
+          if (monthlyEl) monthlyEl.innerHTML = 'Rp 301.000 <span style="font-size:0.75rem; font-weight:600; color:#15803D;">/ bln</span>';
           if (entryEl) entryEl.textContent = 'Rp 560.000';
           if (tableAwal) {
             tableAwal.innerHTML = `
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 70.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Kesiswaan</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 100.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">MOS</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 40.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">KTA / Brizzi</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Pondok & Almari</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 110.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Madin</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px; color:#B45309; font-weight:700;">Kasur dan Dipan VIP</td><td style="padding:6px 10px; text-align:right; font-weight:700; color:#B45309;">Rp 150.000</td></tr>
-              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#0A2540;">TOTAL AWAL TAHUN</td><td style="padding:7px 10px; text-align:right; color:#0A2540;">Rp 560.000</td></tr>
+              <tr><td>PPDB Sekolah</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+              <tr><td>Rapor Sekolah</td><td style="text-align:right; font-weight:600;">Rp 70.000</td></tr>
+              <tr><td>Kesiswaan</td><td style="text-align:right; font-weight:600;">Rp 100.000</td></tr>
+              <tr><td>MOS</td><td style="text-align:right; font-weight:600;">Rp 40.000</td></tr>
+              <tr><td>KTA / Brizzi</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+              <tr><td>PPDB Pondok & Almari</td><td style="text-align:right; font-weight:600;">Rp 110.000</td></tr>
+              <tr><td>Rapor Madin</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+              <tr style="background:#FEF3C7; color:#B45309; font-weight:700;"><td>Kasur & Dipan VIP</td><td style="text-align:right; font-weight:700; color:#B45309;">Rp 150.000</td></tr>
+              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#0A2540;">TOTAL AWAL TAHUN</td><td style="text-align:right; color:#0A2540;">Rp 560.000</td></tr>
             `;
           }
           if (tableBulanan) {
             tableBulanan.innerHTML = `
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Syahriyah VIP (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 223.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Infaq Madrasah (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 47.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PTS & PAS Semester</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 16.667</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PAS Madin, KKM, Perawatan</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 10.834</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Muharram, Poskestren, HUT RI</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 3.500</td></tr>
-              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#166534;">IURAN PER BULAN</td><td style="padding:7px 10px; text-align:right; color:#166534;">Rp 301.000</td></tr>
+              <tr><td>Syahriyah VIP (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 223.000</td></tr>
+              <tr><td>Infaq Madrasah (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 47.000</td></tr>
+              <tr><td>PTS & PAS Semester</td><td style="text-align:right; font-weight:600;">Rp 16.667</td></tr>
+              <tr><td>PAS Madin, KKM, Perawatan</td><td style="text-align:right; font-weight:600;">Rp 10.834</td></tr>
+              <tr><td>Muharram, Poskestren, HUT RI</td><td style="text-align:right; font-weight:600;">Rp 3.500</td></tr>
+              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#166534;">IURAN PER BULAN</td><td style="text-align:right; color:#166534;">Rp 301.000</td></tr>
             `;
           }
         } else if (cat === 'mbajak') {
-          if (monthlyEl) monthlyEl.innerHTML = 'Rp 73.000 <span style="font-size:0.8rem; font-weight:600; color:#15803D;">/ bulan</span>';
+          if (monthlyEl) monthlyEl.innerHTML = 'Rp 73.000 <span style="font-size:0.75rem; font-weight:600; color:#15803D;">/ bln</span>';
           if (entryEl) entryEl.textContent = 'Rp 270.000';
           if (tableAwal) {
             tableAwal.innerHTML = `
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 70.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Kesiswaan</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 100.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">MOS</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 40.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">KTA / Brizzi</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#0A2540;">TOTAL AWAL TAHUN</td><td style="padding:7px 10px; text-align:right; color:#0A2540;">Rp 270.000</td></tr>
+              <tr><td>PPDB Sekolah</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+              <tr><td>Rapor Sekolah</td><td style="text-align:right; font-weight:600;">Rp 70.000</td></tr>
+              <tr><td>Kesiswaan</td><td style="text-align:right; font-weight:600;">Rp 100.000</td></tr>
+              <tr><td>MOS</td><td style="text-align:right; font-weight:600;">Rp 40.000</td></tr>
+              <tr><td>KTA / Brizzi</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#0A2540;">TOTAL AWAL TAHUN</td><td style="text-align:right; color:#0A2540;">Rp 270.000</td></tr>
             `;
           }
           if (tableBulanan) {
             tableBulanan.innerHTML = `
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Infaq Sekolah (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 47.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PTS (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 7.500</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PAS (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 9.167</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">KKM & Perawatan</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 6.667</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Poskestren & HUT RI</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 2.500</td></tr>
-              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#166534;">IURAN PER BULAN</td><td style="padding:7px 10px; text-align:right; color:#166534;">Rp 73.000</td></tr>
+              <tr><td>Infaq Sekolah (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 47.000</td></tr>
+              <tr><td>PTS (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 7.500</td></tr>
+              <tr><td>PAS (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 9.167</td></tr>
+              <tr><td>KKM & Perawatan</td><td style="text-align:right; font-weight:600;">Rp 6.667</td></tr>
+              <tr><td>Poskestren & HUT RI</td><td style="text-align:right; font-weight:600;">Rp 2.500</td></tr>
+              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#166534;">IURAN PER BULAN</td><td style="text-align:right; color:#166534;">Rp 73.000</td></tr>
             `;
           }
         }
       } else if (level === 'slta') {
-        const btnReg = document.getElementById('catBtnSltaReguler');
-        const btnVip = document.getElementById('catBtnSltaVip');
-        const btnMbajak = document.getElementById('catBtnSltaMbajak');
-        [btnReg, btnVip, btnMbajak].forEach(b => {
-          if (b) { b.style.background = '#F8FAFC'; b.style.color = '#334155'; b.style.borderColor = '#CBD5E1'; }
-        });
-
-        const activeBtn = cat === 'reguler' ? btnReg : (cat === 'vip' ? btnVip : btnMbajak);
-        if (activeBtn) { activeBtn.style.background = '#0F4C81'; activeBtn.style.color = '#FFFFFF'; activeBtn.style.borderColor = '#0F4C81'; }
-
-        const monthlyEl = document.getElementById('sltaMonthlyPrice');
-        const entryEl = document.getElementById('sltaEntryPrice');
-        const tableAwal = document.getElementById('sltaTableAwal');
-        const tableBulanan = document.getElementById('sltaTableBulanan');
-
         if (cat === 'reguler') {
-          if (monthlyEl) monthlyEl.innerHTML = 'Rp 330.000 <span style="font-size:0.8rem; font-weight:600; color:#15803D;">/ bulan</span>';
+          if (monthlyEl) monthlyEl.innerHTML = 'Rp 330.000 <span style="font-size:0.75rem; font-weight:600; color:#15803D;">/ bln</span>';
           if (entryEl) entryEl.textContent = 'Rp 420.000';
           if (tableAwal) {
             tableAwal.innerHTML = `
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 40.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 70.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Kesiswaan</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 100.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">MOS</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 40.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">KTA / Brizzi</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Pondok & Almari</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 110.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Madin</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#0A2540;">TOTAL AWAL TAHUN</td><td style="padding:7px 10px; text-align:right; color:#0A2540;">Rp 420.000</td></tr>
+              <tr><td>PPDB Sekolah</td><td style="text-align:right; font-weight:600;">Rp 40.000</td></tr>
+              <tr><td>Rapor Sekolah</td><td style="text-align:right; font-weight:600;">Rp 70.000</td></tr>
+              <tr><td>Kesiswaan</td><td style="text-align:right; font-weight:600;">Rp 100.000</td></tr>
+              <tr><td>MOS</td><td style="text-align:right; font-weight:600;">Rp 40.000</td></tr>
+              <tr><td>KTA / Brizzi</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+              <tr><td>PPDB Pondok & Almari</td><td style="text-align:right; font-weight:600;">Rp 110.000</td></tr>
+              <tr><td>Rapor Madin</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#0A2540;">TOTAL AWAL TAHUN</td><td style="text-align:right; color:#0A2540;">Rp 420.000</td></tr>
             `;
           }
           if (tableBulanan) {
             tableBulanan.innerHTML = `
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Syahriyah (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 203.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Infaq Madrasah (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 92.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PTS (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 9.167</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PAS (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 11.667</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PAS Madin (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 4.167</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">KKM & Perawatan</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 6.667</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Muharram, Poskestren, HUT RI</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 3.333</td></tr>
-              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#166534;">IURAN PER BULAN</td><td style="padding:7px 10px; text-align:right; color:#166534;">Rp 330.000</td></tr>
+              <tr><td>Syahriyah (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 203.000</td></tr>
+              <tr><td>Infaq Madrasah (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 92.000</td></tr>
+              <tr><td>PTS (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 9.167</td></tr>
+              <tr><td>PAS (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 11.667</td></tr>
+              <tr><td>PAS Madin (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 4.167</td></tr>
+              <tr><td>KKM & Perawatan</td><td style="text-align:right; font-weight:600;">Rp 6.667</td></tr>
+              <tr><td>Muharram, Poskestren, HUT RI</td><td style="text-align:right; font-weight:600;">Rp 3.333</td></tr>
+              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#166534;">IURAN PER BULAN</td><td style="text-align:right; color:#166534;">Rp 330.000</td></tr>
             `;
           }
         } else if (cat === 'vip') {
-          if (monthlyEl) monthlyEl.innerHTML = 'Rp 350.000 <span style="font-size:0.8rem; font-weight:600; color:#15803D;">/ bulan</span>';
+          if (monthlyEl) monthlyEl.innerHTML = 'Rp 350.000 <span style="font-size:0.75rem; font-weight:600; color:#15803D;">/ bln</span>';
           if (entryEl) entryEl.textContent = 'Rp 570.000';
           if (tableAwal) {
             tableAwal.innerHTML = `
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 40.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 70.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Kesiswaan</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 100.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">MOS</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 40.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">KTA / Brizzi</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Pondok & Almari</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 110.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Madin</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px; color:#B45309; font-weight:700;">Kasur dan Dipan VIP</td><td style="padding:6px 10px; text-align:right; font-weight:700; color:#B45309;">Rp 150.000</td></tr>
-              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#0A2540;">TOTAL AWAL TAHUN</td><td style="padding:7px 10px; text-align:right; color:#0A2540;">Rp 570.000</td></tr>
+              <tr><td>PPDB Sekolah</td><td style="text-align:right; font-weight:600;">Rp 40.000</td></tr>
+              <tr><td>Rapor Sekolah</td><td style="text-align:right; font-weight:600;">Rp 70.000</td></tr>
+              <tr><td>Kesiswaan</td><td style="text-align:right; font-weight:600;">Rp 100.000</td></tr>
+              <tr><td>MOS</td><td style="text-align:right; font-weight:600;">Rp 40.000</td></tr>
+              <tr><td>KTA / Brizzi</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+              <tr><td>PPDB Pondok & Almari</td><td style="text-align:right; font-weight:600;">Rp 110.000</td></tr>
+              <tr><td>Rapor Madin</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+              <tr style="background:#FEF3C7; color:#B45309; font-weight:700;"><td>Kasur & Dipan VIP</td><td style="text-align:right; font-weight:700; color:#B45309;">Rp 150.000</td></tr>
+              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#0A2540;">TOTAL AWAL TAHUN</td><td style="text-align:right; color:#0A2540;">Rp 570.000</td></tr>
             `;
           }
           if (tableBulanan) {
             tableBulanan.innerHTML = `
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Syahriyah VIP (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 223.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Infaq Madrasah (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 92.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PTS & PAS Semester</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 20.834</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PAS Madin, KKM, Perawatan</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 10.834</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Muharram, Poskestren, HUT RI</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 3.333</td></tr>
-              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#166534;">IURAN PER BULAN</td><td style="padding:7px 10px; text-align:right; color:#166534;">Rp 350.000</td></tr>
+              <tr><td>Syahriyah VIP (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 223.000</td></tr>
+              <tr><td>Infaq Madrasah (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 92.000</td></tr>
+              <tr><td>PTS & PAS Semester</td><td style="text-align:right; font-weight:600;">Rp 20.834</td></tr>
+              <tr><td>PAS Madin, KKM, Perawatan</td><td style="text-align:right; font-weight:600;">Rp 10.834</td></tr>
+              <tr><td>Muharram, Poskestren, HUT RI</td><td style="text-align:right; font-weight:600;">Rp 3.333</td></tr>
+              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#166534;">IURAN PER BULAN</td><td style="text-align:right; color:#166534;">Rp 350.000</td></tr>
             `;
           }
         } else if (cat === 'mbajak') {
-          if (monthlyEl) monthlyEl.innerHTML = 'Rp 122.000 <span style="font-size:0.8rem; font-weight:600; color:#15803D;">/ bulan</span>';
+          if (monthlyEl) monthlyEl.innerHTML = 'Rp 122.000 <span style="font-size:0.75rem; font-weight:600; color:#15803D;">/ bln</span>';
           if (entryEl) entryEl.textContent = 'Rp 280.000';
           if (tableAwal) {
             tableAwal.innerHTML = `
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">PPDB Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 40.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Rapor Sekolah</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 70.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">Kesiswaan</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 100.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">MOS</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 40.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:6px 10px;">KTA / Brizzi</td><td style="padding:6px 10px; text-align:right; font-weight:600;">Rp 30.000</td></tr>
-              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#0A2540;">TOTAL AWAL TAHUN</td><td style="padding:7px 10px; text-align:right; color:#0A2540;">Rp 280.000</td></tr>
+              <tr><td>PPDB Sekolah</td><td style="text-align:right; font-weight:600;">Rp 40.000</td></tr>
+              <tr><td>Rapor Sekolah</td><td style="text-align:right; font-weight:600;">Rp 70.000</td></tr>
+              <tr><td>Kesiswaan</td><td style="text-align:right; font-weight:600;">Rp 100.000</td></tr>
+              <tr><td>MOS</td><td style="text-align:right; font-weight:600;">Rp 40.000</td></tr>
+              <tr><td>KTA / Brizzi</td><td style="text-align:right; font-weight:600;">Rp 30.000</td></tr>
+              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#0A2540;">TOTAL AWAL TAHUN</td><td style="text-align:right; color:#0A2540;">Rp 280.000</td></tr>
             `;
           }
           if (tableBulanan) {
             tableBulanan.innerHTML = `
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Infaq Sekolah (12 bln)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 92.000</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PTS (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 9.167</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">PAS (2 semester)</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 11.667</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">KKM & Perawatan</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 6.667</td></tr>
-              <tr style="border-bottom:1px solid #F1F5F9;"><td style="padding:5px 10px;">Poskestren & HUT RI</td><td style="padding:5px 10px; text-align:right; font-weight:600;">Rp 2.500</td></tr>
-              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="padding:7px 10px; color:#166534;">IURAN PER BULAN</td><td style="padding:7px 10px; text-align:right; color:#166534;">Rp 122.000</td></tr>
+              <tr><td>Infaq Sekolah (12 bln)</td><td style="text-align:right; font-weight:600;">Rp 92.000</td></tr>
+              <tr><td>PTS (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 9.167</td></tr>
+              <tr><td>PAS (2 semester)</td><td style="text-align:right; font-weight:600;">Rp 11.667</td></tr>
+              <tr><td>KKM & Perawatan</td><td style="text-align:right; font-weight:600;">Rp 6.667</td></tr>
+              <tr><td>Poskestren & HUT RI</td><td style="text-align:right; font-weight:600;">Rp 2.500</td></tr>
+              <tr style="background:#F8FAFC; font-weight:800; border-top:2px solid #CBD5E1;"><td style="color:#166534;">IURAN PER BULAN</td><td style="text-align:right; color:#166534;">Rp 122.000</td></tr>
             `;
           }
         }
