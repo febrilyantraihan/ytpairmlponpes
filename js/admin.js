@@ -5624,9 +5624,9 @@ window.openPsbCostsModal = function() {
     ? db.psbCosts
     : ((typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.psbCosts) ? DEFAULT_YAYASAN_DATA.psbCosts : { cards: [] });
 
-  const c1 = (costs.cards && costs.cards[0]) || { name: 'Infaq Formulir & Seleksi', price: 'Rp 150.000', period: 'Sekali bayar saat registrasi awal', btnText: 'Pilih Jalur Reguler', btnLink: '#formulir', features: [] };
-  const c2 = (costs.cards && costs.cards[1]) || { name: 'Infaq Pangkal & Fasilitas Masuk', price: 'Rp 4.850.000', period: 'Sekali selama masa jenjang pendidikan (Bisa Diangsur 3x)', isPopular: true, popularBadge: 'Paling Populer', btnText: 'Daftar Sekarang', btnLink: '#formulir', features: [] };
-  const c3 = (costs.cards && costs.cards[2]) || { name: 'Iuran SPP Bulanan Terpadu', price: 'Rp 1.050.000', period: 'Per bulan (Paket All-in-One Mukim Asrama)', btnText: 'Pelajari Selengkapnya', btnLink: '#faq', features: [] };
+  const c1 = (costs.cards && costs.cards[0]) || { name: 'Infaq Formulir & Seleksi', price: 'Rp 140.000', period: 'Sekali bayar saat registrasi awal', btnText: 'Pilih Jalur Reguler', btnLink: '#formulir', features: [] };
+  const c2 = (costs.cards && costs.cards[1]) || { name: 'Infaq Masuk & Seragam Lengkap', price: 'Mulai Rp 1.236.000', period: 'Sekali di awal masuk (Sudah Termasuk Seragam Lengkap)', isPopular: true, popularBadge: 'Paling Populer', btnText: 'Daftar Sekarang', btnLink: '#formulir', features: [] };
+  const c3 = (costs.cards && costs.cards[2]) || { name: 'Iuran SPP Bulanan Terpadu', price: 'Mulai Rp 281.000', period: 'Per bulan (Rp 281rb SLTP / Rp 330rb SLTA - Paket Mukim)', btnText: 'Buka Rincian Biaya Resmi', btnLink: 'javascript:openOfficialCostsModal()', features: [] };
 
   const formHtml = `
     <form id="psbCostsCrudForm" onsubmit="event.preventDefault(); savePsbCostsForm();">
