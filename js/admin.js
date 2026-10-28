@@ -9990,7 +9990,7 @@ window.moveDailyScheduleOrder = function(idx, direction) {
 };
 
 window.resetDailySchedule = function() {
-  if (!confirm('Kembalikan seluruh daftar jadwal santri 24 jam ke pengaturan awal (15 sesi baku)?')) return;
+  if (!confirm('Kembalikan seluruh daftar jadwal santri 24 jam ke pengaturan awal (19 sesi baku)?')) return;
   const db = getDB();
   db.dailySchedules = JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.dailySchedules));
   saveDB(db);

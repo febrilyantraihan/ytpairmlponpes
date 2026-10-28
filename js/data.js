@@ -2415,21 +2415,66 @@ Mari kita rawat bersama tradisi gotong royong dan khidmah tulus ini agar pesantr
     }
   ],
   dailySchedules: [
-    { id: "sched-1", time: "03.30 – 04.30", activity: "Bangun pagi, mandi, sholat Tahajud, Hajat, dan wirid pembacaan dzikir fajar di Mushola Pondok Pesantren Putra", order: 1 },
-    { id: "sched-2", time: "04.30 – 05.15", activity: "Sholat Subuh berjamaah dan pembacaan Ratib Al-Haddad / Hizib Nashor", order: 2 },
-    { id: "sched-3", time: "05.15 – 06.15", activity: "Halaqah Al-Qur'an pagi: setoran tahfidz sanad, binnadhor, dan sorogan tajwid", order: 3 },
-    { id: "sched-4", time: "06.15 – 07.15", activity: "Sholat Dhuha berjamaah, makan pagi santri, dan persiapan masuk kelas formal", order: 4 },
-    { id: "sched-5", time: "07.15 – 12.00", activity: "Kegiatan Belajar Mengajar (KBM) Sekolah/Madrasah Formal (MI, MTs, SMP, MA, SMA)", order: 5 },
-    { id: "sched-6", time: "12.00 – 13.00", activity: "Sholat Dhuhur berjamaah di Mushola Pondok Pesantren Putra dilanjutkan makan siang santri", order: 6 },
-    { id: "sched-7", time: "13.00 – 14.30", activity: "Lanjutan KBM formal / Istirahat siang (Qoilulah Sunnah) di asrama", order: 7 },
-    { id: "sched-8", time: "14.30 – 15.30", activity: "Persiapan & Sholat Ashar berjamaah", order: 8 },
-    { id: "sched-9", time: "15.30 – 17.00", activity: "Pengajian Kitab Kuning Madrasah Diniyah Salaf / Ekstrakurikuler Bahasa Arab-Inggris & Olahraga", order: 9 },
-    { id: "sched-10", time: "17.00 – 17.45", activity: "Mandi sore, berpakaian rapi jubah/busana muslim, dan persiapan menuju Mushola Pondok Pesantren Putra", order: 10 },
-    { id: "sched-11", time: "17.45 – 18.30", activity: "Sholat Maghrib berjamaah, pembacaan Waqi'ah, dan Shalawat Burdah", order: 11 },
-    { id: "sched-12", time: "18.30 – 19.30", activity: "Sorogan & Bandongan Kitab Kuning bersama Dewan Masyayikh / Asatidz pengasuh", order: 12 },
-    { id: "sched-13", time: "19.30 – 20.15", activity: "Sholat Isya' berjamaah dilanjutkan makan malam santri", order: 13 },
-    { id: "sched-14", time: "20.15 – 22.00", activity: "Belajar mandiri terbimbing (Tatsqif), musyawarah pelajaran, dan percakapan bahasa asing", order: 14 },
-    { id: "sched-15", time: "22.00 – 03.30", activity: "Istirahat malam, lampu asrama dipadamkan demi menjaga stamina santri", order: 15 }
+    { id: "sched-1", time: "03.30", activity: "Bangun & Sholat Tahajud", order: 1 },
+    { id: "sched-2", time: "04.20", activity: "Jama'ah Sholat Shubuh, Pembiasaan Membaca Surah Yasin, Juz Amma, dan Asmaul Husna", order: 2 },
+    { id: "sched-3", time: "05.00", activity: "Pengaosan Kitab Kuning", order: 3 },
+    { id: "sched-4", time: "05.30", activity: "Piket Pagi", order: 4 },
+    { id: "sched-5", time: "06.00", activity: "Sarapan Pagi", order: 5 },
+    { id: "sched-6", time: "07.45 – 13.20", activity: "Berangkat Sekolah - 13.20 (siang) / KBM Sekolah Formal", order: 6 },
+    { id: "sched-7", time: "14.00", activity: "Piket Siang", order: 7 },
+    { id: "sched-8", time: "14.30", activity: "Bel Persiapan Jama'ah Sholat Ashar", order: 8 },
+    { id: "sched-9", time: "15.15", activity: "Jama'ah Sholat Ashar, Pembiasaan Membaca Surah Al-Waqiah, dan Rotib Al-Haddad", order: 9 },
+    { id: "sched-10", time: "16.00", activity: "Pengajian Al-Qur'an & Jilid", order: 10 },
+    { id: "sched-11", time: "16.30", activity: "Makan Sore", order: 11 },
+    { id: "sched-12", time: "17.10", activity: "Persiapan Jama'ah Sholat Maghrib", order: 12 },
+    { id: "sched-13", time: "17.30", activity: "Jama'ah Sholat Maghrib, Pembiasaan Membaca Surah As-Sajdah", order: 13 },
+    { id: "sched-14", time: "18.00", activity: "Kursus 2 Bahasa (Bahasa Arab & Bahasa Inggris)", order: 14 },
+    { id: "sched-15", time: "18.45", activity: "Persiapan Jama'ah Sholat Isya'", order: 15 },
+    { id: "sched-16", time: "19.00", activity: "Jama'ah Sholat Isya', Pembiasaan Membaca Surah Al-Mulk", order: 16 },
+    { id: "sched-17", time: "19.30 – 20.30", activity: "Pembelajaran Madrasah Diniyah", order: 17 },
+    { id: "sched-18", time: "20.30 – 21.30", activity: "Jam Bebas (Belajar / Setoran Hafalan / Jajan ke Kantin)", order: 18 },
+    { id: "sched-19", time: "22.00", activity: "Tidur Malam & Istirahat", order: 19 }
+  ],
+  weeklySchedules: [
+    {
+      id: "week-1",
+      day: "Kamis Malam",
+      title: "Kegiatan Kamis Malam Jum'at",
+      desc: "Pembacaan Dzikir, Tahlil bersama, dan Shalawat Diba'iyah / Burdah untuk memperkuat mahabbah kepada Rasulullah SAW dan spiritualitas santri.",
+      badge: "Kamis Malam"
+    },
+    {
+      id: "week-2",
+      day: "Jum'at Pagi",
+      title: "Ro'an Tiap Jum'at Pagi",
+      desc: "Kerja bakti gotong royong santriwati membersihkan lingkungan kamar, koridor asrama, mushola pondok, dan halaman pesantren.",
+      badge: "Jum'at Pagi"
+    },
+    {
+      id: "week-3",
+      day: "Seminggu Sekali",
+      title: "Senam Seminggu Sekali",
+      desc: "Senam jasmani santriwati di area tertutup khusus putri guna menjaga kebugaran fisik, kesehatan, dan imunitas santri.",
+      badge: "Kebugaran Fisik"
+    }
+  ],
+  periodicSchedules: [
+    {
+      id: "period-1",
+      type: "Bulanan",
+      period: "Sebulan Sekali",
+      title: "Khataman Sebulan Sekali di Jum'at Pagi",
+      desc: "Majelis Khataman Al-Qur'an 30 Juz serentak sebulan sekali di hari Jum'at pagi yang diikuti seluruh santriwati mukim dan asatidzah.",
+      badge: "Agenda Bulanan"
+    },
+    {
+      id: "period-2",
+      type: "Tahunan",
+      period: "Setahun Sekali",
+      title: "Pengaosan Kitab Dardir (Tahunan)",
+      desc: "Kajian akbar tahunan pembacaan Kitab Dardir Mi'raj bersama Dewan Masyayikh & Pengasuh sebagai tradisi keilmuan luhur salafiyah.",
+      badge: "Agenda Tahunan"
+    }
   ]
 };
 
@@ -3007,9 +3052,17 @@ function getDB() {
       parsed.kbihuPembimbing = JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.kbihuPembimbing));
       localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     }
-    // Auto-migrate dailySchedules (Jadwal Rutin Santri 24 Jam)
-    if (!parsed.dailySchedules || !Array.isArray(parsed.dailySchedules) || parsed.dailySchedules.length === 0 || parsed.dailySchedules.some(s => s.activity && (s.activity.includes("Masjid Jami'") || s.activity.includes("Mushola Utama Pesantren")))) {
+    // Auto-migrate dailySchedules (Jadwal Rutin Santri 24 Jam) & Periodic Schedules
+    if (!parsed.dailySchedules || !Array.isArray(parsed.dailySchedules) || parsed.dailySchedules.length < 19 || !parsed.dailySchedules.some(s => s.activity && s.activity.includes("Piket Pagi"))) {
       parsed.dailySchedules = JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.dailySchedules));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+    }
+    if (!parsed.weeklySchedules || !Array.isArray(parsed.weeklySchedules) || parsed.weeklySchedules.length === 0) {
+      parsed.weeklySchedules = JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.weeklySchedules));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+    }
+    if (!parsed.periodicSchedules || !Array.isArray(parsed.periodicSchedules) || parsed.periodicSchedules.length === 0) {
+      parsed.periodicSchedules = JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.periodicSchedules));
       localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     }
     // Auto-migrate psbFaq (Tanya Jawab Resmi PSB & CRUD Dinamis)

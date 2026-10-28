@@ -687,125 +687,236 @@
               <li><span class="check">✔</span> Ujian Semester Madin, KKM & Perawatan Lembaga</li>
               <li><span class="check">✔</span> Layanan Kesehatan Santri Poskestren & HUT RI</li>
             </ul>
-            <a href="javascript:void(0)" onclick="openOfficialCostsModal()" class="btn btn-outline btn-sm" style="width:100%; justify-content:center;">Buka Rincian Biaya Resmi</a>
+            <a href="#formulir" class="btn btn-outline btn-sm" style="width:100%; justify-content:center;">Pilih Paket Mukim</a>
           </div>
         </div>
 
         <!-- Banner Transparansi Rincian Biaya Resmi (SLTP, SLTA & Non-Mukim) -->
-        <div class="psb-cost-official-card" style="margin-top:20px; background:linear-gradient(135deg, #0A2540 0%, #0F4C81 100%); border-radius:12px; padding:18px 22px; color:#FFFFFF; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; box-shadow:0 8px 20px rgba(10,37,64,0.12); border:1px solid rgba(251,191,36,0.35);">
-          <div style="display:flex; align-items:center; gap:14px; min-width:260px; flex:1;">
-            <div style="width:44px; height:44px; min-width:44px; border-radius:10px; background:rgba(251,191,36,0.15); color:#FBBF24; display:flex; align-items:center; justify-content:center; font-size:1.4rem;">
-              📋
+        <div class="psb-cost-official-card">
+          <div class="psb-cost-official-content">
+            <div class="psb-cost-official-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
             </div>
-            <div>
-              <div style="font-weight:800; font-size:0.95rem; color:#FFFFFF; letter-spacing:0.2px;">Transparansi Rincian Biaya Resmi (SLTP, SLTA & Non-Mukim)</div>
-              <div style="font-size:0.78rem; color:#E2E8F0; margin-top:3px; line-height:1.4;">Lihat rincian lengkap pos pembiayaan riil yayasan: biaya awal tahun, SPP bulanan, biaya akhir tahun, dan seragam lengkap.</div>
+            <div class="psb-cost-official-info">
+              <div class="psb-cost-official-title-row">
+                <h4 class="psb-cost-official-title">Transparansi Rincian Biaya Resmi</h4>
+                <span class="psb-cost-official-badge">SLTP • SLTA • Non-Mukim</span>
+              </div>
+              <p class="psb-cost-official-desc">
+                Lihat rincian lengkap pos pembiayaan riil yayasan: biaya awal tahun, SPP bulanan terpadu, biaya akhir tahun, dan seragam lengkap.
+              </p>
             </div>
           </div>
-          <button type="button" class="btn btn-sm" onclick="openOfficialCostsModal()" style="background:#FBBF24; color:#0A2540; font-weight:800; border:none; padding:10px 18px; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 12px rgba(251,191,36,0.25); white-space:nowrap; transition:transform 0.2s ease;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <button type="button" class="psb-cost-official-btn" onclick="openOfficialCostsModal()" aria-label="Buka Rincian Biaya Resmi">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             <span>Buka Rincian Biaya Resmi</span>
           </button>
         </div>
       </div>
     </section>
 
-    <!-- 9. SEKSI JADWAL RUTIN SANTRI 24 JAM (REF: PSB AL FITHRAH) -->
+    <!-- 9. SEKSI JADWAL RUTIN SANTRI 24 JAM & AGENDA BERKALA -->
     <section class="psb-section psb-section-alt" id="kegiatan">
       <div class="container">
         <div class="psb-section-header">
-          <span class="section-badge" style="margin-bottom:8px;">Disiplin & Berkah</span>
-          <h2 class="psb-section-title">Jadwal Kegiatan Sehari-hari Santri (24 Jam)</h2>
-          <p class="psb-section-sub">Ritme keseharian santri yang disusun seimbang antara ibadah sholat berjamaah, sekolah formal, pendalaman kitab kuning, olahraga, dan istirahat.</p>
+          <span class="section-badge" style="margin-bottom:8px;">Pondok Pesantren Putri</span>
+          <h2 class="psb-section-title">Jadwal &amp; Agenda Kegiatan Santri Pondok Pesantren Putri</h2>
+          <p class="psb-section-sub">Ritme keseharian dan agenda berkala santriwati yang disusun seimbang antara ibadah sholat berjamaah di Mushola Putri, pengajian Al-Qur'an &amp; kitab kuning, KBM sekolah formal, madrasah diniyah, kursus 2 bahasa, serta kebersihan ro'an.</p>
         </div>
 
-        <div class="psb-schedule-table-wrap">
-          <table class="psb-table">
-            <thead>
-              <tr>
-                <th style="width:60px; text-align:center;">No</th>
-                <th style="width:140px;">Waktu (WIB)</th>
-                <th>Kegiatan & Rutinitas Santri</th>
-              </tr>
-            </thead>
-            <tbody id="psbDailyScheduleBody">
-              <tr>
-                <td align="center">1</td>
-                <td><span class="psb-schedule-time">03.30 – 04.30</span></td>
-                <td>Bangun pagi, mandi, sholat Tahajud, Hajat, dan wirid pembacaan dzikir fajar di Mushola Pondok Pesantren Putra</td>
-              </tr>
-              <tr>
-                <td align="center">2</td>
-                <td><span class="psb-schedule-time">04.30 – 05.15</span></td>
-                <td>Sholat Subuh berjamaah dan pembacaan Ratib Al-Haddad / Hizib Nashor</td>
-              </tr>
-              <tr>
-                <td align="center">3</td>
-                <td><span class="psb-schedule-time">05.15 – 06.15</span></td>
-                <td>Halaqah Al-Qur'an pagi: setoran tahfidz sanad, binnadhor, dan sorogan tajwid</td>
-              </tr>
-              <tr>
-                <td align="center">4</td>
-                <td><span class="psb-schedule-time">06.15 – 07.15</span></td>
-                <td>Sholat Dhuha berjamaah, makan pagi santri, dan persiapan masuk kelas formal</td>
-              </tr>
-              <tr>
-                <td align="center">5</td>
-                <td><span class="psb-schedule-time">07.15 – 12.00</span></td>
-                <td>Kegiatan Belajar Mengajar (KBM) Sekolah/Madrasah Formal (MI, MTs, SMP, MA, SMA)</td>
-              </tr>
-              <tr>
-                <td align="center">6</td>
-                <td><span class="psb-schedule-time">12.00 – 13.00</span></td>
-                <td>Sholat Dhuhur berjamaah di Mushola Pondok Pesantren Putra dilanjutkan makan siang santri</td>
-              </tr>
-              <tr>
-                <td align="center">7</td>
-                <td><span class="psb-schedule-time">13.00 – 14.30</span></td>
-                <td>Lanjutan KBM formal / Istirahat siang (Qoilulah Sunnah) di asrama</td>
-              </tr>
-              <tr>
-                <td align="center">8</td>
-                <td><span class="psb-schedule-time">14.30 – 15.30</span></td>
-                <td>Persiapan & Sholat Ashar berjamaah</td>
-              </tr>
-              <tr>
-                <td align="center">9</td>
-                <td><span class="psb-schedule-time">15.30 – 17.00</span></td>
-                <td>Pengajian Kitab Kuning Madrasah Diniyah Salaf / Ekstrakurikuler Bahasa Arab-Inggris & Olahraga</td>
-              </tr>
-              <tr>
-                <td align="center">10</td>
-                <td><span class="psb-schedule-time">17.00 – 17.45</span></td>
-                <td>Mandi sore, berpakaian rapi jubah/busana muslim, dan persiapan menuju Mushola Pondok Pesantren Putra</td>
-              </tr>
-              <tr>
-                <td align="center">11</td>
-                <td><span class="psb-schedule-time">17.45 – 18.30</span></td>
-                <td>Sholat Maghrib berjamaah, pembacaan Waqi'ah, dan Shalawat Burdah</td>
-              </tr>
-              <tr>
-                <td align="center">12</td>
-                <td><span class="psb-schedule-time">18.30 – 19.30</span></td>
-                <td>Sorogan & Bandongan Kitab Kuning bersama Dewan Masyayikh / Asatidz pengasuh</td>
-              </tr>
-              <tr>
-                <td align="center">13</td>
-                <td><span class="psb-schedule-time">19.30 – 20.15</span></td>
-                <td>Sholat Isya' berjamaah dilanjutkan makan malam santri</td>
-              </tr>
-              <tr>
-                <td align="center">14</td>
-                <td><span class="psb-schedule-time">20.15 – 22.00</span></td>
-                <td>Belajar mandiri terbimbing (Tatsqif), musyawarah pelajaran, dan percakapan bahasa asing</td>
-              </tr>
-              <tr>
-                <td align="center">15</td>
-                <td><span class="psb-schedule-time">22.00 – 03.30</span></td>
-                <td>Istirahat malam, lampu asrama dipadamkan demi menjaga stamina santri</td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- Segmented Tab Navigation for Harian / Mingguan / Bulanan & Tahunan -->
+        <div class="psb-schedule-tabs-nav" role="tablist" aria-label="Navigasi Agenda Santri">
+          <button type="button" class="psb-sched-tab-btn active" role="tab" aria-selected="true" onclick="switchScheduleTab('harian', this)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Rutinitas Harian (24 Jam)</span>
+          </button>
+          <button type="button" class="psb-sched-tab-btn" role="tab" aria-selected="false" onclick="switchScheduleTab('mingguan', this)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Kegiatan Mingguan</span>
+          </button>
+          <button type="button" class="psb-sched-tab-btn" role="tab" aria-selected="false" onclick="switchScheduleTab('berkala', this)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span>Kegiatan Bulanan & Tahunan</span>
+          </button>
+        </div>
+
+        <!-- Tab 1: Rutinitas Harian (24 Jam) -->
+        <div class="psb-sched-tab-panel active" id="schedPanelHarian">
+          <div class="psb-schedule-table-wrap">
+            <table class="psb-table">
+              <thead>
+                <tr>
+                  <th style="width:60px; text-align:center;">No</th>
+                  <th style="width:140px;">Waktu (WIB)</th>
+                  <th>Kegiatan & Rutinitas Santri</th>
+                </tr>
+              </thead>
+              <tbody id="psbDailyScheduleBody">
+                <tr>
+                  <td align="center">1</td>
+                  <td><span class="psb-schedule-time">03.30</span></td>
+                  <td>Bangun & Sholat Tahajud</td>
+                </tr>
+                <tr>
+                  <td align="center">2</td>
+                  <td><span class="psb-schedule-time">04.20</span></td>
+                  <td>Jama'ah Sholat Shubuh, Pembiasaan Membaca Surah Yasin, Juz Amma, dan Asmaul Husna</td>
+                </tr>
+                <tr>
+                  <td align="center">3</td>
+                  <td><span class="psb-schedule-time">05.00</span></td>
+                  <td>Pengaosan Kitab Kuning</td>
+                </tr>
+                <tr>
+                  <td align="center">4</td>
+                  <td><span class="psb-schedule-time">05.30</span></td>
+                  <td>Piket Pagi</td>
+                </tr>
+                <tr>
+                  <td align="center">5</td>
+                  <td><span class="psb-schedule-time">06.00</span></td>
+                  <td>Sarapan Pagi</td>
+                </tr>
+                <tr>
+                  <td align="center">6</td>
+                  <td><span class="psb-schedule-time">07.45 – 13.20</span></td>
+                  <td>Berangkat Sekolah - 13.20 (siang) / KBM Sekolah Formal</td>
+                </tr>
+                <tr>
+                  <td align="center">7</td>
+                  <td><span class="psb-schedule-time">14.00</span></td>
+                  <td>Piket Siang</td>
+                </tr>
+                <tr>
+                  <td align="center">8</td>
+                  <td><span class="psb-schedule-time">14.30</span></td>
+                  <td>Bel Persiapan Jama'ah Sholat Ashar</td>
+                </tr>
+                <tr>
+                  <td align="center">9</td>
+                  <td><span class="psb-schedule-time">15.15</span></td>
+                  <td>Jama'ah Sholat Ashar, Pembiasaan Membaca Surah Al-Waqiah, dan Rotib Al-Haddad</td>
+                </tr>
+                <tr>
+                  <td align="center">10</td>
+                  <td><span class="psb-schedule-time">16.00</span></td>
+                  <td>Pengajian Al-Qur'an & Jilid</td>
+                </tr>
+                <tr>
+                  <td align="center">11</td>
+                  <td><span class="psb-schedule-time">16.30</span></td>
+                  <td>Makan Sore</td>
+                </tr>
+                <tr>
+                  <td align="center">12</td>
+                  <td><span class="psb-schedule-time">17.10</span></td>
+                  <td>Persiapan Jama'ah Sholat Maghrib</td>
+                </tr>
+                <tr>
+                  <td align="center">13</td>
+                  <td><span class="psb-schedule-time">17.30</span></td>
+                  <td>Jama'ah Sholat Maghrib, Pembiasaan membaca Surah As-Sajdah</td>
+                </tr>
+                <tr>
+                  <td align="center">14</td>
+                  <td><span class="psb-schedule-time">18.00</span></td>
+                  <td>Kursus 2 Bahasa (Bahasa Arab & Bahasa Inggris)</td>
+                </tr>
+                <tr>
+                  <td align="center">15</td>
+                  <td><span class="psb-schedule-time">18.45</span></td>
+                  <td>Persiapan Jama'ah Sholat Isya'</td>
+                </tr>
+                <tr>
+                  <td align="center">16</td>
+                  <td><span class="psb-schedule-time">19.00</span></td>
+                  <td>Jama'ah Sholat Isya', Pembiasaan Membaca Surah Al-Mulk</td>
+                </tr>
+                <tr>
+                  <td align="center">17</td>
+                  <td><span class="psb-schedule-time">19.30 – 20.30</span></td>
+                  <td>Pembelajaran Madrasah Diniyah</td>
+                </tr>
+                <tr>
+                  <td align="center">18</td>
+                  <td><span class="psb-schedule-time">20.30 – 21.30</span></td>
+                  <td>Jam Bebas (Belajar / Setoran Hafalan / Jajan ke Kantin)</td>
+                </tr>
+                <tr>
+                  <td align="center">19</td>
+                  <td><span class="psb-schedule-time">22.00</span></td>
+                  <td>Tidur Malam & Istirahat</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab 2: Kegiatan Mingguan -->
+        <div class="psb-sched-tab-panel" id="schedPanelMingguan" style="display:none;">
+          <div class="psb-periodic-grid">
+            <div class="psb-periodic-card">
+              <div class="psb-periodic-top">
+                <span class="psb-periodic-badge badge-gold">Kamis Malam</span>
+                <span class="psb-periodic-icon">📿</span>
+              </div>
+              <h4 class="psb-periodic-title">Kegiatan Kamis Malam Jum'at</h4>
+              <p class="psb-periodic-desc">Pembacaan Dzikir, Tahlil bersama, dan Shalawat Diba'iyah / Burdah untuk memperkuat mahabbah kepada Rasulullah SAW dan spiritualitas santri.</p>
+            </div>
+
+            <div class="psb-periodic-card">
+              <div class="psb-periodic-top">
+                <span class="psb-periodic-badge badge-emerald">Jum'at Pagi</span>
+                <span class="psb-periodic-icon">🧹</span>
+              </div>
+              <h4 class="psb-periodic-title">Ro'an Tiap Jum'at Pagi</h4>
+              <p class="psb-periodic-desc">Kerja bakti gotong royong santriwati membersihkan lingkungan kamar, koridor asrama, mushola pondok, dan halaman pesantren.</p>
+            </div>
+
+            <div class="psb-periodic-card">
+              <div class="psb-periodic-top">
+                <span class="psb-periodic-badge badge-blue">Seminggu Sekali</span>
+                <span class="psb-periodic-icon">🏃‍♀️</span>
+              </div>
+              <h4 class="psb-periodic-title">Senam Seminggu Sekali</h4>
+              <p class="psb-periodic-desc">Senam jasmani santriwati di area tertutup khusus putri guna menjaga kebugaran fisik, kesehatan, dan imunitas santri.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Kegiatan Bulanan & Tahunan -->
+        <div class="psb-sched-tab-panel" id="schedPanelBerkala" style="display:none;">
+          <div class="psb-periodic-grid">
+            <div class="psb-periodic-card highlight">
+              <div class="psb-periodic-top">
+                <span class="psb-periodic-badge badge-gold">Agenda Bulanan</span>
+                <span class="psb-periodic-icon">📖</span>
+              </div>
+              <h4 class="psb-periodic-title">Khataman Sebulan Sekali di Jum'at Pagi</h4>
+              <p class="psb-periodic-desc">Majelis Khataman Al-Qur'an 30 Juz serentak sebulan sekali di hari Jum'at pagi yang diikuti seluruh santriwati mukim dan asatidzah.</p>
+            </div>
+
+            <div class="psb-periodic-card highlight">
+              <div class="psb-periodic-top">
+                <span class="psb-periodic-badge badge-amber">Agenda Tahunan</span>
+                <span class="psb-periodic-icon">📜</span>
+              </div>
+              <h4 class="psb-periodic-title">Pengaosan Kitab Dardir (Tahunan)</h4>
+              <p class="psb-periodic-desc">Kajian akbar tahunan pembacaan Kitab Dardir Mi'raj bersama Dewan Masyayikh & Pengasuh sebagai tradisi keilmuan luhur salafiyah.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Informative Institutional Footer Note (Rule 11 Compliant) -->
+        <div class="psb-schedule-note">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span>Seluruh kegiatan ibadah santriwati mukim berpusat di sarana ibadah <strong>Mushola Pondok Pesantren Putri</strong> yang terjaga privasi syar'i 24 jam dengan bimbingan asatidzah pengasuh.</span>
         </div>
       </div>
     </section>
@@ -2044,21 +2155,97 @@
       window.open(`https://wa.me/${waNumber}?text=${text}`, '_blank');
     }
 
-    /* RENDER JADWAL RUTIN SANTRI 24 JAM DINAMIS DARI CMS PONDOK */
+    /* TAB NAVIGASI JADWAL KEGIATAN SANTRI (HARIAN / MINGGUAN / BULANAN & TAHUNAN) */
+    function switchScheduleTab(tabId, btn) {
+      try {
+        const allBtns = document.querySelectorAll('.psb-sched-tab-btn');
+        allBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        if (btn) {
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+        }
+        const panels = document.querySelectorAll('.psb-sched-tab-panel');
+        panels.forEach(p => {
+          p.style.display = 'none';
+          p.classList.remove('active');
+        });
+        const targetId = (tabId === 'harian') ? 'schedPanelHarian' :
+                         (tabId === 'mingguan') ? 'schedPanelMingguan' :
+                         (tabId === 'berkala') ? 'schedPanelBerkala' : null;
+        if (targetId) {
+          const targetPanel = document.getElementById(targetId);
+          if (targetPanel) {
+            targetPanel.style.display = 'block';
+            targetPanel.classList.add('active');
+          }
+        }
+      } catch(err) {
+        console.warn('Schedule tab switch note:', err);
+      }
+    }
+    window.switchScheduleTab = switchScheduleTab;
+
+    /* RENDER JADWAL RUTIN SANTRI DINAMIS DARI CMS PONDOK */
     function renderPsbDailySchedule() {
       try {
         const db = (typeof getDB === 'function') ? getDB() : (window.YAYASAN_DATA || null);
-        const schedules = (db && db.dailySchedules && Array.isArray(db.dailySchedules) && db.dailySchedules.length > 0) ? db.dailySchedules : null;
-        if (!schedules) return;
-        const tbody = document.getElementById('psbDailyScheduleBody');
-        if (!tbody) return;
-        tbody.innerHTML = schedules.map((item, idx) => `
-          <tr>
-            <td align="center">${idx + 1}</td>
-            <td><span class="psb-schedule-time">${item.time || ''}</span></td>
-            <td>${item.activity || ''}</td>
-          </tr>
-        `).join('');
+        if (!db) return;
+
+        // 1. Jadwal Harian (19 Sesi Kegiatan Rutin)
+        const schedules = (db.dailySchedules && Array.isArray(db.dailySchedules) && db.dailySchedules.length > 0) ? db.dailySchedules : null;
+        if (schedules) {
+          const tbody = document.getElementById('psbDailyScheduleBody');
+          if (tbody) {
+            tbody.innerHTML = schedules.map((item, idx) => `
+              <tr>
+                <td align="center">${idx + 1}</td>
+                <td><span class="psb-schedule-time">${item.time || ''}</span></td>
+                <td>${item.activity || ''}</td>
+              </tr>
+            `).join('');
+          }
+        }
+
+        // 2. Jadwal Mingguan
+        if (db.weeklySchedules && Array.isArray(db.weeklySchedules) && db.weeklySchedules.length > 0) {
+          const weeklyGrid = document.querySelector('#schedPanelMingguan .psb-periodic-grid');
+          if (weeklyGrid) {
+            const badgeClasses = ['badge-gold', 'badge-emerald', 'badge-blue'];
+            const icons = ['📿', '🧹', '🏃‍♀️'];
+            weeklyGrid.innerHTML = db.weeklySchedules.map((item, idx) => `
+              <div class="psb-periodic-card">
+                <div class="psb-periodic-top">
+                  <span class="psb-periodic-badge ${badgeClasses[idx % badgeClasses.length]}">${item.badge || item.day || 'Mingguan'}</span>
+                  <span class="psb-periodic-icon">${icons[idx % icons.length]}</span>
+                </div>
+                <h4 class="psb-periodic-title">${item.title || ''}</h4>
+                <p class="psb-periodic-desc">${item.desc || ''}</p>
+              </div>
+            `).join('');
+          }
+        }
+
+        // 3. Jadwal Bulanan & Tahunan
+        if (db.periodicSchedules && Array.isArray(db.periodicSchedules) && db.periodicSchedules.length > 0) {
+          const periodicGrid = document.querySelector('#schedPanelBerkala .psb-periodic-grid');
+          if (periodicGrid) {
+            const badgeClasses = ['badge-gold', 'badge-amber'];
+            const icons = ['📖', '📜'];
+            periodicGrid.innerHTML = db.periodicSchedules.map((item, idx) => `
+              <div class="psb-periodic-card highlight">
+                <div class="psb-periodic-top">
+                  <span class="psb-periodic-badge ${badgeClasses[idx % badgeClasses.length]}">${item.badge || item.period || 'Berkala'}</span>
+                  <span class="psb-periodic-icon">${icons[idx % icons.length]}</span>
+                </div>
+                <h4 class="psb-periodic-title">${item.title || ''}</h4>
+                <p class="psb-periodic-desc">${item.desc || ''}</p>
+              </div>
+            `).join('');
+          }
+        }
       } catch(e) {
         console.warn('Daily schedule render note:', e);
       }

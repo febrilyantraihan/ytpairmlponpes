@@ -10745,13 +10745,13 @@
   background: rgba(10, 37, 64, 0.65);
   border: 1px solid rgba(251, 191, 36, 0.5);
   color: #FDE047;
-  padding: 6px 16px;
-  border-radius: 9999px;
+  padding: 6px 14px;
+  border-radius: 8px;
   font-size: 0.80rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   backdrop-filter: blur(12px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
@@ -10793,7 +10793,7 @@
   font-size: 1.02rem;
   line-height: 1.75;
   color: #F8FAFC;
-  margin-bottom: 26px;
+  margin-bottom: 24px;
   max-width: 580px;
   font-weight: 400;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
@@ -10803,7 +10803,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 }
 
 .showcase-point-item {
@@ -10819,7 +10819,7 @@
 .showcase-point-check {
   width: 22px;
   height: 22px;
-  border-radius: 50%;
+  border-radius: 6px;
   background: #FBBF24;
   color: #0A2540;
   border: none;
@@ -10835,7 +10835,7 @@
 .parallax-showcase-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
@@ -10850,7 +10850,7 @@
   align-items: center;
   gap: 10px;
   padding: 13px 26px;
-  border-radius: var(--radius-md);
+  border-radius: 8px;
   text-decoration: none;
 }
 
@@ -10869,7 +10869,7 @@
   color: #FFFFFF !important;
   font-weight: 700;
   padding: 13px 24px;
-  border-radius: var(--radius-md);
+  border-radius: 8px;
   text-decoration: none;
   transition: all 0.3s ease;
 }
@@ -10971,7 +10971,7 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1.5px solid rgba(255, 255, 255, 0.22);
-  border-radius: var(--radius-xl);
+  border-radius: 12px;
   padding: 14px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
@@ -11015,7 +11015,7 @@
   padding: 0 11px;
   height: 26px;
   box-sizing: border-box;
-  border-radius: 999px;
+  border-radius: 6px;
   white-space: nowrap;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   transition: all 0.25s ease;
@@ -11047,7 +11047,7 @@
   padding: 0 11px;
   height: 26px;
   box-sizing: border-box;
-  border-radius: 999px;
+  border-radius: 6px;
   white-space: nowrap;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   transition: all 0.25s ease;
@@ -11094,7 +11094,7 @@
   position: relative;
   width: 100%;
   padding-top: 56.25%; /* 16:9 Aspect Ratio */
-  border-radius: var(--radius-md);
+  border-radius: 8px;
   overflow: hidden;
   background: #000000;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -11131,21 +11131,79 @@
   font-weight: 600;
 }
 
-/* Responsivitas Layar Tablet & Ponsel */
-@media (max-width: 991px) {
+/* Responsivitas Layar Tablet Acuan (768px s.d. 991px): Adaptive 2-Kolom Seimbang */
+@media (min-width: 768px) and (max-width: 991px) {
   .parallax-showcase-section {
-    padding: 70px 0 80px;
+    padding: 60px 0 65px;
     clip-path: inset(0);
     -webkit-clip-path: inset(0);
   }
+  .parallax-showcase-container {
+    padding: 24px 20px;
+  }
   .parallax-showcase-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
+    grid-template-columns: 1.08fr 0.92fr;
+    gap: 28px;
+    align-items: center;
   }
   .parallax-showcase-title {
-    font-size: clamp(1.5rem, 5vw, 1.95rem);
+    font-size: 1.65rem;
     line-height: 1.25;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
+  }
+  .parallax-showcase-desc {
+    font-size: 0.90rem;
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  .parallax-showcase-points {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .showcase-point-item {
+    font-size: 0.88rem;
+  }
+  .parallax-showcase-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .parallax-showcase-actions .btn {
+    padding: 11px 18px !important;
+    font-size: 0.88rem !important;
+  }
+  .parallax-wave-top {
+    height: 42px;
+  }
+  .parallax-wave-bottom {
+    height: 40px;
+  }
+}
+
+/* Responsivitas Ponsel Pintar Acuan: Samsung Galaxy A55 (360x800) & Layar Sempit */
+@media (max-width: 767px) {
+  .parallax-showcase-section {
+    padding: 44px 0 48px;
+    clip-path: inset(0);
+    -webkit-clip-path: inset(0);
+  }
+  .parallax-showcase-container {
+    padding: 14px 14px; /* Screen padding teratur 12px - 16px (Rule 14) */
+  }
+  .parallax-showcase-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .showcase-badge {
+    font-size: 0.72rem;
+    padding: 4px 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+  }
+  .parallax-showcase-title {
+    font-size: 1.35rem;
+    line-height: 1.25;
+    margin-bottom: 8px;
   }
   .parallax-showcase-title .highlight-gold,
   .parallax-showcase-content .highlight-gold {
@@ -11154,27 +11212,107 @@
     filter: none;
   }
   .parallax-showcase-desc {
-    font-size: 0.92rem;
-    line-height: 1.6;
+    font-size: 0.84rem;
+    line-height: 1.5;
     color: #F8FAFC;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
   }
   .parallax-showcase-overlay {
-    background: linear-gradient(180deg, rgba(7, 26, 46, 0.74) 0%, rgba(10, 37, 64, 0.60) 50%, rgba(7, 26, 46, 0.80) 100%);
+    background: linear-gradient(180deg, rgba(7, 26, 46, 0.82) 0%, rgba(10, 37, 64, 0.72) 50%, rgba(7, 26, 46, 0.88) 100%);
   }
-  .parallax-showcase-actions {
+
+  /* Poin Keunggulan Simetris: Elegan & Rata Sisi (Menghilangkan Kekosongan Asimetris Kanan) */
+  .parallax-showcase-points {
+    display: flex;
     flex-direction: column;
+    gap: 7px;
+    margin-bottom: 14px;
+  }
+  .showcase-point-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 0.81rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    padding: 7px 11px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+  .showcase-point-check {
+    width: 19px;
+    height: 19px;
+    border-radius: 6px;
+    font-size: 0.70rem;
+    box-shadow: 0 1px 6px rgba(251, 191, 36, 0.4);
+  }
+
+  /* Tombol Aksi Seimbang: Proporsional & Ergonomis (Anti-Melar Canggung) */
+  .parallax-showcase-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     align-items: stretch;
   }
   .parallax-showcase-actions .btn {
     text-align: center;
     justify-content: center;
+    min-height: 42px !important;
+    padding: 9px 14px !important;
+    font-size: 0.85rem !important;
+    font-weight: 700;
+    border-radius: 8px !important;
+  }
+  .parallax-showcase-actions .btn-gold {
+    box-shadow: 0 4px 14px rgba(251, 191, 36, 0.32);
+  }
+  .parallax-showcase-actions .btn-outline-white {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1.2px solid rgba(255, 255, 255, 0.35);
+  }
+
+  /* Kartu Video Proporsional & Bebas Tabrakan Tombol Mengambang (Zero Overlap) */
+  .parallax-video-card {
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(15, 76, 129, 0.38);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+  .video-frame-container {
+    border-radius: 6px;
+  }
+  /* Padding kanan 64px melindungi teks dari tumpang-tindih floating WhatsApp/chatbot */
+  .video-card-footer {
+    padding: 8px 64px 4px 6px;
+  }
+  .video-title {
+    font-size: 0.88rem;
+    line-height: 1.35;
+    margin-bottom: 4px;
+  }
+  .video-speaker {
+    font-size: 0.75rem;
+    gap: 5px;
   }
   .parallax-wave-top {
-    height: 45px;
+    height: 38px;
   }
   .parallax-wave-bottom {
-    height: 42px;
+    height: 36px;
+  }
+}
+
+/* Tablet Kecil / Phablet: Tombol Aksi 2 Kolom Seimbang */
+@media (min-width: 440px) and (max-width: 767px) {
+  .parallax-showcase-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 }
 
@@ -16167,6 +16305,131 @@ img.footer-logo {
   font-weight: 800;
 }
 
+/* Banner Transparansi Rincian Biaya Resmi (PSB) */
+.psb-cost-official-card {
+  margin-top: 24px;
+  background: linear-gradient(135deg, #0A2540 0%, #0F4C81 100%);
+  border-radius: 12px;
+  padding: 20px 24px;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 10px 28px rgba(10, 37, 64, 0.16);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.psb-cost-official-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #FBBF24, transparent);
+  opacity: 0.85;
+}
+
+.psb-cost-official-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex: 1;
+}
+
+.psb-cost-official-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 8px;
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  color: #FBBF24;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.psb-cost-official-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #FBBF24;
+}
+
+.psb-cost-official-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.psb-cost-official-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.psb-cost-official-title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.psb-cost-official-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #0A2540;
+  background: #FBBF24;
+  padding: 2.5px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.psb-cost-official-desc {
+  font-size: 0.82rem;
+  color: #E2E8F0;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.psb-cost-official-btn {
+  background: #FBBF24;
+  color: #0A2540 !important;
+  font-weight: 800;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(251, 191, 36, 0.35);
+  white-space: nowrap;
+  font-size: 0.88rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.psb-cost-official-btn:hover {
+  background: #FDE047;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(251, 191, 36, 0.45);
+}
+
 /* 7. FAQ Accordion */
 .psb-faq-wrap {
   max-width: 860px;
@@ -16234,10 +16497,59 @@ img.footer-logo {
   display: block;
 }
 
-/* 8. 24-Hour Santri Schedule */
+/* 8. 24-Hour Santri Schedule & Periodic Activities (Ref: Maskumambang & Al Fithrah) */
+.psb-schedule-tabs-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 auto 24px;
+  max-width: 760px;
+  flex-wrap: wrap;
+}
+
+.psb-sched-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(15, 76, 129, 0.16);
+  color: #0A2540;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(10, 37, 64, 0.04);
+}
+
+.psb-sched-tab-btn:hover {
+  border-color: #0F4C81;
+  background: #F8FAFC;
+  transform: translateY(-1px);
+}
+
+.psb-sched-tab-btn.active {
+  background: #0A2540;
+  color: #FBBF24;
+  border-color: #0A2540;
+  box-shadow: 0 4px 14px rgba(10, 37, 64, 0.2);
+}
+
+.psb-sched-tab-btn svg {
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.psb-sched-tab-panel {
+  display: block;
+  animation: fadeIn 0.3s ease forwards;
+}
+
 .psb-schedule-table-wrap {
   background: #FFFFFF;
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid rgba(15, 76, 129, 0.14);
   box-shadow: 0 10px 30px -5px rgba(10, 37, 64, 0.06);
   overflow-x: auto;
@@ -16254,6 +16566,121 @@ img.footer-logo {
   padding: 4px 10px;
   border-radius: 6px;
   white-space: nowrap;
+}
+
+/* Periodic Cards Grid (Weekly, Monthly, Annual) */
+.psb-periodic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.psb-periodic-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1.5px solid rgba(15, 76, 129, 0.12);
+  padding: 22px 20px;
+  box-shadow: 0 6px 20px rgba(10, 37, 64, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+}
+
+.psb-periodic-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(10, 37, 64, 0.1);
+  border-color: rgba(251, 191, 36, 0.5);
+}
+
+.psb-periodic-card.highlight {
+  border-color: rgba(251, 191, 36, 0.4);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF5 100%);
+}
+
+.psb-periodic-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.psb-periodic-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.psb-periodic-badge.badge-gold {
+  background: rgba(251, 191, 36, 0.18);
+  color: #B45309;
+  border: 1px solid rgba(251, 191, 36, 0.5);
+}
+
+.psb-periodic-badge.badge-emerald {
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.psb-periodic-badge.badge-blue {
+  background: rgba(14, 165, 233, 0.12);
+  color: #0369A1;
+  border: 1px solid rgba(14, 165, 233, 0.35);
+}
+
+.psb-periodic-badge.badge-amber {
+  background: rgba(245, 158, 11, 0.15);
+  color: #92400E;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.psb-periodic-icon {
+  font-size: 1.35rem;
+}
+
+.psb-periodic-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0A2540;
+  margin: 0 0 8px;
+  line-height: 1.35;
+}
+
+.psb-periodic-desc {
+  font-size: 0.85rem;
+  color: #475569;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Schedule Institutional Note */
+.psb-schedule-note {
+  max-width: 900px;
+  margin: 22px auto 0;
+  background: rgba(15, 76, 129, 0.06);
+  border: 1px solid rgba(15, 76, 129, 0.16);
+  border-radius: 10px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #0F4C81;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.psb-schedule-note svg {
+  flex-shrink: 0;
+  color: #0F4C81;
 }
 
 /* 9. PSB Interactive Multi-Step Form Wizard (Minimalis & Geometris Rapi) */
@@ -16989,11 +17416,98 @@ img.footer-logo {
     gap: 6px !important;
   }
 
-  /* 24-Hour Santri Schedule on Mobile */
+  /* Banner Transparansi Biaya Resmi di Mobile (Samsung Galaxy A55 360x800) */
+  .psb-cost-official-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 16px 14px !important;
+    gap: 14px !important;
+    margin-top: 18px !important;
+    border-radius: 10px !important;
+  }
+  .psb-cost-official-content {
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .psb-cost-official-icon {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    border-radius: 8px !important;
+  }
+  .psb-cost-official-icon svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .psb-cost-official-title {
+    font-size: 0.94rem !important;
+    line-height: 1.35 !important;
+  }
+  .psb-cost-official-badge {
+    font-size: 0.62rem !important;
+    padding: 2px 6px !important;
+  }
+  .psb-cost-official-desc {
+    font-size: 0.78rem !important;
+    line-height: 1.45 !important;
+  }
+  .psb-cost-official-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    min-height: 44px !important;
+    padding: 11px 16px !important;
+    font-size: 0.86rem !important;
+    border-radius: 8px !important;
+  }
+
+  /* 24-Hour Santri Schedule & Periodic Tabs on Mobile (Samsung Galaxy A55 360x800) */
+  .psb-schedule-tabs-nav {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    padding: 4px 2px 10px !important;
+    gap: 8px !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .psb-schedule-tabs-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .psb-sched-tab-btn {
+    padding: 8px 14px !important;
+    font-size: 0.80rem !important;
+    white-space: nowrap !important;
+    border-radius: 7px !important;
+    flex-shrink: 0 !important;
+    min-height: 40px !important;
+  }
   .psb-schedule-time {
     font-size: 0.76rem !important;
     padding: 3px 8px !important;
     border-radius: 5px !important;
+  }
+  .psb-periodic-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .psb-periodic-card {
+    padding: 16px 14px !important;
+    border-radius: 10px !important;
+  }
+  .psb-periodic-title {
+    font-size: 0.95rem !important;
+  }
+  .psb-periodic-desc {
+    font-size: 0.80rem !important;
+    line-height: 1.5 !important;
+  }
+  .psb-schedule-note {
+    padding: 10px 12px !important;
+    font-size: 0.78rem !important;
+    gap: 8px !important;
+    border-radius: 8px !important;
+    margin-top: 16px !important;
   }
 
   /* FAQ Accordion on Mobile */
@@ -21547,8 +22061,8 @@ body:has(#genericModal.active) #ytpaiAiChatContainer {
     border-radius: 12px;
   }
   .psb-gateway-badge {
-    font-size: 0.68rem;
-    padding: 4.5px 10px;
+    font-size: 0.72rem;
+    padding: 5px 12px;
     border-radius: 6px;
     gap: 6px;
     margin-bottom: 14px;
@@ -21561,26 +22075,28 @@ body:has(#genericModal.active) #ytpaiAiChatContainer {
     letter-spacing: 0.03em;
   }
   .psb-gateway-title {
-    font-size: 1.45rem;
-    line-height: 1.3;
-    margin-bottom: 12px;
+    font-size: clamp(1.72rem, 5.6vw, 1.95rem);
+    font-weight: 850;
+    line-height: 1.25;
+    margin-bottom: 14px;
+    letter-spacing: -0.015em;
   }
   .psb-title-flourish {
-    margin: 0 auto 12px;
-    gap: 6px;
+    margin: 0 auto 14px;
+    gap: 7px;
   }
   .psb-flourish-bar {
-    width: 28px;
+    width: 32px;
   }
   .psb-flourish-gem {
     width: 5px;
     height: 5px;
   }
   .psb-gateway-desc {
-    font-size: 0.84rem;
+    font-size: 0.88rem;
     line-height: 1.55;
     margin-bottom: 18px;
-    color: rgba(241, 245, 249, 0.92);
+    color: rgba(241, 245, 249, 0.95);
   }
   /* Minimalis 2x2 Grid Ramping di Mobile */
   .psb-gateway-grid {
