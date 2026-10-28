@@ -17227,8 +17227,7 @@ img.footer-logo {
   }
 
   /* Executive Mobile Card Transformation for PSB Tables */
-  .psb-table-wrap, 
-  .psb-schedule-table-wrap {
+  .psb-table-wrap {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
@@ -17482,10 +17481,125 @@ img.footer-logo {
     flex-shrink: 0 !important;
     min-height: 40px !important;
   }
-  .psb-schedule-time {
-    font-size: 0.76rem !important;
-    padding: 3px 8px !important;
-    border-radius: 5px !important;
+  /* Opsi 1: Timeline Vertikal Kompak Jadwal Santri (Connected Executive Timeline) */
+  .psb-schedule-table-wrap {
+    background: #FFFFFF !important;
+    border: 1.5px solid rgba(15, 76, 129, 0.14) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 18px rgba(10, 37, 64, 0.05) !important;
+    padding: 14px 12px 14px 14px !important;
+    overflow: visible !important;
+    position: relative !important;
+    margin: 0 auto !important;
+  }
+
+  .psb-schedule-table-wrap .psb-table,
+  .psb-schedule-table-wrap .psb-table tbody {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+
+  /* Garis Vertikal Penanda Alur Waktu Santri (Connected Timeline Line) */
+  .psb-schedule-table-wrap .psb-table tbody::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 14px !important;
+    bottom: 20px !important;
+    left: 11px !important;
+    width: 2px !important;
+    background: linear-gradient(180deg, #0A2540 0%, #0F4C81 40%, #D97706 75%, #FBBF24 100%) !important;
+    opacity: 0.35 !important;
+    z-index: 1 !important;
+  }
+
+  .psb-schedule-table-wrap .psb-table thead {
+    display: none !important;
+  }
+
+  .psb-schedule-table-wrap .psb-table tr {
+    display: grid !important;
+    grid-template-columns: 24px 1fr !important;
+    align-items: start !important;
+    gap: 0 10px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 7px 0 !important;
+    border-bottom: 1px dashed rgba(15, 76, 129, 0.09) !important;
+    box-shadow: none !important;
+    position: relative !important;
+    z-index: 2 !important;
+    text-align: left !important;
+    transition: background 0.15s ease !important;
+  }
+
+  .psb-schedule-table-wrap .psb-table tr:last-child {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
+
+  .psb-schedule-table-wrap .psb-table tr:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+    background: rgba(248, 250, 252, 0.7) !important;
+  }
+
+  /* Titik Node Garis Waktu (Nomor Urut Emas-Navy) */
+  .psb-schedule-table-wrap .psb-table td:nth-child(1) {
+    grid-column: 1 !important;
+    grid-row: 1 / span 2 !important;
+    width: 22px !important;
+    height: 22px !important;
+    border-radius: 6px !important;
+    background: #0A2540 !important;
+    color: #FBBF24 !important;
+    font-size: 0.68rem !important;
+    font-weight: 800 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 0 0 3px #FFFFFF, 0 1px 3px rgba(10, 37, 64, 0.2) !important;
+    margin-top: 1px !important;
+    z-index: 3 !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Badge Waktu Jam */
+  .psb-schedule-table-wrap .psb-table td:nth-child(2) {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    margin-bottom: 2px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .psb-schedule-table-wrap .psb-table td:nth-child(2) .psb-schedule-time {
+    font-family: monospace !important;
+    font-weight: 800 !important;
+    font-size: 0.75rem !important;
+    color: #0F4C81 !important;
+    background: #EFF6FF !important;
+    border: 1px solid #BFDBFE !important;
+    padding: 1.5px 7px !important;
+    border-radius: 4px !important;
+    letter-spacing: 0.01em !important;
+    display: inline-block !important;
+  }
+
+  /* Judul / Teks Kegiatan */
+  .psb-schedule-table-wrap .psb-table td:nth-child(3) {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    font-size: 0.83rem !important;
+    font-weight: 600 !important;
+    color: #0A2540 !important;
+    line-height: 1.36 !important;
+    margin-top: 0 !important;
+    word-break: break-word !important;
   }
   .psb-periodic-grid {
     grid-template-columns: 1fr !important;
