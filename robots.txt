@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /scratch/
+Disallow: /_baseline_snapshot/
+
+Sitemap: https://ytpai-raudlatulmutaallimin.sch.id/sitemap.xml
+

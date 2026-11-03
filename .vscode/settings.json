@@ -1,6 +1,6 @@
 {
     "liveServer.settings.AdvanceCustomBrowserCmdLine": "chrome",
     "liveServer.settings.CustomBrowser": "chrome",
-    "liveServer.settings.port": 5501,
+    "liveServer.settings.port": 5502,
     "livePreview.defaultPreviewPath": "/index.html"
 }

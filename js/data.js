@@ -72,6 +72,8 @@ const DEFAULT_YAYASAN_DATA = {
   // Konfigurasi Sistem Jadwal Pendaftaran SPMB (Indent, Gelombang 1, Gelombang 2)
   psbWaveConfig: {
     activeWave: 1, // 1 = Indent aktif, 2 = Gelombang 1 aktif, 3 = Gelombang 2 aktif, 0 = Ditutup
+    autoDateTracking: true, // Otomatis menyesuaikan status berdasarkan kalender & tanggal waktu nyata
+    endingSoonThresholdDays: 7, // H-7 s.d. tanggal penutupan otomatis berstatus "Akan Berakhir"
     academicYear: "T.A. 2027/2028",
     heroBackground: "assets/banner_ppdb_hero.jpg",
     slogan: "#SEKOLAH UNGGULAN BERBASIS PESANTREN",
@@ -80,7 +82,9 @@ const DEFAULT_YAYASAN_DATA = {
       name: "Jalur Indent (Pemesanan Kuota Awal)",
       shortName: "INDENT",
       dateRange: "01 Nov 2026 – 06 Jan 2027",
-      status: "Segera Dibuka",
+      startDate: "2026-11-01",
+      endDate: "2027-01-06",
+      status: "Dibuka",
       isOpen: true,
       announcementText: "Jalur Indent SPMB T.A. 2027/2028: 01 November 2026 s/d 06 Januari 2027. Kuota asrama putra dan putri terbatas. Pendaftaran online buka 24 jam. Pelayanan tatap muka hadir ke Kantor Sekretariat Pusat SPMB YTPAI Lamongan atau Kantor Unit Formal (KB–SMA) buka Sabtu s.d. Kamis pukul 07.00 – 14.00 WIB (Hari Jum'at Libur Lembaga)."
     },
@@ -89,6 +93,8 @@ const DEFAULT_YAYASAN_DATA = {
       name: "Gelombang 1 (Jalur Reguler Tahap I)",
       shortName: "GELOMBANG 1",
       dateRange: "07 Jan – 31 Mar 2027",
+      startDate: "2027-01-07",
+      endDate: "2027-03-31",
       status: "Tahap 1",
       isOpen: false,
       announcementText: "Periode Gelombang 1: 07 Januari s/d 31 Maret 2027. Kuota asrama putra dan putri tersedia. Pendaftaran online buka 24 jam via portal web resmi."
@@ -98,6 +104,8 @@ const DEFAULT_YAYASAN_DATA = {
       name: "Gelombang 2 (Jalur Reguler Tahap II)",
       shortName: "GELOMBANG 2",
       dateRange: "01 Apr – 08 Jul 2027",
+      startDate: "2027-04-01",
+      endDate: "2027-07-08",
       status: "Tahap 2",
       isOpen: false,
       announcementText: "Periode Gelombang 2: 01 April s/d 08 Juli 2027. Pengisian sisa kuota murid baru untuk seluruh jenjang pendidikan."
@@ -105,7 +113,9 @@ const DEFAULT_YAYASAN_DATA = {
     // Properti Kompatibilitas Legacy
     name: "Jalur Indent",
     dateRange: "01 Nov 2026 – 06 Jan 2027",
-    status: "Segera Dibuka",
+    startDate: "2026-11-01",
+    endDate: "2027-01-06",
+    status: "Dibuka",
     isOpen: true,
     announcementText: "Jalur Indent SPMB T.A. 2027/2028: 01 November 2026 s/d 06 Januari 2027. Kuota asrama putra dan putri terbatas. Pendaftaran online buka 24 jam."
   },
@@ -2992,27 +3002,13 @@ function getDB() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
       }
     }
-    // Auto-migrate psbWaveConfig (Sistem 2 Gelombang PSB Dinamis)
-    if (!parsed.psbWaveConfig || !parsed.psbWaveConfig.wave1) {
+    // Auto-migrate psbWaveConfig (Sistem Jadwal SPMB 3 Tahap Dinamis & Pelacak Tanggal Otomatis)
+    if (!parsed.psbWaveConfig || !parsed.psbWaveConfig.indent || !parsed.psbWaveConfig.indent.startDate || parsed.psbWaveConfig.autoDateTracking === undefined) {
       const oldConfig = parsed.psbWaveConfig || {};
-      parsed.psbWaveConfig = {
-        activeWave: (typeof oldConfig.isOpen !== 'undefined' && !oldConfig.isOpen) ? 0 : 1,
-        academicYear: oldConfig.academicYear || DEFAULT_YAYASAN_DATA.psbWaveConfig.academicYear,
-        wave1: {
-          name: oldConfig.name || DEFAULT_YAYASAN_DATA.psbWaveConfig.wave1.name,
-          shortName: "Gelombang I",
-          dateRange: oldConfig.dateRange || DEFAULT_YAYASAN_DATA.psbWaveConfig.wave1.dateRange,
-          status: oldConfig.status || DEFAULT_YAYASAN_DATA.psbWaveConfig.wave1.status,
-          isOpen: (typeof oldConfig.isOpen !== 'undefined') ? oldConfig.isOpen : true,
-          announcementText: oldConfig.announcementText || DEFAULT_YAYASAN_DATA.psbWaveConfig.wave1.announcementText
-        },
-        wave2: JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.psbWaveConfig.wave2)),
-        name: oldConfig.name || "Gelombang I",
-        dateRange: oldConfig.dateRange || "02 Jan – 31 Mar 2026",
-        status: oldConfig.status || "Kuota Terbatas",
-        isOpen: (typeof oldConfig.isOpen !== 'undefined') ? oldConfig.isOpen : true,
-        announcementText: oldConfig.announcementText || DEFAULT_YAYASAN_DATA.psbWaveConfig.wave1.announcementText
-      };
+      parsed.psbWaveConfig = Object.assign({}, JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.psbWaveConfig)), {
+        activeWave: (typeof oldConfig.activeWave !== 'undefined') ? oldConfig.activeWave : DEFAULT_YAYASAN_DATA.psbWaveConfig.activeWave,
+        academicYear: oldConfig.academicYear || DEFAULT_YAYASAN_DATA.psbWaveConfig.academicYear
+      });
       localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     }
     // Auto-migrate kbihuInfo office to Mushola Pondok Pesantren Putra & kontak resmi Ust. Yusuf Afif Rifa'i

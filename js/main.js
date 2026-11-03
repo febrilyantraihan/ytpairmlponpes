@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initVisitorTelemetry();
   initHeroCtaInteractiveHover();
   initLatestInfoPopup();
+  initPrayerTimesWidget();
 
   // Listen to live database updates from Admin panel
   window.addEventListener('ytpai_db_updated', () => {
@@ -73,6 +74,7 @@ function renderAllSections() {
   try { renderPsbWaveHeader(db); } catch (e) { console.error('Error renderPsbWaveHeader:', e); }
   try { renderPsbFaq(db); } catch (e) { console.error('Error renderPsbFaq:', e); }
   try { renderPsbCosts(db); } catch (e) { console.error('Error renderPsbCosts:', e); }
+  try { initPrayerTimesWidget(); } catch (e) { console.error('Error initPrayerTimesWidget:', e); }
   if (typeof refreshScrollObserver === 'function') {
     refreshScrollObserver();
   }
@@ -719,7 +721,7 @@ function renderAgenda(db) {
   `).join('');
 }
 
-window.openAgendaModal = function(eventId) {
+window.openAgendaModal = function (eventId) {
   const db = getDB();
   const agenda = (db.agenda || []).find(e => String(e.id) === String(eventId));
   if (!agenda) return;
@@ -1020,7 +1022,11 @@ function initScrollEngine() {
   }
 
   // Setup High-Performance IntersectionObserver for reveal animations
-  // Setup High-Performance IntersectionObserver for soft, elegant reveal animations
+  // Masterclass Assembly Engine (Animasi Menyusun Halus, Soft & Profesional)
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+  const revealRootMargin = isMobile ? '0px 0px -30px 0px' : '0px 0px -55px 0px';
+  const revealThreshold = isMobile ? 0.05 : 0.08;
+
   if ('IntersectionObserver' in window) {
     globalRevealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
@@ -1031,91 +1037,191 @@ function initScrollEngine() {
       });
     }, {
       root: null,
-      rootMargin: '0px 0px -40px 0px',
-      threshold: 0.05
+      rootMargin: revealRootMargin,
+      threshold: revealThreshold
     });
 
     refreshScrollObserver();
   } else {
     // Fallback: reveal immediately for older browsers without IntersectionObserver
-    document.querySelectorAll('.scroll-reveal, .scroll-reveal-soft, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .scroll-reveal-zoom')
+    document.querySelectorAll('.scroll-reveal, .scroll-reveal-soft, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .scroll-reveal-zoom, .scroll-reveal-assembly')
       .forEach(el => el.classList.add('is-revealed'));
   }
 
-  // Active scroll fallback: ensures elements smoothly reveal on scroll across all devices & iframes
-  window.addEventListener('scroll', checkScrollRevealsFallback, { passive: true });
+  // Active scroll fallback with requestAnimationFrame throttling for buttery 60fps/120Hz
+  let scrollThrottleTimer = null;
+  window.addEventListener('scroll', () => {
+    if (scrollThrottleTimer) return;
+    scrollThrottleTimer = requestAnimationFrame(() => {
+      checkScrollRevealsFallback();
+      scrollThrottleTimer = null;
+    });
+  }, { passive: true });
 
   // Initial check: reveal ONLY elements already visible in initial viewport
   checkScrollRevealsFallback();
-  setTimeout(checkScrollRevealsFallback, 150);
-  setTimeout(checkScrollRevealsFallback, 400);
+  setTimeout(checkScrollRevealsFallback, 180);
 }
 
 function checkScrollRevealsFallback() {
   const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+  const offset = window.innerWidth <= 768 ? 30 : 55;
   const unrevealed = document.querySelectorAll(
-    '.scroll-reveal:not(.is-revealed), .scroll-reveal-soft:not(.is-revealed), .scroll-reveal-left:not(.is-revealed), .scroll-reveal-right:not(.is-revealed), .scroll-reveal-scale:not(.is-revealed), .scroll-reveal-zoom:not(.is-revealed)'
+    '.scroll-reveal:not(.is-revealed), .scroll-reveal-soft:not(.is-revealed), .scroll-reveal-left:not(.is-revealed), .scroll-reveal-right:not(.is-revealed), .scroll-reveal-scale:not(.is-revealed), .scroll-reveal-zoom:not(.is-revealed), .scroll-reveal-assembly:not(.is-revealed)'
   );
   if (unrevealed.length === 0) return;
 
   unrevealed.forEach(el => {
     const rect = el.getBoundingClientRect();
-    // Soft reveal: trigger when element enters lower portion of viewport
-    if (rect.top < vh - 30 && rect.bottom > 0) {
+    // Soft reveal: trigger when element enters viewport with proper luxury margin
+    if (rect.top < vh - offset && rect.bottom > 20) {
       el.classList.add('is-revealed');
       if (globalRevealObserver) {
-        try { globalRevealObserver.unobserve(el); } catch (e) {}
+        try { globalRevealObserver.unobserve(el); } catch (e) { }
       }
     }
   });
 }
 
 function refreshScrollObserver() {
-  // Automatically attach smooth, luxurious scroll reveal & stagger across all modules
-  const autoRevealSelectors = [
-    // Section Headers & Badges & Titles
-    '.section-header', '.section-header-center', '.psb-section-header', '.section-badge',
-    // Foundation & Pillars
-    '.pilar-card', '.pilar-exec-card', '.core-value-card',
-    // Editorial Speech & Visimisi & Tentang
-    '.editorial-main-headline', '.editorial-speech-block', '.visimisi-split-card', '.visimisi-hero-card',
-    '.about-image-card', '.yayasan-vision-card', '.about-visit-card', '.about-history-banner', '.yayasan-mission-box', '.vision-pillar-card', '.mission-item',
-    // Units of Education
-    '.unit-grid > div', '.unit-card', '.unit-card-v2', '.unit-item-horizontal',
-    // Asrama Santri
-    '.asrama-showcase-card', '.asrama-feature-card',
-    // Facilities & Buildings
-    '.facilities-showcase-grid > article', '.facility-showcase-card', '.facility-card', '.facility-spec-card', '.facility-grid > div', '.fasilitas-card',
-    // Extracurriculars
-    '.ekskul-card',
-    // News & Media
-    '.news-grid > article', '.news-grid > div', '.news-card',
-    // Highlights & Prestasi
-    '.highlight-card-executive', '.prestasi-grid > div', '.prestasi-card', '.stat-card-executive',
-    // Tahfidz & Student Creative Works
-    '.tasmik-card', '.karya-grid > div', '.karya-card',
-    // Leadership & History
-    '.leader-grid > div', '.leader-card', '.pembina-card',
-    '.timeline-item', '.timeline-card', '.muassis-card',
-    '.history-stat-card', '.history-lead-card', '.history-archive-card', '.philosophy-card',
-    // Programs & Gateways
-    '.programs-grid > div', '.program-card', '.agenda-item-card', '.ppdb-gateway-card', '.hero-gateway-strip',
-    // KBIHU & LBB Modules
-    '.kbihu-grid > div', '.kbihu-card', '.kbihu-program-card', '.kbihu-package-card', '.kbihu-mentor-card', '.kbihu-step-card',
-    '.lbb-card', '.lbb-briefing-card', '.lbb-mentor-card', '.lbb-day-card', '.lbb-timeline-step', '.lbb-pricing-card', '.lbb-matrix-wrap',
-    // PSB & Registration Modules
-    '.psb-step-card', '.psb-wave-card', '.psb-benefit-card', '.psb-beasiswa-card', '.psb-alur-card',
-    '.psb-easy-step-card', '.psb-cost-card', '.duo-card',
-    // Testimonials
-    '.testi-card-v2',
-    // FAQ & Contact
-    '.faq-item', '.accordion-item', '.contact-info-card', '.contact-form-card',
-    // Footer Blocks
-    '.footer-brand', '.footer-col'
-  ];
+  // MASTERCLASS SCROLL ASSEMBLY ENGINE: Menyusun Halus, Soft & Profesional
+  // 1. Helper function to apply sibling-aware sequential stagger delays inside any container
+  const applySiblingAssembly = (containerSelector, itemSelector, baseStagger = 1) => {
+    try {
+      document.querySelectorAll(containerSelector).forEach(container => {
+        let items;
+        try {
+          items = container.querySelectorAll(itemSelector);
+        } catch (e) {
+          items = container.children;
+        }
+        Array.from(items).forEach((item, idx) => {
+          if (!item || !item.classList) return;
+          if (!item.classList.contains('scroll-reveal') &&
+              !item.classList.contains('scroll-reveal-soft') &&
+              !item.classList.contains('scroll-reveal-left') &&
+              !item.classList.contains('scroll-reveal-right') &&
+              !item.classList.contains('scroll-reveal-scale') &&
+              !item.classList.contains('scroll-reveal-assembly')) {
+            item.classList.add('scroll-reveal');
+          }
+          // Pastikan urutan stagger selalu berjenjang rapi 1, 2, 3... per container
+          item.className = item.className.replace(/\bstagger-\d+\b/g, '').trim();
+          const staggerNum = Math.min(((idx + baseStagger - 1) % 10) + 1, 10);
+          item.classList.add(`stagger-${staggerNum}`);
+        });
+      });
+    } catch (err) {
+      console.warn('Warning in applySiblingAssembly:', err);
+    }
+  };
 
-  document.querySelectorAll(autoRevealSelectors.join(', ')).forEach((el, idx) => {
-    if (!el.classList.contains('scroll-reveal') && !el.classList.contains('scroll-reveal-soft') && !el.classList.contains('scroll-reveal-left') && !el.classList.contains('scroll-reveal-right') && !el.classList.contains('scroll-reveal-scale') && !el.classList.contains('scroll-reveal-zoom')) {
+  // 2. Section Headers Assembly Choreography (Badge -> Title -> Description)
+  document.querySelectorAll('.section-header, .section-header-center, .psb-section-header, .about-section-header').forEach(header => {
+    const badge = header.querySelector('.section-badge, .badge, .royal-gold-badge');
+    const title = header.querySelector('.section-title, h2, h3');
+    const desc = header.querySelector('.section-desc, .section-subtitle, p');
+
+    if (badge && !badge.classList.contains('scroll-reveal')) {
+      badge.classList.add('scroll-reveal');
+      badge.className = badge.className.replace(/\bstagger-\d+\b/g, '').trim();
+      badge.classList.add('stagger-1');
+    }
+    if (title && !title.classList.contains('scroll-reveal')) {
+      title.classList.add('scroll-reveal');
+      title.className = title.className.replace(/\bstagger-\d+\b/g, '').trim();
+      title.classList.add('stagger-2');
+    }
+    if (desc && !desc.classList.contains('scroll-reveal')) {
+      desc.classList.add('scroll-reveal');
+      desc.className = desc.className.replace(/\bstagger-\d+\b/g, '').trim();
+      desc.classList.add('stagger-3');
+    }
+  });
+
+  // 3. Grid & Card Cascading Assembly across All Modules
+  applySiblingAssembly('.hero-stats-strip, .stat-row', '.stat-card, .stat-card-executive, .stat-item', 1);
+  applySiblingAssembly('.pilar-grid, .pilar-exec-grid', '.pilar-card, .pilar-exec-card', 1);
+  applySiblingAssembly('.core-values-grid', '.core-value-card', 1);
+  applySiblingAssembly('.unit-grid', '.unit-card, .unit-card-v2, .unit-item-horizontal, :scope > div', 1);
+  applySiblingAssembly('.asrama-showcase-grid', '.asrama-showcase-card, .asrama-feature-card', 1);
+  applySiblingAssembly('.facilities-showcase-grid, .facilities-grid, .facility-grid', 'article, .facility-card, .facility-showcase-card, .fasilitas-card', 1);
+  applySiblingAssembly('.ekskul-grid', '.ekskul-card', 1);
+  applySiblingAssembly('.news-grid', 'article, .news-card, :scope > div', 1);
+  applySiblingAssembly('.prestasi-grid', 'article, .prestasi-card, :scope > div', 1);
+  applySiblingAssembly('.programs-grid', '.program-card, :scope > div', 1);
+  applySiblingAssembly('.tasmik-grid', '.tasmik-card', 1);
+  applySiblingAssembly('.karya-grid', '.karya-card, :scope > div', 1);
+  applySiblingAssembly('.leader-grid, .pembina-grid', '.leader-card, .pembina-card, :scope > div', 1);
+  applySiblingAssembly('.timeline-container', '.timeline-item, .timeline-card', 1);
+  applySiblingAssembly('.muassis-grid', '.muassis-card', 1);
+  applySiblingAssembly('.testi-grid, .testi-carousel', '.testi-card-v2, .testi-item', 1);
+  applySiblingAssembly('.psb-steps-grid', '.psb-step-card, .psb-alur-card', 1);
+  applySiblingAssembly('.psb-cost-grid', '.psb-cost-card', 1);
+  applySiblingAssembly('.psb-wave-grid', '.psb-wave-card', 1);
+  applySiblingAssembly('.sholat-cards-grid, .prayer-times-grid', '.prayer-card, .sholat-time-card', 1);
+  applySiblingAssembly('.kbihu-grid, .kbihu-packages-grid, .kbihu-facility-grid', '.kbihu-card, .kbihu-package-card, .kbihu-step-card, .kbihu-step-item', 1);
+  applySiblingAssembly('.lbb-schedule-grid, .lbb-mentors-grid, .lbb-tools-grid', '.lbb-day-card, .lbb-mentor-card, .lbb-tool-card, .lbb-card', 1);
+  applySiblingAssembly('.faq-grid, .faq-container', '.faq-item, .accordion-item', 1);
+  applySiblingAssembly('.contact-grid', '.contact-info-card, .contact-form-card, .map-container-executive', 1);
+  applySiblingAssembly('.footer-grid, .footer-main', '.footer-col, .footer-brand', 1);
+
+  // 4. Section #tentang (Split Two-Column Architectural Assembly)
+  const aboutLeft = document.querySelector('.about-col-left');
+  if (aboutLeft) {
+    const aboutImg = aboutLeft.querySelector('.about-image-card, .about-image-frame');
+    const visionCard = aboutLeft.querySelector('.yayasan-vision-card');
+    const visitCard = aboutLeft.querySelector('.about-visit-card');
+    if (aboutImg) { aboutImg.classList.add('scroll-reveal'); aboutImg.classList.add('stagger-1'); }
+    if (visionCard) { visionCard.classList.add('scroll-reveal'); visionCard.classList.add('stagger-2'); }
+    if (visitCard) { visitCard.classList.add('scroll-reveal'); visitCard.classList.add('stagger-3'); }
+  }
+  const aboutRight = document.querySelector('.about-col-right');
+  if (aboutRight) {
+    const aboutDesc = aboutRight.querySelector('.about-desc-card, .about-description, p');
+    if (aboutDesc) { aboutDesc.classList.add('scroll-reveal'); aboutDesc.classList.add('stagger-2'); }
+    const missionItems = aboutRight.querySelectorAll('.mission-item, .pilar-keunggulan-item, .mission-item-luxury, .vision-pillar-card');
+    missionItems.forEach((item, idx) => {
+      item.classList.add('scroll-reveal');
+      item.className = item.className.replace(/\bstagger-\d+\b/g, '').trim();
+      item.classList.add(`stagger-${Math.min(idx + 3, 8)}`);
+    });
+  }
+
+  // 5. Sambutan Section (#sambutan-ketua)
+  const sambutanSection = document.getElementById('sambutan-ketua');
+  if (sambutanSection) {
+    const titleBox = sambutanSection.querySelector('.speech-golden-title-box');
+    const photoCol = sambutanSection.querySelector('.speech-showcase-photo-col');
+    const themeQuote = sambutanSection.querySelector('.speech-showcase-theme');
+    const paragraphs = sambutanSection.querySelector('.speech-showcase-paragraphs');
+    const signature = sambutanSection.querySelector('.speech-showcase-signature');
+    if (titleBox) { titleBox.classList.add('scroll-reveal'); titleBox.classList.add('stagger-1'); }
+    if (photoCol) { photoCol.classList.add('scroll-reveal'); photoCol.classList.add('stagger-2'); }
+    if (themeQuote) { themeQuote.classList.add('scroll-reveal'); themeQuote.classList.add('stagger-3'); }
+    if (paragraphs) { paragraphs.classList.add('scroll-reveal'); paragraphs.classList.add('stagger-4'); }
+    if (signature) { signature.classList.add('scroll-reveal'); signature.classList.add('stagger-5'); }
+  }
+
+  // 6. Sholat Next Prayer Countdown
+  const prayerCountdown = document.querySelector('.sholat-countdown-container, .prayer-countdown-card');
+  if (prayerCountdown) {
+    prayerCountdown.classList.add('scroll-reveal', 'stagger-6');
+  }
+
+  // 7. General Fallback for Any Individual Cards/Banners Not in Grids
+  const individualSelectors = [
+    '.editorial-main-headline', '.editorial-speech-block', '.visimisi-split-card', '.visimisi-hero-card',
+    '.about-history-banner', '.highlight-card-executive', '.haul-akbar-card', '.ppdb-gateway-card',
+    '.hero-gateway-strip', '.agenda-item-card', '.lbb-matrix-wrap', '.psb-easy-step-card', '.duo-card'
+  ];
+  document.querySelectorAll(individualSelectors.join(', ')).forEach((el, idx) => {
+    if (!el.classList.contains('scroll-reveal') &&
+        !el.classList.contains('scroll-reveal-soft') &&
+        !el.classList.contains('scroll-reveal-left') &&
+        !el.classList.contains('scroll-reveal-right') &&
+        !el.classList.contains('scroll-reveal-scale') &&
+        !el.classList.contains('scroll-reveal-assembly')) {
       el.classList.add('scroll-reveal');
       if (!el.className.includes('stagger-')) {
         el.classList.add(`stagger-${(idx % 6) + 1}`);
@@ -1123,16 +1229,17 @@ function refreshScrollObserver() {
     }
   });
 
+  // 8. Observe All Newly Attached Elements with IntersectionObserver
   const unrevealed = document.querySelectorAll(
-    '.scroll-reveal:not(.is-revealed), .scroll-reveal-soft:not(.is-revealed), .scroll-reveal-left:not(.is-revealed), .scroll-reveal-right:not(.is-revealed), .scroll-reveal-scale:not(.is-revealed), .scroll-reveal-zoom:not(.is-revealed)'
+    '.scroll-reveal:not(.is-revealed), .scroll-reveal-soft:not(.is-revealed), .scroll-reveal-left:not(.is-revealed), .scroll-reveal-right:not(.is-revealed), .scroll-reveal-scale:not(.is-revealed), .scroll-reveal-zoom:not(.is-revealed), .scroll-reveal-assembly:not(.is-revealed)'
   );
   if (unrevealed.length === 0) return;
 
   const vh = window.innerHeight || document.documentElement.clientHeight || 800;
   unrevealed.forEach(el => {
-    // If element is already in initial visible viewport on page load, reveal smoothly
+    // Only reveal immediately if element is already fully in initial visible top viewport on page load
     const rect = el.getBoundingClientRect();
-    if (rect.top < vh - 40 && rect.bottom > 0) {
+    if (rect.top < vh - 60 && rect.bottom > 40) {
       el.classList.add('is-revealed');
       return;
     }
@@ -1282,10 +1389,10 @@ function renderUnits(db) {
     const cleanAccred = getCleanAccreditation(unit);
     const badgeExtra = isKbihu ? `<span class="unit-special-pill pill-kbihu">Bimbingan Haji & Umrah Resmi Kemenag</span>`
       : isLbb ? `<span class="unit-special-pill pill-lbb">Bimbel Terbuka Siswa Luar & Santri</span>`
-      : '';
+        : '';
     const standaloneLink = isKbihu ? `<a href="kbihu.html" class="unit-direct-portal-btn btn-portal-kbihu" onclick="event.stopPropagation()">Portal KBIHU ↗</a>`
       : isLbb ? `<a href="lbb.html" class="unit-direct-portal-btn btn-portal-lbb" onclick="event.stopPropagation()">Portal LBB ↗</a>`
-      : '';
+        : '';
 
     return `
     <div class="unit-card ${isKbihu ? 'unit-card-highlight-kbihu' : ''} ${isLbb ? 'unit-card-highlight-lbb' : ''} scroll-reveal stagger-${(idx % 4) + 1}" onclick="openUnitModal('${unit.id}')">
@@ -1490,7 +1597,7 @@ function renderLeadership(db) {
   }
 
   let currentPembinaIdx = 0;
-  window.selectPembinaSlide = function(idx) {
+  window.selectPembinaSlide = function (idx) {
     if (idx < 0) idx = 0;
     if (idx >= pembinaList.length) idx = pembinaList.length - 1;
     currentPembinaIdx = idx;
@@ -1565,7 +1672,7 @@ function renderLeadership(db) {
     }, { passive: true });
   }
 
-  // 4B. Render Ketua Yayasan Sekaligus Sambutan Resmi (Monumental Executive Showcase)
+  // 4B. Render Ketua Yayasan Sekaligus Sambutan Resmi (Monumental Executive Showcase Sesuai Benchmark)
   const sambutanKetuaContainer = document.getElementById('sambutanKetuaContainer');
   if (sambutanKetuaContainer && ketua) {
     const rawParagraphs = (ketua.speechContent || '').split('\n\n').filter(p => p.trim().length > 0);
@@ -1593,54 +1700,52 @@ function renderLeadership(db) {
           </div>
         </div>
 
-        <div class="sambutan-ketua-grid">
-          <!-- Kolom Kiri: Foto Monumental & Identity Plaque -->
-          <div class="sambutan-ketua-monumental-portrait scroll-reveal-left">
-            <div class="portrait-arch-casing">
-              <div class="portrait-gold-filigree-ring"></div>
-              <img src="${ketua.photo}" alt="${ketua.name}" class="portrait-official-photo" onerror="this.onerror=null; this.src='assets/leader_ketua.jpg';">
-              <div class="portrait-gold-vignette"></div>
+        <div class="speech-showcase-container" style="padding: 32px 32px 36px;">
+          <div class="speech-showcase-grid">
+            <!-- 1. Kotak Judul Kuning Emas -->
+            <div class="speech-golden-title-box">
+              <h3 class="speech-golden-title-text">Pesan Ketua Yayasan<br><span class="speech-golden-title-sub">YTPAI Raudlatul Muta'allimin Lamongan</span></h3>
             </div>
 
-            <!-- Identity Plaque -->
-            <div class="portrait-identity-plaque">
-              <div class="plaque-office-tag">
-                <span class="plaque-office-role-badge">KETUA</span>
-                <span class="plaque-office-line-1">Yayasan Taman Pendidikan Agama Islam</span>
-                <span class="plaque-office-line-2">Raudlatul Muta'allimin</span>
-              </div>
-              <h3 class="plaque-name">${ketua.name}</h3>
-              <div class="plaque-meta">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <span class="plaque-meta-desktop-txt">Amanah Kebijakan & Transformasi Pendidikan</span>
-                <span class="plaque-meta-mobile-txt">Amanah Kebijakan & Transformasi</span>
+            <!-- 2. Foto Resmi Ketua Yayasan (Di Atas Teks pada Mode Ponsel, Kanan pada Mode PC) -->
+            <div class="speech-showcase-photo-col">
+              <div class="speech-showcase-photo-frame">
+                <img src="${ketua.photo}" alt="${ketua.name}" class="speech-showcase-photo-img" onerror="this.onerror=null; this.src='assets/leader_ketua.jpg';">
+                <div class="speech-showcase-photo-badge">
+                  <span>KETUA YAYASAN</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- Kolom Kanan: Naskah Resmi Sambutan -->
-          <div class="sambutan-ketua-editorial-content scroll-reveal-right">
-            <div class="editorial-bismillah-opening" aria-label="Bismillahirrohmanirrohim">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-            <h2 class="editorial-main-headline">
-              ${ketua.speechTitle || 'Membina Generasi Emas Berjiwa Santri dan Berdaya Saing Global'}
-            </h2>
-            <!-- Formal Body Paragraphs -->
-            <div class="editorial-paragraphs">
-              ${displayParagraphs.map(p => `<p class="editorial-paragraph">${p}</p>`).join('')}
+            <!-- 3. Tema / Kutipan Topik -->
+            <div class="speech-showcase-theme">
+              “${ketua.speechTitle || 'Membina Generasi Emas Berjiwa Santri dan Berdaya Saing Global'}”
             </div>
 
-            <!-- Actions -->
-            <div class="editorial-actions-bar">
-              <button class="btn btn-primary btn-md royal-action-btn" onclick="openSpeechModal('${ketua.id}')">
-                <span>Baca Sambutan Lengkap</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </button>
-              <a href="#unit" class="btn btn-outline btn-md royal-outline-btn">
-                <span>Satuan Pendidikan (11 Unit)</span>
-              </a>
+            <!-- 4. Naskah Paragraf Sambutan -->
+            <div class="speech-showcase-paragraphs">
+              ${displayParagraphs.map(p => `<p>${p}</p>`).join('')}
+            </div>
+
+            <!-- 5. Tanda Tangan & Tombol Aksi Eksekutif -->
+            <div class="speech-showcase-signature">
+              <p class="speech-closing-salam">Wassalamu'alaikum Warahmatullahi Wabarakatuh.</p>
+              <div class="speech-signature-name">${ketua.name}</div>
+              <div class="speech-signature-role">Ketua Yayasan YTPAI Raudlatul Muta'allimin Lamongan</div>
+
+              <!-- Tombol Aksi Eksekutif -->
+              <div class="editorial-actions-bar" style="margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-primary btn-md royal-action-btn" onclick="openSpeechModal('${ketua.id}')" style="min-height: 44px;">
+                  <span>Baca Sambutan Lengkap</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </button>
+                <a href="#unit" class="btn btn-outline btn-md royal-outline-btn" style="min-height: 44px; display: inline-flex; align-items: center;">
+                  <span>Satuan Pendidikan (11 Unit)</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -1852,7 +1957,7 @@ function initNewsControls() {
   }
 }
 
-window.clearNewsSearch = function() {
+window.clearNewsSearch = function () {
   const searchInput = document.getElementById('newsSearchInput');
   const clearBtn = document.getElementById('newsSearchClear');
   if (searchInput) searchInput.value = '';
@@ -1861,7 +1966,7 @@ window.clearNewsSearch = function() {
   renderNews(getDB());
 };
 
-window.resetNewsFilters = function() {
+window.resetNewsFilters = function () {
   currentNewsCategory = 'Semua';
   currentNewsSearch = '';
   const searchInput = document.getElementById('newsSearchInput');
@@ -1980,9 +2085,9 @@ function renderNews(db) {
 
   // Filter by category and search keyword
   const filtered = newsList.filter(item => {
-    const matchCategory = currentNewsCategory === 'Semua' || 
+    const matchCategory = currentNewsCategory === 'Semua' ||
       (item.category && item.category.toLowerCase().includes(currentNewsCategory.toLowerCase()));
-    const matchSearch = !currentNewsSearch || 
+    const matchSearch = !currentNewsSearch ||
       item.title.toLowerCase().includes(currentNewsSearch) ||
       (item.excerpt && item.excerpt.toLowerCase().includes(currentNewsSearch)) ||
       (item.content && item.content.toLowerCase().includes(currentNewsSearch)) ||
@@ -2018,7 +2123,7 @@ function renderNews(db) {
     else if (catLower.includes('bahasa')) catClass = 'badge-cat-bahasa';
     else if (catLower.includes('ppdb')) catClass = 'badge-cat-ppdb';
 
-      return `
+    return `
         <article class="news-card scroll-reveal stagger-${(idx % 3) + 1}" onclick="openNewsModal(${item.id})" role="button" tabindex="0" aria-label="Buka warta: ${item.title}">
           <div class="news-thumb">
             <img src="${item.image}" alt="${item.title}" loading="lazy" class="news-thumb-img">
@@ -2078,8 +2183,8 @@ function renderProfilHighlights(db) {
     desc: "Kontingen Pramuka Gugus Depan Pondok Pesantren Raudlatul Muta'allimin sukses menorehkan prestasi gemilang sebagai Juara Umum Jambore Daerah se-Jawa Timur."
   };
 
-  const achImageSrc = (topAch.image && !topAch.image.includes('1526976668912-1a811878dd37') && !topAch.image.includes('photo-1526976668912')) 
-    ? topAch.image 
+  const achImageSrc = (topAch.image && !topAch.image.includes('1526976668912-1a811878dd37') && !topAch.image.includes('photo-1526976668912'))
+    ? topAch.image
     : 'assets/kegiatan_pramuka_santri.jpg';
 
   const topNews = (newsList.find(n => n.isFeatured) || newsList[0]) || {
@@ -2210,7 +2315,7 @@ function renderPrestasiHomepage(db) {
   }).join('');
 }
 
-window.switchBeritaHpTab = function(tab) {
+window.switchBeritaHpTab = function (tab) {
   const btnBerita = document.getElementById('tabBtnBeritaHp');
   const btnPrestasi = document.getElementById('tabBtnPrestasiHp');
   const paneBerita = document.getElementById('beritaHpPane');
@@ -2237,7 +2342,7 @@ function getSmartRelatedNews(currentItem, allNews, limit = 3) {
 
   const currentCategory = (currentItem.category || '').toLowerCase().trim();
   const currentTitle = (currentItem.title || '').toLowerCase();
-  
+
   // Keyword extractor (ignoring common Indonesian stop words)
   const stopWords = new Set([
     'yang', 'untuk', 'pada', 'dalam', 'dengan', 'dan', 'dari', 'atau', 'akan', 'oleh',
@@ -2254,7 +2359,7 @@ function getSmartRelatedNews(currentItem, allNews, limit = 3) {
     .map(n => {
       let score = 0;
       const cat = (n.category || '').toLowerCase().trim();
-      
+
       // High score for same category
       if (cat === currentCategory) {
         score += 12;
@@ -2278,7 +2383,7 @@ function getSmartRelatedNews(currentItem, allNews, limit = 3) {
   return scored.slice(0, limit).map(s => s.item);
 }
 
-window.showNewsToast = function(message) {
+window.showNewsToast = function (message) {
   let toast = document.getElementById('newsToastNotification');
   if (!toast) {
     toast = document.createElement('div');
@@ -2298,14 +2403,14 @@ window.showNewsToast = function(message) {
   toast.classList.remove('show');
   void toast.offsetWidth;
   toast.classList.add('show');
-  
+
   if (window._newsToastTimer) clearTimeout(window._newsToastTimer);
   window._newsToastTimer = setTimeout(() => {
     toast.classList.remove('show');
   }, 2600);
 };
 
-window.copyArticleLink = function(customUrl) {
+window.copyArticleLink = function (customUrl) {
   const url = customUrl || (window.location.origin + window.location.pathname + '#berita');
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(url).then(() => {
@@ -2318,7 +2423,7 @@ window.copyArticleLink = function(customUrl) {
   }
 };
 
-window.openNewsModal = function(newsId) {
+window.openNewsModal = function (newsId) {
   const db = (typeof getDB === 'function' ? getDB() : window.APP_DB) || {};
   const newsList = db.news || [];
   const itemIndex = newsList.findIndex(n => String(n.id) === String(newsId) || Number(n.id) === Number(newsId));
@@ -2620,7 +2725,7 @@ function initSegmentedTabs() {
   }
 
   // Global helper to switch education tabs and scroll smoothly to #unit
-  window.switchPendidikanTab = function(targetTabId) {
+  window.switchPendidikanTab = function (targetTabId) {
     const btn = document.querySelector(`.segmented-tab-btn[data-target="${targetTabId}"]`);
     if (btn) {
       btn.click();
@@ -2673,8 +2778,8 @@ function renderAchievements(db, category) {
   if (!container) return;
 
   const rawList = db.achievements || [];
-  const filtered = category === 'Semua' 
-    ? rawList 
+  const filtered = category === 'Semua'
+    ? rawList
     : rawList.filter(a => a.category === category);
 
   if (filtered.length === 0) {
@@ -2902,7 +3007,7 @@ function setupPrestasiCarousel() {
 /* ==========================================================================
    MODAL GENERIC UTILITIES & DETAIL PRESTASI SANTRI
    ========================================================================== */
-window.closeGenericModal = function() {
+window.closeGenericModal = function () {
   const modal = document.getElementById('genericModal');
   if (modal) {
     modal.classList.remove('active');
@@ -2928,7 +3033,7 @@ if (_globalGenericModal) {
   });
 }
 
-window.openPrestasiDetail = function(achId) {
+window.openPrestasiDetail = function (achId) {
   const db = (typeof getDB === 'function' ? getDB() : window.APP_DB) || {};
   const achievements = db.achievements || [];
   const a = achievements.find(item => String(item.id) === String(achId));
@@ -2951,7 +3056,7 @@ window.openPrestasiDetail = function(achId) {
 
   // Format paragraphs from description
   const rawDesc = a.desc || `Prestasi membanggakan diraih oleh ${a.winner} dari satuan pendidikan ${a.unit} dalam ajang ${a.title}. Keberhasilan ini membuktikan komitmen YTPAI Raudlatul Muta'allimin Lamongan dalam memadukan kurikulum kepesantrenan dengan keunggulan kompetitif santri di berbagai bidang kejuaraan.`;
-  
+
   const sentences = rawDesc.split(/(?<=[.!?])\s+/);
   let paragraphsHtml = '';
   if (sentences.length > 2) {
@@ -3076,7 +3181,7 @@ window.openPrestasiDetail = function(achId) {
   const searchInput = document.getElementById('prestasiSidebarSearchInput');
   const searchBtn = document.getElementById('prestasiSidebarSearchBtn');
   if (searchInput) {
-    searchInput.addEventListener('input', function(e) {
+    searchInput.addEventListener('input', function (e) {
       const q = (e.target.value || '').toLowerCase().trim();
       const items = bodyEl.querySelectorAll('.featured-post-item');
       items.forEach(it => {
@@ -3104,7 +3209,7 @@ window.openPrestasiDetail = function(achId) {
 function initTasmikFilterTabs() {
   const tabsContainer = document.getElementById('tasmikFilterTabs');
   if (!tabsContainer) return;
-  
+
   const buttons = tabsContainer.querySelectorAll('.tasmik-filter-btn');
   buttons.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -3124,8 +3229,8 @@ function renderTasmikGallery(db, filterType = 'Semua') {
   if (!container) return;
 
   const records = db.tasmikRecords || [];
-  const filtered = filterType === 'Semua' 
-    ? records 
+  const filtered = filterType === 'Semua'
+    ? records
     : records.filter(r => r.accompaniment === filterType);
 
   if (filtered.length === 0) {
@@ -3142,7 +3247,7 @@ function renderTasmikGallery(db, filterType = 'Semua') {
   container.innerHTML = filtered.map((t, idx) => {
     const isParent = t.accompaniment === 'parent';
     const badgeClass = isParent ? 'tasmik-badge-parent' : 'tasmik-badge-independent';
-    const badgeIcon = isParent 
+    const badgeIcon = isParent
       ? `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`
       : `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 10a3 3 0 0 1 6 0v11H9V10z"/></svg>`;
     const badgeLabel = isParent ? 'Didampingi Orang Tua' : 'Mandiri (Santri Asrama)';
@@ -3210,7 +3315,7 @@ function renderTasmikGallery(db, filterType = 'Semua') {
   }
 }
 
-window.openTasmikDetail = function(tasmikId) {
+window.openTasmikDetail = function (tasmikId) {
   const db = (typeof getDB === 'function' ? getDB() : window.APP_DB) || {};
   const records = db.tasmikRecords || [];
   const t = records.find(item => String(item.id) === String(tasmikId));
@@ -3342,8 +3447,8 @@ function renderKarya(db, activeCategory = 'Semua') {
   if (!container) return;
 
   const works = db.studentWorks || [];
-  const filtered = activeCategory === 'Semua' 
-    ? works 
+  const filtered = activeCategory === 'Semua'
+    ? works
     : works.filter(w => w.category === activeCategory);
 
   if (filtered.length === 0) {
@@ -3410,7 +3515,7 @@ function renderKarya(db, activeCategory = 'Semua') {
   refreshScrollObserver();
 }
 
-window.giveLikeKarya = function(karyaId, btnElement) {
+window.giveLikeKarya = function (karyaId, btnElement) {
   const db = getDB();
   const work = (db.studentWorks || []).find(w => w.id === karyaId);
   if (!work) return;
@@ -3425,7 +3530,7 @@ window.giveLikeKarya = function(karyaId, btnElement) {
   }
 };
 
-window.openKaryaModal = function(karyaId) {
+window.openKaryaModal = function (karyaId) {
   const db = getDB();
   const work = (db.studentWorks || []).find(w => w.id === karyaId);
   if (!work) return;
@@ -3442,10 +3547,10 @@ window.openKaryaModal = function(karyaId) {
   if (work.category === 'Film') {
     mediaContentHtml = `
       <div class="karya-modal-video">
-        ${work.mediaUrl && work.mediaUrl.includes('youtube') 
-          ? `<iframe src="${work.mediaUrl}?autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-          : `<img src="${work.thumbnail}" style="width:100%; height:100%; object-fit:cover;">`
-        }
+        ${work.mediaUrl && work.mediaUrl.includes('youtube')
+        ? `<iframe src="${work.mediaUrl}?autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+        : `<img src="${work.thumbnail}" style="width:100%; height:100%; object-fit:cover;">`
+      }
       </div>
     `;
   } else if (work.category === 'Musik') {
@@ -3631,7 +3736,7 @@ function renderTestimonials(db, activeCategory = 'all') {
 
     // Avatar fallback (Inisial Elegan jika foto kosong / placeholder gagal)
     const initialLetter = (safeName || 'S').trim().charAt(0).toUpperCase();
-    const avatarMarkup = (t.avatar && !t.avatar.includes('placehold.co')) 
+    const avatarMarkup = (t.avatar && !t.avatar.includes('placehold.co'))
       ? `<img src="${t.avatar}" alt="${safeName}" class="testi-avatar-img" onerror="this.outerHTML='<div class=\\\'testi-avatar-fallback\\\'>${initialLetter}</div>'">`
       : `<div class="testi-avatar-fallback">${initialLetter}</div>`;
 
@@ -3680,7 +3785,7 @@ function renderTestimonials(db, activeCategory = 'all') {
   refreshScrollObserver();
 }
 
-window.filterTestimonials = function(category, btnElement) {
+window.filterTestimonials = function (category, btnElement) {
   const filterBtns = document.querySelectorAll('#testiFilterGroup .testi-filter-btn');
   filterBtns.forEach(btn => {
     btn.classList.remove('active');
@@ -3697,7 +3802,7 @@ window.filterTestimonials = function(category, btnElement) {
 };
 
 /* --- PUBLIC TESTIMONIAL SUBMISSION MODAL HANDLERS --- */
-window.openTestimonialModal = function() {
+window.openTestimonialModal = function () {
   const modal = document.getElementById('testimonialSubmitModal');
   if (!modal) return;
   modal.classList.add('active');
@@ -3707,7 +3812,7 @@ window.openTestimonialModal = function() {
   if (firstInput) setTimeout(() => firstInput.focus(), 150);
 };
 
-window.closeTestimonialModal = function() {
+window.closeTestimonialModal = function () {
   const modal = document.getElementById('testimonialSubmitModal');
   if (!modal) return;
   modal.classList.remove('active');
@@ -3719,7 +3824,7 @@ window.closeTestimonialModal = function() {
 };
 
 /* --- DEVICE PHOTO PICKER & CLIENT-SIDE COMPRESSOR --- */
-window.handleTestiPhotoUpload = function(event) {
+window.handleTestiPhotoUpload = function (event) {
   const file = event.target.files?.[0];
   if (!file) return;
 
@@ -3730,9 +3835,9 @@ window.handleTestiPhotoUpload = function(event) {
   }
 
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = function (e) {
     const img = new Image();
-    img.onload = function() {
+    img.onload = function () {
       // Kompres dan resize ke dimensi proporsional max 300px
       const maxDim = 300;
       let width = img.width;
@@ -3787,7 +3892,7 @@ window.handleTestiPhotoUpload = function(event) {
   reader.readAsDataURL(file);
 };
 
-window.clearTestiPhoto = function(e) {
+window.clearTestiPhoto = function (e) {
   if (e && typeof e.stopPropagation === 'function') e.stopPropagation();
 
   const fileInput = document.getElementById('pubTestiAvatarFile');
@@ -3812,7 +3917,7 @@ window.clearTestiPhoto = function(e) {
   if (clearBtn) clearBtn.style.display = 'none';
 };
 
-window.handlePublicTestimonialSubmit = function(e) {
+window.handlePublicTestimonialSubmit = function (e) {
   e.preventDefault();
 
   const nameInput = document.getElementById('pubTestiName');
@@ -3942,13 +4047,13 @@ function populateUnitSelects(db) {
     { value: "Ponpes PA", label: "Pondok Pesantren Putra", cat: "Santri Mukim Putra 24 Jam" },
     { value: "Ponpes PI", label: "Pondok Pesantren Putri", cat: "Santri Mukim Putri 24 Jam" }
   ];
-  select.innerHTML = spmbUnits.map(u => 
+  select.innerHTML = spmbUnits.map(u =>
     `<option value="${u.value}" ${u.value === 'MTs' ? 'selected' : ''}>${u.label} — [${u.cat}]</option>`
   ).join('');
 }
 
 /* INTERACTIVE BOARDING & GENDER HANDLERS */
-window.handleGenderChange = function(gender) {
+window.handleGenderChange = function (gender) {
   const badge = document.getElementById('boardingDestBadge');
   const previewBox = document.getElementById('asramaPreviewBox');
   const icon = document.getElementById('asramaIcon');
@@ -3984,7 +4089,7 @@ window.handleGenderChange = function(gender) {
   }
 };
 
-window.selectBoardingOption = function(option) {
+window.selectBoardingOption = function (option) {
   const isBoarding = option === 'Mondok';
   const optYes = document.getElementById('optBoardingYes');
   const optNo = document.getElementById('optBoardingNo');
@@ -4008,23 +4113,175 @@ window.selectBoardingOption = function(option) {
   }
 };
 
-/* 8B. RENDER GELOMBANG & PERIODE PSB DINAMIS DARI DATABASE (SISTEM 2 GELOMBANG) */
+/* 8B. RENDER GELOMBANG & PERIODE PSB DINAMIS DARI DATABASE & KALENDER WAKTU NYATA */
+function parseWaveDateRange(rangeStr, defaultStartYear = 2026, defaultEndYear = 2027) {
+  if (!rangeStr) return null;
+  const months = {
+    jan: 0, januari: 0, feb: 1, februari: 1, mar: 2, maret: 2, apr: 3, april: 3,
+    mei: 4, may: 4, jun: 5, juni: 5, jul: 6, juli: 6, agu: 7, agustus: 7, aug: 7,
+    sep: 8, september: 8, okt: 9, oktober: 9, oct: 9, nov: 10, november: 10, des: 11, desember: 11
+  };
+  const parts = rangeStr.split(/[–\-—]| s\/?d /i).map(s => s.trim());
+  if (parts.length < 2) return null;
+
+  const endMatch = parts[1].match(/(\d{1,2})\s+([a-zA-Z]+)(?:\s+(\d{4}))?/i);
+  const startMatch = parts[0].match(/(\d{1,2})\s+([a-zA-Z]+)(?:\s+(\d{4}))?/i);
+  if (!endMatch || !startMatch) return null;
+
+  const endYear = parseInt(endMatch[3] || startMatch[3] || defaultEndYear, 10);
+  const startYear = parseInt(startMatch[3] || endYear, 10);
+  const startMonth = months[startMatch[2].toLowerCase().substr(0, 3)];
+  const endMonth = months[endMatch[2].toLowerCase().substr(0, 3)];
+  if (startMonth === undefined || endMonth === undefined) return null;
+
+  const startDay = parseInt(startMatch[1], 10);
+  const endDay = parseInt(endMatch[1], 10);
+
+  const start = new Date(startYear, startMonth, startDay, 0, 0, 0);
+  const end = new Date(endYear, endMonth, endDay, 23, 59, 59);
+  return { start, end };
+}
+
+function evaluatePsbWaveRealtime(waveObj, now, upcomingDefaultLabel = 'SEGERA DIBUKA', thresholdDays = 7) {
+  let start = waveObj.startDate ? new Date(waveObj.startDate + 'T00:00:00') : null;
+  let end = waveObj.endDate ? new Date(waveObj.endDate + 'T23:59:59') : null;
+
+  if (!start || !end || isNaN(start.getTime()) || isNaN(end.getTime())) {
+    const parsed = parseWaveDateRange(waveObj.dateRange || '');
+    if (parsed) {
+      start = parsed.start;
+      end = parsed.end;
+    }
+  }
+
+  if (!start || !end) {
+    return {
+      state: 'UNKNOWN',
+      label: (waveObj.status || upcomingDefaultLabel).toUpperCase(),
+      badgeClass: 'status-subtle',
+      isActive: false,
+      isEnded: false,
+      isUpcoming: false,
+      daysRemaining: null
+    };
+  }
+
+  const nowMs = now.getTime();
+  const startMs = start.getTime();
+  const endMs = end.getTime();
+
+  if (nowMs < startMs) {
+    const daysUntilStart = Math.ceil((startMs - nowMs) / (1000 * 60 * 60 * 24));
+    return {
+      state: 'UPCOMING',
+      label: upcomingDefaultLabel.toUpperCase(),
+      badgeClass: 'status-subtle',
+      isActive: false,
+      isEnded: false,
+      isUpcoming: true,
+      daysRemaining: null,
+      daysUntilStart
+    };
+  } else if (nowMs >= startMs && nowMs <= endMs) {
+    const daysRemaining = Math.ceil((endMs - nowMs) / (1000 * 60 * 60 * 24));
+    // Sesuai instruksi: jika mendekati batas akhir (H-7 s.d. H-0), keterangan otomatis "AKAN BERAKHIR"
+    const isEndingSoon = daysRemaining <= thresholdDays;
+    return {
+      state: isEndingSoon ? 'ENDING_SOON' : 'OPEN',
+      label: isEndingSoon ? 'AKAN BERAKHIR' : 'DIBUKA',
+      badgeClass: isEndingSoon ? 'status-warning' : 'status-open',
+      isActive: true,
+      isEnded: false,
+      isUpcoming: false,
+      daysRemaining
+    };
+  } else {
+    return {
+      state: 'CLOSED',
+      label: 'SELESAI',
+      badgeClass: 'status-subtle',
+      isActive: false,
+      isEnded: true,
+      isUpcoming: false,
+      daysRemaining: 0
+    };
+  }
+}
+
 function renderPsbWaveHeader(db) {
   if (!db) db = getDB();
   const waveCfg = db.psbWaveConfig;
   if (!waveCfg) return;
 
-  const activeWaveNum = (typeof waveCfg.activeWave !== 'undefined') ? waveCfg.activeWave : 1;
-  const isClosed = (activeWaveNum === 0 || waveCfg.isOpen === false);
+  const now = new Date();
+  const thresholdDays = waveCfg.endingSoonThresholdDays || 7;
 
-  const wIndent = waveCfg.indent || { name: 'Jalur Indent', shortName: 'INDENT', dateRange: '01 Nov 2026 – 06 Jan 2027', status: 'Segera Dibuka', isOpen: true };
-  const w1 = waveCfg.wave1 || { name: 'Gelombang 1', shortName: 'GELOMBANG 1', dateRange: '07 Jan – 31 Mar 2027', status: 'Tahap 1', isOpen: false };
-  const w2 = waveCfg.wave2 || { name: 'Gelombang 2', shortName: 'GELOMBANG 2', dateRange: '01 Apr – 08 Jul 2027', status: 'Tahap 2', isOpen: false };
+  const wIndent = waveCfg.indent || {
+    name: 'Jalur Indent',
+    shortName: 'INDENT',
+    dateRange: '01 Nov 2026 – 06 Jan 2027',
+    startDate: '2026-11-01',
+    endDate: '2027-01-06',
+    status: 'Dibuka',
+    isOpen: true
+  };
+  const w1 = waveCfg.wave1 || {
+    name: 'Gelombang 1',
+    shortName: 'GELOMBANG 1',
+    dateRange: '07 Jan – 31 Mar 2027',
+    startDate: '2027-01-07',
+    endDate: '2027-03-31',
+    status: 'Tahap 1',
+    isOpen: false
+  };
+  const w2 = waveCfg.wave2 || {
+    name: 'Gelombang 2',
+    shortName: 'GELOMBANG 2',
+    dateRange: '01 Apr – 08 Jul 2027',
+    startDate: '2027-04-01',
+    endDate: '2027-07-08',
+    status: 'Tahap 2',
+    isOpen: false
+  };
 
-  // Ambil objek gelombang yang sedang aktif
+  // Evaluasi status real-time ketiga gelombang secara otomatis berdasarkan kalender
+  const evalIndent = evaluatePsbWaveRealtime(wIndent, now, 'SEGERA BUKA', thresholdDays);
+  const evalW1 = evaluatePsbWaveRealtime(w1, now, 'TAHAP 1', thresholdDays);
+  const evalW2 = evaluatePsbWaveRealtime(w2, now, 'TAHAP 2', thresholdDays);
+
+  let activeWaveNum = 1;
+  let isClosed = false;
+
+  // Jika sistem pelacak tanggal aktif (default: true)
+  if (waveCfg.autoDateTracking !== false) {
+    if (evalIndent.isActive) {
+      activeWaveNum = 1;
+    } else if (evalW1.isActive) {
+      activeWaveNum = 2;
+    } else if (evalW2.isActive) {
+      activeWaveNum = 3;
+    } else if (evalIndent.isUpcoming) {
+      activeWaveNum = 1; // Belum mulai, Indent adalah tahap awal
+    } else {
+      activeWaveNum = 0; // Seluruh gelombang telah berakhir
+      isClosed = true;
+    }
+  } else {
+    // Mode override manual dari CMS admin
+    activeWaveNum = (typeof waveCfg.activeWave !== 'undefined') ? waveCfg.activeWave : 1;
+    isClosed = (activeWaveNum === 0 || waveCfg.isOpen === false);
+  }
+
+  // Ambil objek gelombang dan evaluasi yang sedang aktif
   let currentWave = wIndent;
-  if (activeWaveNum === 2) currentWave = w1;
-  else if (activeWaveNum === 3) currentWave = w2;
+  let currentEval = evalIndent;
+  if (activeWaveNum === 2) {
+    currentWave = w1;
+    currentEval = evalW1;
+  } else if (activeWaveNum === 3) {
+    currentWave = w2;
+    currentEval = evalW2;
+  }
 
   const academicYearEl = document.getElementById('psbAcademicYearBadge');
   if (academicYearEl && waveCfg.academicYear) {
@@ -4043,13 +4300,13 @@ function renderPsbWaveHeader(db) {
     }
   }
 
-  // 1. UPDATE JALUR INDENT DI BADGE
+  // 1. UPDATE JALUR INDENT DI BADGE MASTHEAD
   const cardIndent = document.getElementById('psbWaveCardIndent');
   const titleIndent = document.getElementById('psbWaveIndentTitle');
   const statusIndent = document.getElementById('psbWaveIndentStatusText');
   const dateIndent = document.getElementById('psbWaveIndentDateText');
   if (cardIndent) {
-    if (activeWaveNum === 1) {
+    if (evalIndent.isActive) {
       cardIndent.classList.remove('dimmed');
       cardIndent.classList.add('active');
     } else {
@@ -4064,16 +4321,11 @@ function renderPsbWaveHeader(db) {
   }
   if (dateIndent) dateIndent.textContent = wIndent.dateRange || '01 Nov 2026 – 06 Jan 2027';
   if (statusIndent) {
-    if (activeWaveNum === 1) {
-      statusIndent.textContent = (wIndent.status || 'SEGERA BUKA').toUpperCase();
-      statusIndent.className = 'psb-period-status';
-    } else {
-      statusIndent.textContent = 'SELESAI';
-      statusIndent.className = 'psb-period-status status-subtle';
-    }
+    statusIndent.textContent = evalIndent.label;
+    statusIndent.className = 'psb-period-status ' + evalIndent.badgeClass;
   }
 
-  // 2. UPDATE GELOMBANG 1 DI BADGE
+  // 2. UPDATE GELOMBANG 1 DI BADGE MASTHEAD
   const card1 = document.getElementById('psbWaveCard1');
   const title1 = document.getElementById('psbWave1Title');
   const status1 = document.getElementById('psbWave1StatusText');
@@ -4081,7 +4333,7 @@ function renderPsbWaveHeader(db) {
   const quota1 = document.getElementById('psbWave1QuotaText');
 
   if (card1) {
-    if (activeWaveNum === 2) {
+    if (evalW1.isActive) {
       card1.classList.remove('dimmed');
       card1.classList.add('active');
     } else {
@@ -4097,19 +4349,11 @@ function renderPsbWaveHeader(db) {
   if (date1) date1.textContent = w1.dateRange || '07 Jan – 31 Mar 2027';
   if (quota1) quota1.textContent = w1.status || 'Tahap 1';
   if (status1) {
-    if (activeWaveNum === 2) {
-      status1.textContent = (w1.status || 'SEDANG DIBUKA').toUpperCase();
-      status1.className = 'psb-period-status';
-    } else if (activeWaveNum === 1) {
-      status1.textContent = 'TAHAP 1';
-      status1.className = 'psb-period-status status-subtle';
-    } else {
-      status1.textContent = 'SELESAI';
-      status1.className = 'psb-period-status status-subtle';
-    }
+    status1.textContent = evalW1.label;
+    status1.className = 'psb-period-status ' + evalW1.badgeClass;
   }
 
-  // 3. UPDATE GELOMBANG 2 DI BADGE
+  // 3. UPDATE GELOMBANG 2 DI BADGE MASTHEAD
   const card2 = document.getElementById('psbWaveCard2');
   const title2 = document.getElementById('psbWave2Title');
   const status2 = document.getElementById('psbWave2StatusText');
@@ -4117,7 +4361,7 @@ function renderPsbWaveHeader(db) {
   const quota2 = document.getElementById('psbWave2QuotaText');
 
   if (card2) {
-    if (activeWaveNum === 3) {
+    if (evalW2.isActive) {
       card2.classList.remove('dimmed');
       card2.classList.add('active');
     } else {
@@ -4133,19 +4377,14 @@ function renderPsbWaveHeader(db) {
   if (date2) date2.textContent = w2.dateRange || '01 Apr – 08 Jul 2027';
   if (quota2) quota2.textContent = w2.status || 'Tahap 2';
   if (status2) {
-    if (activeWaveNum === 3) {
-      status2.textContent = (w2.status || 'SEDANG DIBUKA').toUpperCase();
-      status2.className = 'psb-period-status';
-    } else {
-      status2.textContent = 'TAHAP 2';
-      status2.className = 'psb-period-status status-subtle';
-    }
+    status2.textContent = evalW2.label;
+    status2.className = 'psb-period-status ' + evalW2.badgeClass;
   }
 
   // Support legacy single anchor jika ada
   const waveNameEl = document.getElementById('psbWaveNameText');
   if (waveNameEl) {
-    const wName = currentWave.shortName || (isWave2Active ? 'Gelombang II' : 'Gelombang I');
+    const wName = currentWave.shortName || (activeWaveNum === 2 ? 'Gelombang I' : (activeWaveNum === 3 ? 'Gelombang II' : 'Jalur Indent'));
     waveNameEl.textContent = wName.endsWith(':') ? wName : (wName + ':');
   }
   const waveDateEl = document.getElementById('psbWaveDateText');
@@ -4154,23 +4393,29 @@ function renderPsbWaveHeader(db) {
   }
   const waveStatusEl = document.getElementById('psbWaveStatusText');
   if (waveStatusEl) {
-    waveStatusEl.textContent = currentWave.status || 'Kuota Terbatas';
+    waveStatusEl.textContent = currentEval.label || 'Dibuka';
   }
 
-  // Banner Pengumuman Resmi (Format Kartu Informasi Layanan Eksekutif Navy-Gold)
+  // 4. BANNER PENGUMUMAN RESMI SEKRETARIAT SPMB
   const bannerIcon = document.getElementById('psbBannerWaveIcon');
   if (bannerIcon) {
-    bannerIcon.innerHTML = isClosed 
+    bannerIcon.innerHTML = isClosed
       ? '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>'
       : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
   }
 
   const bannerTitle = document.getElementById('psbBannerWaveTitle');
   if (bannerTitle) {
-    const displayWaveTitle = (currentWave.shortName || (isWave2Active ? 'GELOMBANG II' : 'GELOMBANG I')).toUpperCase();
-    bannerTitle.textContent = !isClosed
-      ? `PENDAFTARAN SANTRI & MURID BARU ${displayWaveTitle} SEDANG DIBUKA`
-      : `PENDAFTARAN SANTRI & MURID BARU T.A. RESMI TELAH DITUTUP SEMENTARA`;
+    if (isClosed) {
+      bannerTitle.textContent = `PENDAFTARAN SANTRI & MURID BARU T.A. RESMI TELAH DITUTUP SEMENTARA`;
+    } else {
+      const displayWaveTitle = (currentWave.shortName || (activeWaveNum === 2 ? 'GELOMBANG 1' : (activeWaveNum === 3 ? 'GELOMBANG 2' : 'JALUR INDENT'))).toUpperCase();
+      if (currentEval.state === 'ENDING_SOON') {
+        bannerTitle.textContent = `PENDAFTARAN SANTRI & MURID BARU ${displayWaveTitle} AKAN SEGERA BERAKHIR (SISA ${currentEval.daysRemaining} HARI)`;
+      } else {
+        bannerTitle.textContent = `PENDAFTARAN SANTRI & MURID BARU ${displayWaveTitle} SEDANG DIBUKA`;
+      }
+    }
   }
 
   const bannerDesc = document.getElementById('psbBannerWaveDesc');
@@ -4230,74 +4475,118 @@ function renderPsbWaveHeader(db) {
     }
   }
 
-  // Render Visualisasi Jadwal 3 Tahap SPMB TA. 2027/2028 di Seksi Informasi
+  // 5. RENDER VISUALISASI JADWAL 3 TAHAP SPMB TA. 2027/2028 DI TABEL RESMI
   const waveTableBody = document.querySelector('#info .psb-table tbody');
   if (waveTableBody) {
+    const getBadgeHtml = (ev, badgeId) => {
+      const idAttr = badgeId ? ` id="${badgeId}"` : '';
+      if (ev.state === 'OPEN') {
+        return `<span class="psb-table-badge status-open"${idAttr} style="background:#FEF3C7; color:#92400E; border:1px solid #FCD34D;">🟢 DIBUKA</span>`;
+      } else if (ev.state === 'ENDING_SOON') {
+        return `<span class="psb-table-badge status-warning"${idAttr} style="background:#FEE2E2; color:#B91C1C; border:1px solid #FCA5A5;">⚠️ AKAN BERAKHIR (SISA ${ev.daysRemaining} HARI)</span>`;
+      } else if (ev.state === 'CLOSED') {
+        return `<span class="psb-table-badge status-subtle"${idAttr} style="background:#F1F5F9; color:#64748B; border:1px solid #CBD5E1;">SELESAI</span>`;
+      } else {
+        return `<span class="psb-table-badge status-subtle"${idAttr} style="background:#F0F9FF; color:#0369A1; border:1px solid #BAE6FD;">${ev.label}</span>`;
+      }
+    };
+
+    const getBtnHtml = (ev, name, btnId) => {
+      const idAttr = btnId ? ` id="${btnId}"` : '';
+      if (ev.isActive) {
+        // HANYA GELOMBANG YANG AKTIF YANG DAPAT DI-KLIK
+        return `<a href="#formulir" class="btn btn-primary btn-sm"${idAttr} style="font-weight:700; box-shadow:0 2px 8px rgba(15,76,129,0.25);">Daftar ${name} →</a>`;
+      } else if (ev.isEnded) {
+        // SUDAH BERAKHIR / DITUTUP -> TIDAK BISA DI-KLIK
+        return `<button type="button" class="btn btn-sm btn-disabled"${idAttr} disabled aria-disabled="true" style="background:#F8FAFC; color:#94A3B8; border:1px solid #E2E8F0; cursor:not-allowed; opacity:0.75; font-size:0.78rem; font-weight:700; pointer-events:none; padding:6px 14px; border-radius:6px;">Ditutup</button>`;
+      } else {
+        // BELUM DIBUKA / GELOMBANG MENDATANG -> TIDAK BISA DI-KLIK
+        return `<button type="button" class="btn btn-sm btn-disabled"${idAttr} disabled aria-disabled="true" style="background:#F1F5F9; color:#94A3B8; border:1px solid #CBD5E1; cursor:not-allowed; opacity:0.8; font-size:0.78rem; font-weight:700; pointer-events:none; padding:6px 14px; border-radius:6px;">Belum Dibuka</button>`;
+      }
+    };
+
     waveTableBody.innerHTML = `
-      <tr style="background:rgba(251,191,36,0.08); font-weight:600;">
+      <tr style="${evalIndent.isActive ? 'background:rgba(251,191,36,0.10); font-weight:600;' : ''}">
         <td align="center">1</td>
-        <td><strong style="color:var(--color-gold-dark, #C59B27);">1 November 2026 – 6 Januari 2027</strong></td>
+        <td><strong style="color:var(--color-gold-dark, #C59B27);">${wIndent.dateRange || '1 November 2026 – 6 Januari 2027'}</strong></td>
         <td>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
             <strong>JALUR INDENT SPMB TA. 2027/2028</strong>
-            <span class="psb-wave-badge" style="background:#10B981; color:#FFF; font-size:0.68rem; font-weight:800; padding:2px 7px; border-radius:4px; letter-spacing:0.02em;">🟢 DIBUKA SEKARANG</span>
+            ${getBadgeHtml(evalIndent, 'psbTableIndentBadge')}
           </div>
           <small style="color:#64748B;">Pendaftaran awal kuota prioritas kamar asrama &amp; penempatan satuan pilihan</small>
         </td>
         <td align="center">
-          <a href="#formulir" class="btn btn-primary btn-sm">Daftar Indent</a>
+          ${getBtnHtml(evalIndent, 'Indent', 'psbTableIndentBtn')}
         </td>
       </tr>
-      <tr>
+      <tr style="${evalW1.isActive ? 'background:rgba(251,191,36,0.10); font-weight:600;' : ''}">
         <td align="center">2</td>
-        <td><strong style="color:var(--color-primary, #0F4C81);">7 Januari – 31 Maret 2027</strong></td>
+        <td><strong style="color:var(--color-primary, #0F4C81);">${w1.dateRange || '7 Januari – 31 Maret 2027'}</strong></td>
         <td>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
             <strong>GELOMBANG 1 SPMB TA. 2027/2028</strong>
-            <span class="psb-wave-badge" style="background:#0284C7; color:#FFF; font-size:0.68rem; font-weight:700; padding:2px 6px; border-radius:4px; letter-spacing:0.02em;">TAHAP 1</span>
+            ${getBadgeHtml(evalW1, 'psbTableWave1Badge')}
           </div>
           <small style="color:#64748B;">Pendaftaran reguler tahap pertama seluruh 10 jenjang pendidikan</small>
         </td>
         <td align="center">
-          <a href="#formulir" class="btn btn-primary btn-sm">Daftar Gel. 1</a>
+          ${getBtnHtml(evalW1, 'Gel. 1', 'psbTableWave1Btn')}
         </td>
       </tr>
-      <tr>
+      <tr style="${evalW2.isActive ? 'background:rgba(251,191,36,0.10); font-weight:600;' : ''}">
         <td align="center">3</td>
-        <td><strong style="color:var(--color-primary-dark, #0A2540);">1 April – 8 Juli 2027</strong></td>
+        <td><strong style="color:var(--color-primary-dark, #0A2540);">${w2.dateRange || '1 April – 8 Juli 2027'}</strong></td>
         <td>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
             <strong>GELOMBANG 2 SPMB TA. 2027/2028</strong>
-            <span class="psb-wave-badge" style="background:#64748B; color:#FFF; font-size:0.68rem; font-weight:700; padding:2px 6px; border-radius:4px; letter-spacing:0.02em;">TAHAP 2</span>
+            ${getBadgeHtml(evalW2, 'psbTableWave2Badge')}
           </div>
           <small style="color:#64748B;">Pendaftaran reguler tahap kedua penutupan kuota tahun ajaran 2027/2028</small>
         </td>
         <td align="center">
-          <a href="#formulir" class="btn btn-primary btn-sm">Daftar Gel. 2</a>
+          ${getBtnHtml(evalW2, 'Gel. 2', 'psbTableWave2Btn')}
         </td>
       </tr>
     `;
   }
 
-  // Update Conversion Booster Card (Panel Status Gelombang & Kuota Asrama)
+  // 6. UPDATE CONVERSION BOOSTER CARD (Panel Status Gelombang & Kuota Asrama)
+  const boosterIndentTitle = document.getElementById('psbBoosterIndentTitle');
+  if (boosterIndentTitle) boosterIndentTitle.textContent = 'Jalur Indent (Prioritas Kamar)';
+  const boosterIndentDate = document.getElementById('psbBoosterIndentDate');
+  if (boosterIndentDate) boosterIndentDate.textContent = wIndent.dateRange || '01 Nov 2026 – 06 Jan 2027';
+  const boosterIndentBadge = document.getElementById('psbBoosterIndentBadge');
+  if (boosterIndentBadge) {
+    boosterIndentBadge.textContent = evalIndent.label;
+    boosterIndentBadge.className = evalIndent.isActive ? 'psb-wave-badge-active' : 'psb-wave-badge-secondary';
+  }
+
   const boosterW1Title = document.getElementById('psbBoosterWave1Title');
-  if (boosterW1Title) boosterW1Title.textContent = 'Gelombang 1 (Reguler Utama)';
+  if (boosterW1Title) boosterW1Title.textContent = 'Gelombang I (Reguler Utama)';
   const boosterW1Date = document.getElementById('psbBoosterWave1Date');
-  if (boosterW1Date) boosterW1Date.textContent = '7 Januari – 31 Maret 2027';
+  if (boosterW1Date) boosterW1Date.textContent = w1.dateRange || '07 Jan – 31 Mar 2027';
   const boosterW1Badge = document.getElementById('psbBoosterWave1Badge');
   if (boosterW1Badge) {
-    boosterW1Badge.textContent = 'Tahap 1';
-    boosterW1Badge.className = 'psb-wave-badge-active';
+    boosterW1Badge.textContent = evalW1.label;
+    boosterW1Badge.className = evalW1.isActive ? 'psb-wave-badge-active' : 'psb-wave-badge-secondary';
   }
 
   const boosterW2Title = document.getElementById('psbBoosterWave2Title');
-  if (boosterW2Title) boosterW2Title.textContent = 'Gelombang 2 (Penutupan Kuota)';
+  if (boosterW2Title) boosterW2Title.textContent = 'Gelombang II (Sisa Kuota)';
   const boosterW2Date = document.getElementById('psbBoosterWave2Date');
-  if (boosterW2Date) boosterW2Date.textContent = '1 April – 8 Juli 2027';
+  if (boosterW2Date) boosterW2Date.textContent = w2.dateRange || '01 Apr – 08 Jul 2027';
   const boosterW2Badge = document.getElementById('psbBoosterWave2Badge');
   if (boosterW2Badge) {
-    boosterW2Badge.textContent = 'Tahap 2';
-    boosterW2Badge.className = 'psb-wave-badge-secondary';
+    boosterW2Badge.textContent = evalW2.label;
+    boosterW2Badge.className = evalW2.isActive ? 'psb-wave-badge-active' : 'psb-wave-badge-secondary';
+  }
+
+  // 7. SINKRONISASI TAG STATUS GELOMBANG DI BERANDA (index.html)
+  const homePsbActiveWaveTag = document.getElementById('homePsbActiveWaveTag');
+  if (homePsbActiveWaveTag) {
+    const activeLabel = currentWave.shortName || (activeWaveNum === 1 ? 'Jalur Indent' : (activeWaveNum === 2 ? 'Gelombang 1' : 'Gelombang 2'));
+    homePsbActiveWaveTag.textContent = `${activeLabel} (${currentEval.label})`;
   }
 }
 
@@ -4324,7 +4613,7 @@ function renderPsbFaq(db) {
     let answer = item.answer || '';
     // Substitusi otomatis token tanggal gelombang dari admin
     answer = answer.replace(/\{\{WAVE_1_DATES\}\}/g, w1Dates)
-                   .replace(/\{\{WAVE_2_DATES\}\}/g, w2Dates);
+      .replace(/\{\{WAVE_2_DATES\}\}/g, w2Dates);
 
     const isFirst = idx === 0;
 
@@ -4405,7 +4694,7 @@ function renderPsbCosts(db) {
   }
 }
 
-window.openOfficialCostsModal = function() {
+window.openOfficialCostsModal = function () {
   const modal = document.getElementById('officialCostsModal');
   if (modal) {
     modal.style.display = 'flex';
@@ -4416,7 +4705,7 @@ window.openOfficialCostsModal = function() {
   }
 };
 
-window.closeOfficialCostsModal = function() {
+window.closeOfficialCostsModal = function () {
   const modal = document.getElementById('officialCostsModal');
   if (modal) {
     modal.style.display = 'none';
@@ -4437,10 +4726,11 @@ function initPPDBRegistration() {
 
     const fullName = document.getElementById('ppdbName') ? document.getElementById('ppdbName').value.trim() : '';
     const gender = document.getElementById('ppdbGender') ? document.getElementById('ppdbGender').value : 'Laki-laki';
-    
+
     // Support modern split birthplace/birthdate or legacy single field
     const birthPlaceEl = document.getElementById('ppdbBirthPlace');
     const birthDateEl = document.getElementById('ppdbBirthDate');
+    const birthDateRaw = birthDateEl ? birthDateEl.value : '';
     let birth = '';
     if (birthPlaceEl && birthDateEl) {
       const bPlace = birthPlaceEl.value.trim();
@@ -4451,7 +4741,7 @@ function initPPDBRegistration() {
           const dObj = new Date(bDate);
           const dateStr = dObj.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
           birth = `${bPlace}, ${dateStr}`;
-        } catch(err) {
+        } catch (err) {
           birth = `${bPlace}, ${bDate}`;
         }
       }
@@ -4466,17 +4756,17 @@ function initPPDBRegistration() {
     const isBoarding = boardingRadio ? boardingRadio.value === 'Mondok' : true;
 
     const boardingStatus = isBoarding ? 'Mondok (Santri Mukim)' : 'Tidak Mondok (Siswa Non-Mukim)';
-    const boardingWing = isBoarding 
+    const boardingWing = isBoarding
       ? (gender === 'Laki-laki' ? "Pondok Pesantren Putra" : "Pondok Pesantren Putri")
       : '-';
-    const program = isBoarding 
+    const program = isBoarding
       ? (document.getElementById('ppdbBoardingProgram') ? document.getElementById('ppdbBoardingProgram').value : 'Reguler Kepesantrenan')
       : 'Siswa Non-Mukim';
 
     const fatherName = document.getElementById('ppdbFather') ? document.getElementById('ppdbFather').value.trim() : '';
     const motherName = document.getElementById('ppdbMother') ? document.getElementById('ppdbMother').value.trim() : '';
     const legacyParent = document.getElementById('ppdbParent') ? document.getElementById('ppdbParent').value.trim() : '';
-    
+
     let parentName = '';
     if (fatherName && motherName) {
       parentName = `${fatherName} (Ayah) & ${motherName} (Ibu)`;
@@ -4488,7 +4778,7 @@ function initPPDBRegistration() {
       parentName = legacyParent;
     }
 
-    const whatsapp = (document.getElementById('ppdbPhoneStep1') && document.getElementById('ppdbPhoneStep1').value.trim()) 
+    const whatsapp = (document.getElementById('ppdbPhoneStep1') && document.getElementById('ppdbPhoneStep1').value.trim())
       || (document.getElementById('ppdbWA') ? document.getElementById('ppdbWA').value.trim() : '');
     const email = document.getElementById('ppdbEmail') ? document.getElementById('ppdbEmail').value.trim() : '';
     const address = document.getElementById('ppdbAddress') ? document.getElementById('ppdbAddress').value.trim() : '';
@@ -4534,8 +4824,8 @@ function initPPDBRegistration() {
 
     // Deteksi Gelombang Aktif dari Konfigurasi Database
     const dbInst = getDB();
-    const activeWaveNum = (dbInst && dbInst.psbWaveConfig && typeof dbInst.psbWaveConfig.activeWave !== 'undefined') 
-      ? dbInst.psbWaveConfig.activeWave 
+    const activeWaveNum = (dbInst && dbInst.psbWaveConfig && typeof dbInst.psbWaveConfig.activeWave !== 'undefined')
+      ? dbInst.psbWaveConfig.activeWave
       : 1;
     const currentWaveTag = activeWaveNum === 2 ? 'Gelombang II' : 'Gelombang I';
 
@@ -4546,6 +4836,7 @@ function initPPDBRegistration() {
       fullName,
       gender,
       birthPlaceDate: birth || '-',
+      birthDateRaw: birthDateRaw || '-',
       fatherName: fatherName || (legacyParent || '-'),
       motherName: motherName || '-',
       parentName,
@@ -4608,12 +4899,12 @@ function syncLeadToGoogleSheets(lead, db) {
       },
       body: JSON.stringify(lead)
     })
-    .then(() => {
-      console.log('✅ Data PPDB berhasil disinkronkan ke Google Sheets:', lead.regNumber);
-    })
-    .catch(err => {
-      console.warn('⚠️ Gagal mengirim ke Google Sheets:', err);
-    });
+      .then(() => {
+        console.log('✅ Data PPDB berhasil disinkronkan ke Google Sheets:', lead.regNumber);
+      })
+      .catch(err => {
+        console.warn('⚠️ Gagal mengirim ke Google Sheets:', err);
+      });
   } catch (err) {
     console.warn('⚠️ Error di syncLeadToGoogleSheets:', err);
   }
@@ -4697,32 +4988,32 @@ function showRegistrationReceipt(data) {
   `;
 
   const dbCurrent = (typeof getDB === 'function') ? getDB() : null;
-    const panitiaWaClean = (dbCurrent && dbCurrent.meta && dbCurrent.meta.whatsappClean)
-      ? dbCurrent.meta.whatsappClean
-      : ((dbCurrent && dbCurrent.meta && dbCurrent.meta.whatsapp) ? dbCurrent.meta.whatsapp.replace(/[^0-9]/g, '') : '6285648847070');
+  const panitiaWaClean = (dbCurrent && dbCurrent.meta && dbCurrent.meta.whatsappClean)
+    ? dbCurrent.meta.whatsappClean
+    : ((dbCurrent && dbCurrent.meta && dbCurrent.meta.whatsapp) ? dbCurrent.meta.whatsapp.replace(/[^0-9]/g, '') : '6285648847070');
 
-    const formattedWaMsg = encodeURIComponent(
-      `*KONFIRMASI PENDAFTARAN MURID BARU (SPMB T.A. 2027/2028)*\n` +
-      `*YTPAI RAUDLATUL MUTA'ALLIMIN LAMONGAN*\n\n` +
-      `Assalamu'alaikum Warahmatullahi Wabarakatuh,\n` +
-      `Kepada Yth. Panitia PPDB YTPAI Lamongan,\n\n` +
-      `Saya selaku orang tua/wali dari calon santri telah menyelesaikan pendaftaran online dengan data sebagai berikut:\n` +
-      `• *No. Registrasi:* ${data.regNumber}\n` +
-      `• *Nama Lengkap Santri:* ${data.fullName}\n` +
-      `• *Jenis Kelamin:* ${data.gender || '-'}\n` +
-      `• *Pilihan Satuan:* ${data.unit}\n` +
-      `• *Status Asrama:* ${data.boardingStatus}${data.isBoarding ? ' (' + (data.boardingWing || (data.gender === 'Perempuan' ? 'Putri' : 'Putra')) + ')' : ''}\n` +
-      `• *Program Pilihan:* ${data.program || 'Reguler'}\n` +
-      `• *Gelombang:* ${data.wave || 'Gelombang I'}\n` +
-      `• *Nama Orang Tua/Wali:* ${data.fatherName || data.parentName || '-'}\n` +
-      `• *Waktu Registrasi:* ${data.date}\n\n` +
-      `Seluruh data telah kami submit melalui portal resmi. Mohon petunjuk mengenai jadwal observasi pemetaan potensi, wawancara, dan tahapan verifikasi berikutnya.\n\n` +
-      `Jazakumullah Khairan Katsiran.\n` +
-      `_Wassalamu'alaikum Warahmatullahi Wabarakatuh._`
-    );
-    const waUrl = `https://wa.me/${panitiaWaClean}?text=${formattedWaMsg}`;
+  const formattedWaMsg = encodeURIComponent(
+    `*KONFIRMASI PENDAFTARAN MURID BARU (SPMB T.A. 2027/2028)*\n` +
+    `*YTPAI RAUDLATUL MUTA'ALLIMIN LAMONGAN*\n\n` +
+    `Assalamu'alaikum Warahmatullahi Wabarakatuh,\n` +
+    `Kepada Yth. Panitia PPDB YTPAI Lamongan,\n\n` +
+    `Saya selaku orang tua/wali dari calon santri telah menyelesaikan pendaftaran online dengan data sebagai berikut:\n` +
+    `• *No. Registrasi:* ${data.regNumber}\n` +
+    `• *Nama Lengkap Santri:* ${data.fullName}\n` +
+    `• *Jenis Kelamin:* ${data.gender || '-'}\n` +
+    `• *Pilihan Satuan:* ${data.unit}\n` +
+    `• *Status Asrama:* ${data.boardingStatus}${data.isBoarding ? ' (' + (data.boardingWing || (data.gender === 'Perempuan' ? 'Putri' : 'Putra')) + ')' : ''}\n` +
+    `• *Program Pilihan:* ${data.program || 'Reguler'}\n` +
+    `• *Gelombang:* ${data.wave || 'Gelombang I'}\n` +
+    `• *Nama Orang Tua/Wali:* ${data.fatherName || data.parentName || '-'}\n` +
+    `• *Waktu Registrasi:* ${data.date}\n\n` +
+    `Seluruh data telah kami submit melalui portal resmi. Mohon petunjuk mengenai jadwal observasi pemetaan potensi, wawancara, dan tahapan verifikasi berikutnya.\n\n` +
+    `Jazakumullah Khairan Katsiran.\n` +
+    `_Wassalamu'alaikum Warahmatullahi Wabarakatuh._`
+  );
+  const waUrl = `https://wa.me/${panitiaWaClean}?text=${formattedWaMsg}`;
 
-    body.innerHTML += `
+  body.innerHTML += `
       <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:16px;">
         <button class="btn btn-outline btn-sm" onclick="window.print()">
           🖨️ Cetak / Simpan PDF
@@ -4743,7 +5034,7 @@ function showRegistrationReceipt(data) {
 /* ==========================================================================
    PPDB ANNOUNCEMENT & RESULT CHECKER
    ========================================================================== */
-window.handleAnnouncementSearch = function(e) {
+window.handleAnnouncementSearch = function (e) {
   if (e) e.preventDefault();
 
   const regInput = document.getElementById('announcementReg');
@@ -4776,15 +5067,38 @@ window.handleAnnouncementSearch = function(e) {
     const db = (typeof getDB === 'function') ? getDB() : { leads: [] };
     const allLeads = db.leads || [];
 
-    // Cari pendaftar berdasarkan No. Registrasi
+    // Cari pendaftar berdasarkan No. Registrasi (toleran terhadap awalan SPMB- / REG-)
     const lead = allLeads.find(item => {
-      const matchReg = (item.regNumber || '').trim().toUpperCase() === regQuery;
+      const itemReg = (item.regNumber || '').trim().toUpperCase();
+      const matchReg = itemReg === regQuery ||
+        itemReg.replace('REG-', 'SPMB-') === regQuery ||
+        itemReg.replace('SPMB-', 'REG-') === regQuery ||
+        itemReg.replace(/[^0-9]/g, '').endsWith(regQuery.replace(/[^0-9]/g, ''));
       if (!matchReg) return false;
 
-      // Verifikasi tanggal lahir jika tersimpan
+      // Verifikasi tanggal lahir fleksibel (mendukung format ISO YYYY-MM-DD dan format lokal)
       if (item.birthPlaceDate) {
-        const cleanDate = birthQuery.trim();
-        return item.birthPlaceDate.includes(cleanDate);
+        const cleanDate = birthQuery.trim(); // "YYYY-MM-DD" e.g. "2012-05-15"
+        if (item.birthPlaceDate.includes(cleanDate)) return true;
+        if (item.birthDateRaw && item.birthDateRaw === cleanDate) return true;
+
+        const parts = cleanDate.split('-');
+        if (parts.length === 3) {
+          const y = parts[0];
+          const mIdx = parseInt(parts[1], 10) - 1;
+          const d = parseInt(parts[2], 10);
+          const indonesianMonths = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+          const monthName = indonesianMonths[mIdx] || '';
+
+          const targetStr = (item.birthPlaceDate || '').toLowerCase();
+          const hasDay = targetStr.includes(String(d)) || targetStr.includes(String(d).padStart(2, '0'));
+          const hasYear = targetStr.includes(String(y));
+          const hasMonth = monthName ? targetStr.includes(monthName.toLowerCase()) : false;
+
+          if (hasDay && hasYear && (hasMonth || targetStr.includes(parts[1]))) {
+            return true;
+          }
+        }
       }
       return true;
     });
@@ -4977,7 +5291,7 @@ window.handleAnnouncementSearch = function(e) {
   }, 400);
 };
 
-window.printAcceptanceLetter = function(regNumber) {
+window.printAcceptanceLetter = function (regNumber) {
   const db = (typeof getDB === 'function') ? getDB() : { leads: [] };
   const lead = (db.leads || []).find(item => item.regNumber === regNumber);
   if (!lead) {
@@ -5133,7 +5447,7 @@ window.unitModalSlideshowState = {
   isPaused: false
 };
 
-window.stopUnitModalSlideshow = function() {
+window.stopUnitModalSlideshow = function () {
   if (window.unitModalSlideshowState.timer) {
     clearInterval(window.unitModalSlideshowState.timer);
     window.unitModalSlideshowState.timer = null;
@@ -5142,22 +5456,22 @@ window.stopUnitModalSlideshow = function() {
   window.unitModalSlideshowState.currentIndex = 0;
 };
 
-window.pauseUnitSlideshow = function() {
+window.pauseUnitSlideshow = function () {
   window.unitModalSlideshowState.isPaused = true;
 };
 
-window.resumeUnitSlideshow = function() {
+window.resumeUnitSlideshow = function () {
   window.unitModalSlideshowState.isPaused = false;
 };
 
-window.setUnitSlide = function(targetIndex) {
+window.setUnitSlide = function (targetIndex) {
   const state = window.unitModalSlideshowState;
   const photos = state.photos;
   if (!photos || photos.length === 0) return;
-  
+
   const total = photos.length;
   state.currentIndex = (targetIndex + total) % total;
-  
+
   // Update slide items
   const items = document.querySelectorAll('.unit-slide-item');
   items.forEach((item, idx) => {
@@ -5199,17 +5513,17 @@ window.setUnitSlide = function(targetIndex) {
   }
 };
 
-window.nextUnitSlide = function() {
+window.nextUnitSlide = function () {
   const state = window.unitModalSlideshowState;
   window.setUnitSlide(state.currentIndex + 1);
 };
 
-window.prevUnitSlide = function() {
+window.prevUnitSlide = function () {
   const state = window.unitModalSlideshowState;
   window.setUnitSlide(state.currentIndex - 1);
 };
 
-window.startUnitModalSlideshow = function(photos) {
+window.startUnitModalSlideshow = function (photos) {
   window.stopUnitModalSlideshow();
   window.unitModalSlideshowState.photos = photos || [];
   window.unitModalSlideshowState.currentIndex = 0;
@@ -5224,7 +5538,7 @@ window.startUnitModalSlideshow = function(photos) {
   }
 };
 
-window.switchUnitTab = function(tabId, btnEl) {
+window.switchUnitTab = function (tabId, btnEl) {
   const tabBtns = document.querySelectorAll('.unit-tab-btn');
   tabBtns.forEach(b => b.classList.remove('active'));
   if (btnEl) {
@@ -5257,7 +5571,7 @@ function initModals() {
   });
 }
 
-window.closeGenericModal = function() {
+window.closeGenericModal = function () {
   const modal = document.getElementById('genericModal');
   if (modal) {
     modal.classList.remove('active');
@@ -5270,7 +5584,7 @@ window.closeGenericModal = function() {
   }
 };
 
-window.handleRegisterUnit = function(unitId, unitName) {
+window.handleRegisterUnit = function (unitId, unitName) {
   // 1. Otomatis tutup jendela modal secara instan
   window.closeGenericModal();
 
@@ -5293,7 +5607,7 @@ window.handleRegisterUnit = function(unitId, unitName) {
 };
 
 // Differentiate institutional authority: Kemenag (Kepala Madrasah) vs Diknas (Kepala Sekolah) vs Pesantren (Pemangku Pondok)
-window.getUnitLeaderMeta = function(unit) {
+window.getUnitLeaderMeta = function (unit) {
   if (!unit) {
     return {
       type: 'diknas',
@@ -5486,7 +5800,7 @@ window.getUnitLeaderMeta = function(unit) {
   };
 };
 
-window.openUnitModal = function(unitId, initialTabId) {
+window.openUnitModal = function (unitId, initialTabId) {
   const db = getDB();
   let unit = null;
 
@@ -5863,52 +6177,86 @@ window.openUnitModal = function(unitId, initialTabId) {
     return `<p class="speech-body-p">${trimmed}</p>`;
   }).join('');
 
-  const speechThemeTitle = unit.headmasterSpeechTitle 
+  const speechThemeTitle = unit.headmasterSpeechTitle
     ? `"${unit.headmasterSpeechTitle}"`
     : `${leaderMeta.speechTitlePrefix} ${speechHeadlineSuffix}`;
 
+  // Ringkas & kecilkan nama jabatan agar proporsional dan tidak menutupi wajah pimpinan
+  function getSleekRoleBadge(u, lMeta) {
+    const id = (u.id || '').toLowerCase();
+    if (id === 'kb') return 'KEPALA KB';
+    if (id === 'tk') return 'KEPALA TK';
+    if (id === 'mi') return 'KEPALA MI';
+    if (id === 'mts') return 'KEPALA MTs';
+    if (id === 'smp') return 'KEPALA SMP';
+    if (id === 'ma') return 'KEPALA MA';
+    if (id === 'sma') return 'KEPALA SMA';
+    if (id === 'ponpes-putra') return 'MUSYRIF';
+    if (id === 'ponpes-putri') return 'MUSYRIFAH';
+    if (id === 'madin') return 'KEPALA MDT';
+    if (id === 'lbb') return 'KETUA LBB';
+    if (id === 'kbihu') return 'PEMBIMBING';
+    if (id === 'lpba') return 'LPBA';
+    if (id === 'poskestren') return 'MEDIS';
+    return (u.leadershipTitle || lMeta.label || 'KEPALA')
+      .replace(/Kelompok Bermain/i, 'KB')
+      .replace(/Taman Kanak-Kanak/i, 'TK')
+      .replace(/Madrasah Ibtidaiyah/i, 'MI')
+      .replace(/Madrasah Tsanawiyah/i, 'MTs')
+      .replace(/Madrasah Aliyah/i, 'MA')
+      .replace(/Madrasah Diniyah/i, 'MDT')
+      .replace(/& Pengasuh Asrama/i, '')
+      .toUpperCase().trim();
+  }
+  const speechRoleBadge = getSleekRoleBadge(unit, leaderMeta);
+
+  let speechPrefix = leaderMeta.speechTitlePrefix || ('Pesan ' + (unit.leadershipTitle || 'Kepala'));
+  if (unit.id === 'kb') speechPrefix = 'Pesan Kepala KB';
+  else if (unit.id === 'tk') speechPrefix = 'Pesan Kepala TK';
+  else if (unit.id === 'mi') speechPrefix = 'Pesan Kepala MI';
+  else if (unit.id === 'mts') speechPrefix = 'Pesan Kepala MTs';
+  else if (unit.id === 'smp') speechPrefix = 'Pesan Kepala SMP';
+  else if (unit.id === 'ma') speechPrefix = 'Pesan Kepala MA';
+  else if (unit.id === 'sma') speechPrefix = 'Pesan Kepala SMA';
+  else if (unit.id === 'ponpes-putra') speechPrefix = 'Pesan Pemangku Pondok';
+  else if (unit.id === 'ponpes-putri') speechPrefix = 'Pesan Pemangku Pondok';
+
   const tabSpeechHtml = hasSpeech ? `
     <div class="unit-tab-pane" id="tab-sambutan">
-      <div class="speech-ref-container">
-        <!-- Header Sambutan Eksekutif (Bebas dari Blok Kuning Menyilaukan) -->
-        <div class="speech-header-box">
-          <div class="speech-kicker-row">
-            <span class="speech-kicker-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              Amanat & Pesan Pimpinan
-            </span>
-            <span class="speech-institution-pill">${unit.name}</span>
+      <div class="speech-showcase-container">
+        <div class="speech-showcase-grid">
+          <!-- 1. Kotak Judul Kuning Emas -->
+          <div class="speech-golden-title-box">
+            <h3 class="speech-golden-title-text">${speechPrefix}<br><span class="speech-golden-title-sub">${speechHeadlineSuffix}</span></h3>
           </div>
-          <h3 class="speech-editorial-title">
-            ${speechThemeTitle}
-          </h3>
-          <div class="speech-gold-divider"></div>
-        </div>
 
-        <!-- Banner Profil Pimpinan Satuan (Elegan, Proporsional & Rapi) -->
-        <div class="speech-leader-banner">
-          <div class="speech-leader-avatar-wrap">
-            <img src="${headPhoto}" alt="${unit.headmaster || leaderMeta.label}" class="speech-leader-avatar" onerror="this.onerror=null;this.src='assets/pesantren_gedung.jpg';">
+          <!-- 2. Foto Profil Kepala Satuan / Pemangku (Di Atas Teks pada Mode Ponsel, Kanan pada Mode PC) -->
+          <div class="speech-showcase-photo-col">
+            <div class="speech-showcase-photo-frame">
+              <img src="${headPhoto}" alt="${unit.headmaster || leaderMeta.label}" class="speech-showcase-photo-img" onerror="this.onerror=null;this.src='assets/pesantren_gedung.jpg';">
+              <div class="speech-showcase-photo-badge">
+                <span>${speechRoleBadge}</span>
+              </div>
+            </div>
           </div>
-          <div class="speech-leader-meta">
-            <div class="speech-leader-role-badge">${leaderMeta.label}</div>
-            <h4 class="speech-leader-name">${unit.headmaster || leaderMeta.label}</h4>
-            <p class="speech-leader-title">${leaderMeta.role || ('Kepala ' + unit.name)}</p>
+
+          ${unit.headmasterSpeechTitle ? `
+            <!-- 3. Tema / Kutipan Topik -->
+            <div class="speech-showcase-theme">
+              “${unit.headmasterSpeechTitle}”
+            </div>
+          ` : ''}
+
+          <!-- 4. Naskah Sambutan -->
+          <div class="speech-showcase-paragraphs">
+            ${formattedSpeechHtml || `<p>${unit.shortDesc || unit.fullDesc}</p>`}
           </div>
-        </div>
 
-        <!-- Alur Teks Sambutan Penuh (Legible, Pantas, dan Nyaman Dibaca di Layar Laptop Maupun HP) -->
-        <div class="speech-text-wrapper">
-          ${formattedSpeechHtml || `<p class="speech-body-p">${unit.shortDesc || unit.fullDesc}</p>`}
-        </div>
-
-        <!-- Blok Pengesahan & Tanda Tangan Resmi Eksekutif -->
-        <div class="speech-editorial-signoff">
-          <p class="speech-closing-salam">Wassalamu'alaikum Warahmatullahi Wabarakatuh.</p>
-          <div class="speech-signature-plain">
-            <span class="speech-signature-tag">Tertanda Resmi,</span>
-            <strong class="speech-signature-name">${unit.headmaster || leaderMeta.label}</strong>
-            <span class="speech-signature-role">${leaderMeta.role || ('Kepala ' + unit.name)}</span>
+          <!-- 5. Tanda Tangan & Pengesahan Bawah -->
+          <div class="speech-showcase-signature">
+            <p class="speech-closing-salam">Wassalamu'alaikum Warahmatullahi Wabarakatuh.</p>
+            <div class="speech-signature-name">${unit.headmaster || leaderMeta.label}</div>
+            <div class="speech-signature-role">${leaderMeta.role || ((unit.leadershipTitle || 'Kepala') + ' ' + unit.name)}</div>
           </div>
         </div>
       </div>
@@ -6171,7 +6519,7 @@ window.openUnitModal = function(unitId, initialTabId) {
 };
 
 /* --- FORMULIR KONSULTASI CALON JAMAAH KBIHU MANDIRI --- */
-window.openKbihuConsultModal = function() {
+window.openKbihuConsultModal = function () {
   const db = getDB();
   const kbihu = db.kbihuInfo || {};
   const modal = document.getElementById('genericModal');
@@ -6247,7 +6595,7 @@ window.openKbihuConsultModal = function() {
   document.body.style.overflow = 'hidden';
 };
 
-window.submitKbihuConsult = function(e) {
+window.submitKbihuConsult = function (e) {
   e.preventDefault();
   const db = getDB();
   const kbihu = db.kbihuInfo || {};
@@ -6273,7 +6621,7 @@ window.submitKbihuConsult = function(e) {
 };
 
 /* --- BAGAN STRUKTUR ORGANISASI: MODAL DETAIL 14 SATUAN --- */
-window.openStrukturDetail = function(unitKey) {
+window.openStrukturDetail = function (unitKey) {
   const modal = document.getElementById('genericModal');
   const title = document.getElementById('genericModalTitle');
   const body = document.getElementById('genericModalBody');
@@ -6555,7 +6903,7 @@ window.openStrukturDetail = function(unitKey) {
   document.body.style.overflow = 'hidden';
 };
 
-window.openSpeechModal = function(leaderId) {
+window.openSpeechModal = function (leaderId) {
   const db = getDB();
   const leader = (db.leadership || []).find(l => l.id === leaderId);
   if (!leader) return;
@@ -6598,17 +6946,28 @@ window.openSpeechModal = function(leaderId) {
           ? 'Pesan Bendahara Dewan Pengasuh'
           : `Pesan ${leader.role}`));
     institutionSuffix = 'YTPAI Raudlatul Muta\'allimin Lamongan';
-    leaderRoleBadge = 'DEWAN PENGASUH';
+    leaderRoleBadge = leader.role.toLowerCase().includes('ketua')
+      ? 'KETUA PENGASUH'
+      : (leader.role.toLowerCase().includes('sekretaris')
+        ? 'SEKRETARIS PENGASUH'
+        : (leader.role.toLowerCase().includes('bendahara')
+          ? 'BENDAHARA PENGASUH'
+          : 'DEWAN PENGASUH'));
     leaderSignatureBadge = 'Dewan Pengasuh';
     leaderFullRole = `${leader.role} YTPAI Raudlatul Muta'allimin Lamongan`;
   }
 
   // Format paragraphs
-  let paragraphsHtml = '<p class="speech-ref-p">Teks amanah resmi yayasan.</p>';
+  let paragraphsHtml = '<p>Teks amanah resmi yayasan.</p>';
   if (leader.speechContent) {
     const rawParagraphs = leader.speechContent.split(/\n\s*\n/).filter(Boolean);
-    paragraphsHtml = rawParagraphs.map(p => {
-      return `<p class="speech-ref-p">${p.trim()}</p>`;
+    paragraphsHtml = rawParagraphs.map((p, idx) => {
+      const trimmed = p.trim();
+      const isSalam = trimmed.toLowerCase().startsWith('assalamu') || trimmed.toLowerCase().startsWith('bismillah');
+      if (isSalam && idx === 0) {
+        return `<p class="speech-salam-p">${trimmed}</p>`;
+      }
+      return `<p>${trimmed}</p>`;
     }).join('');
   }
 
@@ -6626,53 +6985,50 @@ window.openSpeechModal = function(leaderId) {
   const modalCard = modal.querySelector('.modal-card');
   if (modalCard) modalCard.classList.add('modal-speech-mode');
 
-  // Set Body Markup with Newspaper Editorial Flow (matches kepala sekolah exactly)
+  // Set Body Markup Sesuai Patokan Baku Gambar Benchmark (Kotak Kuning Emas + Teks Kiri + Foto Kanan)
   body.innerHTML = `
-    <div class="speech-ref-container" style="padding-top: 4px;">
-      <!-- Header Dokumen Resmi Pesantren (Bersih & Elegan) -->
-      <div class="speech-ref-title-box">
-        <div class="speech-doc-kicker-row">
-          <span class="speech-doc-kicker-badge">Amanah &amp; Taushiah Resmi</span>
-          <span class="speech-doc-kicker-org">${catBadge} • ${statusBadge}</span>
+    <div class="speech-showcase-container">
+      <div class="speech-showcase-grid">
+        <!-- 1. Kotak Judul Kuning Emas -->
+        <div class="speech-golden-title-box">
+          <h3 class="speech-golden-title-text">${speechTitlePrefix}<br><span class="speech-golden-title-sub">${institutionSuffix}</span></h3>
         </div>
-        <h3 class="speech-ref-highlight-title">
-          <span class="speech-ref-title-main">${speechTitlePrefix}</span>
-          <span class="speech-ref-title-sub">${institutionSuffix}</span>
-        </h3>
-      </div>
 
-      <!-- Newspaper Editorial Flow: Foto Floated di Kiri, Teks Mengalir Bersisian & Membungkus Bawah -->
-      <div class="speech-newspaper-article">
-        <div class="speech-portrait-float">
-          <div class="speech-portrait-frame">
-            <img src="${leader.photo}" alt="${leader.name}" class="speech-portrait-img" 
+        <!-- 2. Foto Resmi Pemimpin / Dewan Pengasuh (Di Atas Teks pada Mode Ponsel, Kanan pada Mode PC) -->
+        <div class="speech-showcase-photo-col">
+          <div class="speech-showcase-photo-frame">
+            <img src="${leader.photo}" alt="${leader.name}" class="speech-showcase-photo-img" 
                  style="transform: scale(${leader.photoScale || 1}) translateY(${leader.photoOffsetY || 0}%); transform-origin: center top;"
                  onerror="this.onerror=null; this.src='assets/leader_ketua.jpg';">
-            <div class="speech-portrait-caption">
-              <span class="caption-role">${leaderRoleBadge}</span>
+            <div class="speech-showcase-photo-badge">
+              <span>${leaderRoleBadge}</span>
             </div>
           </div>
         </div>
 
-        <div class="speech-article-content">
+        ${leader.speechTitle ? `
+          <!-- 3. Tema / Kutipan Topik -->
+          <div class="speech-showcase-theme">
+            “${leader.speechTitle}”
+          </div>
+        ` : ''}
+
+        <!-- 4. Naskah Paragraf Sambutan -->
+        <div class="speech-showcase-paragraphs">
           ${paragraphsHtml}
         </div>
 
-        <!-- Blok Pengesahan & Tanda Tangan Resmi Eksekutif (Newspaper Editorial Sign-Off) -->
-        <div class="speech-editorial-signoff">
+        <!-- 5. Tanda Tangan & Pengesahan Bawah -->
+        <div class="speech-showcase-signature">
           <p class="speech-closing-salam">Wassalamu'alaikum Warahmatullahi Wabarakatuh.</p>
-          <div class="speech-signature-card">
-            <div class="speech-signature-content">
-              <h4 class="speech-ref-author-name">${leader.name}</h4>
-              <p class="speech-ref-author-role">${leaderFullRole}</p>
-            </div>
-          </div>
+          <div class="speech-signature-name">${leader.name}</div>
+          <div class="speech-signature-role">${leaderFullRole}</div>
         </div>
       </div>
 
       <!-- Tombol Tutup Naskah Ramping -->
-      <div class="unit-modal-action-footer" style="margin-top:14px; padding-top:10px; border-top:1px solid #E2E8F0;">
-        <button type="button" class="btn btn-outline btn-block" onclick="closeGenericModal()" style="border-radius:8px; padding:10px 18px; font-weight:700; width:100%; border:1.5px solid #CBD5E1; color:#334155; background:#FFFFFF;">
+      <div class="unit-modal-action-footer" style="margin-top:20px; padding-top:12px; border-top:1px solid #E2E8F0;">
+        <button type="button" class="btn btn-outline btn-block" onclick="closeGenericModal()" style="border-radius:8px; padding:10px 18px; font-weight:700; width:100%; border:1.5px solid #CBD5E1; color:#334155; background:#FFFFFF; min-height:44px;">
           Tutup Naskah
         </button>
       </div>
@@ -6683,7 +7039,7 @@ window.openSpeechModal = function(leaderId) {
   document.body.style.overflow = 'hidden';
 };
 
-window.openFacilityDetail = function(identifier, fallbackDesc) {
+window.openFacilityDetail = function (identifier, fallbackDesc) {
   const db = getDB();
   const facList = db.facilities || [];
   // Support lookup by id or name
@@ -6717,7 +7073,7 @@ window.openFacilityDetail = function(identifier, fallbackDesc) {
       <span style="font-size:0.72rem; font-weight:700; background:#FEF3C7; color:#92400E; padding:2px 8px; border-radius:999px; border:1px solid #FDE68A; letter-spacing:0.02em;">${fac.category || 'Fasilitas'}</span>
     </div>
   `;
-  
+
   const features = fac.features && Array.isArray(fac.features) ? fac.features : [];
   const fullNarrative = fac.fullDesc || fac.desc;
 
@@ -6851,7 +7207,7 @@ function selectUnitDropdown(unitName) {
 }
 window.selectUnitDropdown = selectUnitDropdown;
 
-window.selectGenderAndUnit = function(gender, unitName, isBoarding = true) {
+window.selectGenderAndUnit = function (gender, unitName, isBoarding = true) {
   const genderSelect = document.getElementById('ppdbGender');
   if (genderSelect) {
     genderSelect.value = gender;
@@ -7028,7 +7384,7 @@ function initInteractiveContactMap() {
    ========================================================================== */
 function renderVideoShowcase(db) {
   const showcase = db.videoShowcase || (typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.videoShowcase) || {};
-  
+
   const badgeTextEl = document.getElementById('parallaxBadgeText');
   if (badgeTextEl && showcase.badge) badgeTextEl.textContent = showcase.badge;
 
@@ -7278,7 +7634,7 @@ function initVisitorTelemetry() {
       document.head.appendChild(gaScript);
 
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
       gtag('config', gaId);
     }
@@ -7341,10 +7697,10 @@ function initVisitorTelemetry() {
     // Pre-record new log entry
     const now = new Date();
     const timeStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-    
+
     // Default city fallback
     let detectedCity = 'Lamongan & Babat';
-    
+
     const newLog = {
       timestamp: timeStr,
       page: pageName,
@@ -7370,7 +7726,7 @@ function initVisitorTelemetry() {
           if (data && (data.city || data.region)) {
             const locName = (data.city || data.region || 'Lamongan') + (data.country_name && data.country_name !== 'Indonesia' ? `, ${data.country_name}` : '');
             newLog.city = locName;
-            
+
             // Check if city exists in list
             const currentDb = getDB();
             if (currentDb && currentDb.analytics && currentDb.analytics.cities) {
@@ -7400,7 +7756,7 @@ function initVisitorTelemetry() {
 }
 
 // Interactive Tab Switcher for Section #tentang (Visi & Misi Yayasan)
-window.switchAboutVmTab = function(tabName) {
+window.switchAboutVmTab = function (tabName) {
   const btnVisi = document.getElementById('tabBtnVisi');
   const btnMisi = document.getElementById('tabBtnMisi');
   const paneVisi = document.getElementById('paneVisi');
@@ -7431,7 +7787,7 @@ window.switchAboutVmTab = function(tabName) {
 /* ========================================================================= */
 let selectedHaulNominal = 100000;
 
-window.switchHaulMethod = function(method) {
+window.switchHaulMethod = function (method) {
   const btnQris = document.getElementById('haulBtnTabQris');
   const btnBank = document.getElementById('haulBtnTabBank');
   const panelQris = document.getElementById('haulPanelQris');
@@ -7455,7 +7811,7 @@ window.switchHaulMethod = function(method) {
   }
 };
 
-window.copyHaulRekening = function(rekNum, btn) {
+window.copyHaulRekening = function (rekNum, btn) {
   if (!rekNum) return;
   navigator.clipboard.writeText(rekNum).then(() => {
     if (btn) {
@@ -7473,7 +7829,7 @@ window.copyHaulRekening = function(rekNum, btn) {
   });
 };
 
-window.selectHaulAmount = function(nominal, btn) {
+window.selectHaulAmount = function (nominal, btn) {
   const chips = document.querySelectorAll('#haulAmountChips .amount-chip');
   chips.forEach(c => c.classList.remove('active'));
   if (btn) btn.classList.add('active');
@@ -7493,7 +7849,7 @@ window.selectHaulAmount = function(nominal, btn) {
   updateHaulWaLink();
 };
 
-window.updateHaulCustomAmount = function(val) {
+window.updateHaulCustomAmount = function (val) {
   const num = parseInt(val || '0', 10);
   selectedHaulNominal = num > 0 ? num : 0;
   updateHaulWaLink();
@@ -7615,7 +7971,7 @@ function initLatestInfoPopup() {
     if (dismissedUntil && Date.now() < Number(dismissedUntil)) {
       return;
     }
-  } catch (e) {}
+  } catch (e) { }
 
   const db = (typeof getDB === 'function' ? getDB() : window.APP_DB) || {};
   const data = getActivePopupData(db);
@@ -7631,7 +7987,7 @@ function initLatestInfoPopup() {
   }, 1400);
 }
 
-window.closePopupInfoModal = function() {
+window.closePopupInfoModal = function () {
   const popupModal = document.getElementById('popupInfoModal');
   if (!popupModal) return;
 
@@ -7640,13 +7996,13 @@ window.closePopupInfoModal = function() {
     if (chk && chk.checked) {
       localStorage.setItem('ytpai_popup_dismissed_until', String(Date.now() + 24 * 60 * 60 * 1000));
     }
-  } catch (e) {}
+  } catch (e) { }
 
   popupModal.classList.remove('active');
   document.body.classList.remove('popup-info-open');
 };
 
-window.handlePopupReadMore = function() {
+window.handlePopupReadMore = function () {
   const newsId = window._currentPopupNewsId;
   const link = window._currentPopupActionLink;
   closePopupInfoModal();
@@ -7665,7 +8021,7 @@ window.handlePopupReadMore = function() {
   }
 };
 
-window.openLatestInfoPopup = function(newsId) {
+window.openLatestInfoPopup = function (newsId) {
   const popupModal = document.getElementById('popupInfoModal');
   if (!popupModal) return;
 
@@ -7711,5 +8067,270 @@ document.addEventListener('keydown', (e) => {
     }
   }
 });
+
+/* ==========================================================================
+   WIDGET JADWAL WAKTU SHOLAT OTOMATIS BABAT - LAMONGAN & KALENDER HIJRIAH
+   Lokasi: Babat, Lamongan (-7.1128, 112.1633, WIB / UTC+7)
+   Standar Hisab: Kemenag RI (Ihtiyath +2 Menit, Subuh -20°, Isya -18°)
+   Fitur: Hitung Mundur Live, Penanda Waktu Sholat Aktif, Kalender Hijriah
+   ========================================================================== */
+let prayerCountdownInterval = null;
+
+function calculateBabatPrayerTimes(targetDate = new Date()) {
+  const lat = -7.1128;
+  const lng = 112.1633;
+  const tz = 7; // WIB
+
+  // Hitung hari ke-n dalam setahun (day of year)
+  const start = new Date(targetDate.getFullYear(), 0, 0);
+  const diff = (targetDate - start) + ((start.getTimezoneOffset() - targetDate.getTimezoneOffset()) * 60 * 1000);
+  const oneDay = 1000 * 60 * 60 * 24;
+  const dayOfYear = Math.floor(diff / oneDay);
+
+  // Parameter astronomis matahari (Deklinasi & Equation of Time)
+  const B = 2 * Math.PI * (dayOfYear - 81) / 365;
+  const EoT = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
+  const decl = 23.45 * Math.sin(B) * (Math.PI / 180);
+  const latRad = lat * (Math.PI / 180);
+
+  // Waktu Zawal / Rembang (Solar Noon Dzuhur)
+  const noon = 12 + tz - (lng / 15) - (EoT / 60);
+
+  function getHourAngle(angleDeg) {
+    const altRad = angleDeg * (Math.PI / 180);
+    const cosH = (Math.sin(altRad) - Math.sin(latRad) * Math.sin(decl)) / (Math.cos(latRad) * Math.cos(decl));
+    if (cosH > 1 || cosH < -1) return 0;
+    return Math.acos(cosH) * (180 / Math.PI) / 15;
+  }
+
+  const hFajr = getHourAngle(-20.0);
+  const hSunrise = getHourAngle(-0.8333);
+  const hDhuha = getHourAngle(4.5);
+  const hMaghrib = getHourAngle(-0.8333);
+  const hIsha = getHourAngle(-18.0);
+
+  // Ashar: Mazhab Syafi'i (bayangan = panjang objek + bayangan zawal)
+  const asrAltRad = Math.atan(1 / (1 + Math.tan(Math.abs(latRad - decl))));
+  const asrAltDeg = asrAltRad * (180 / Math.PI);
+  const hAsr = getHourAngle(asrAltDeg);
+
+  function formatTime(hourDecimal, ihtiyathMins = 2) {
+    const totalMinutes = Math.round(hourDecimal * 60) + ihtiyathMins;
+    const h = Math.floor(totalMinutes / 60) % 24;
+    const m = totalMinutes % 60;
+    const timeStr = String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+    return {
+      timeStr,
+      hours: h,
+      minutes: m,
+      totalSeconds: h * 3600 + m * 60
+    };
+  }
+
+  const subuhRaw = noon - hFajr;
+  const imsakObj = formatTime(subuhRaw, -8); // Subuh - 10m + 2m ihtiyath = -8m
+  const subuhObj = formatTime(subuhRaw, 2);
+  const terbitObj = formatTime(noon - hSunrise, -2);
+  const dhuhaObj = formatTime(noon - hDhuha, 2);
+  const dzuhurObj = formatTime(noon, 2);
+  const asharObj = formatTime(noon + hAsr, 2);
+  const maghribObj = formatTime(noon + hMaghrib, 2);
+  const isyaObj = formatTime(noon + hIsha, 2);
+
+  return [
+    { id: 'imsak', name: 'Imsak', time: imsakObj.timeStr, sec: imsakObj.totalSeconds, isFardhu: false },
+    { id: 'subuh', name: 'Subuh', time: subuhObj.timeStr, sec: subuhObj.totalSeconds, isFardhu: true },
+    { id: 'terbit', name: 'Terbit', time: terbitObj.timeStr, sec: terbitObj.totalSeconds, isFardhu: false },
+    { id: 'dhuha', name: 'Dhuha', time: dhuhaObj.timeStr, sec: dhuhaObj.totalSeconds, isFardhu: false },
+    { id: 'dzuhur', name: 'Dzuhur', time: dzuhurObj.timeStr, sec: dzuhurObj.totalSeconds, isFardhu: true },
+    { id: 'ashar', name: 'Ashar', time: asharObj.timeStr, sec: asharObj.totalSeconds, isFardhu: true },
+    { id: 'maghrib', name: 'Maghrib', time: maghribObj.timeStr, sec: maghribObj.totalSeconds, isFardhu: true },
+    { id: 'isya', name: "Isya'", time: isyaObj.timeStr, sec: isyaObj.totalSeconds, isFardhu: true }
+  ];
+}
+
+function getIslamicDateString(date = new Date()) {
+  try {
+    const formatter = new Intl.DateTimeFormat('id-ID-u-ca-islamic-umalqura', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+    const hijriRaw = formatter.format(date);
+    return hijriRaw.replace('AH', 'H').trim();
+  } catch (err) {
+    try {
+      const formatterStd = new Intl.DateTimeFormat('id-ID-u-ca-islamic', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+      return formatterStd.format(date).replace('AH', 'H').trim();
+    } catch (e) {
+      return '22 Jumadilawal 1448 H';
+    }
+  }
+}
+
+function getPrayerSvgIcon(prayerId) {
+  switch (prayerId) {
+    case 'imsak':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+    case 'subuh':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v5M4.93 6.93l3.54 3.54M19.07 6.93l-3.54 3.54M2 18h20M20 22H4"/></svg>`;
+    case 'terbit':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v5M4.93 10.93l2.83 2.83M19.07 10.93l-2.83 2.83M2 18h20M7 18a5 5 0 0 1 10 0"/></svg>`;
+    case 'dhuha':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line></svg>`;
+    case 'dzuhur':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>`;
+    case 'ashar':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 8v4l3 3M3 21h18"/></svg>`;
+    case 'maghrib':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v6M12 15l-3-3M12 15l3-3M2 18h20M7 18a5 5 0 0 1 10 0"/></svg>`;
+    case 'isya':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path><circle cx="19" cy="5" r="1.2" fill="currentColor"></circle></svg>`;
+    default:
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>`;
+  }
+}
+
+function initPrayerTimesWidget() {
+  const container = document.getElementById('jadwal-sholat');
+  const gridEl = document.getElementById('prayerTimesGrid');
+  if (!container || !gridEl) return;
+
+  function renderPrayerWidget() {
+    const now = new Date();
+    const prayerTimes = calculateBabatPrayerTimes(now);
+
+    // Render Tanggal Masehi & Hijriah
+    const masehiEl = document.getElementById('prayerMasehiDate');
+    const hijriEl = document.getElementById('prayerHijriDate');
+    if (masehiEl) {
+      masehiEl.textContent = now.toLocaleDateString('id-ID', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      }) + ' M';
+    }
+    if (hijriEl) {
+      hijriEl.textContent = getIslamicDateString(now);
+    }
+
+    // Deteksi waktu saat ini dalam detik (0 s.d. 86399)
+    const currentSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+
+    // Tentukan waktu sholat berikutnya & waktu sholat aktif
+    let nextPrayer = null;
+    let nextTargetSeconds = 0;
+    let isNextTomorrow = false;
+    let currentActivePrayer = null;
+
+    for (let i = 0; i < prayerTimes.length; i++) {
+      const p = prayerTimes[i];
+      // Jika dalam rentang 18 menit setelah masuk waktu sholat fardhu, tandai sebagai waktu sholat aktif
+      if (currentSeconds >= p.sec && currentSeconds < p.sec + (18 * 60)) {
+        currentActivePrayer = p;
+      }
+      if (p.sec > currentSeconds && !nextPrayer) {
+        nextPrayer = p;
+        nextTargetSeconds = p.sec;
+      }
+    }
+
+    // Jika seluruh sholat hari ini telah lewat (setelah Isya'), maka sholat berikutnya adalah Subuh besok
+    if (!nextPrayer) {
+      nextPrayer = prayerTimes.find(p => p.id === 'subuh') || prayerTimes[0];
+      nextTargetSeconds = (24 * 3600) + nextPrayer.sec;
+      isNextTomorrow = true;
+    }
+
+    // Update Spotlight Card
+    const nameEl = document.getElementById('nextPrayerName');
+    const timeEl = document.getElementById('nextPrayerTimeDisplay');
+    const statusPillText = document.getElementById('prayerLiveStatusText');
+
+    if (nameEl) nameEl.textContent = nextPrayer.name + (isNextTomorrow ? ' (Besok)' : '');
+    if (timeEl) timeEl.textContent = nextPrayer.time;
+
+    if (statusPillText) {
+      if (currentActivePrayer) {
+        statusPillText.textContent = `Waktu Sholat ${currentActivePrayer.name}`;
+      } else {
+        statusPillText.textContent = `Menuju Sholat ${nextPrayer.name}`;
+      }
+    }
+
+    // Render 8 Kartu Sholat
+    let gridHtml = '';
+    prayerTimes.forEach(p => {
+      const isActive = (currentActivePrayer && currentActivePrayer.id === p.id) || (!currentActivePrayer && nextPrayer.id === p.id);
+      const isPast = p.sec < currentSeconds && (!currentActivePrayer || currentActivePrayer.id !== p.id);
+      const isNext = (nextPrayer.id === p.id);
+
+      let statusLabel = '';
+      if (currentActivePrayer && currentActivePrayer.id === p.id) {
+        statusLabel = 'Sedang Berlangsung';
+      } else if (isNext) {
+        statusLabel = 'Akan Datang';
+      } else if (isPast) {
+        statusLabel = 'Selesai';
+      } else {
+        statusLabel = p.isFardhu ? 'Fardhu' : 'Sunnah';
+      }
+
+      gridHtml += `
+        <div class="prayer-card ${isActive ? 'active-prayer' : ''}" data-prayer="${p.id}" title="Waktu Sholat ${p.name} Babat Lamongan: ${p.time} WIB">
+          <div class="prayer-card-icon" aria-hidden="true">
+            ${getPrayerSvgIcon(p.id)}
+          </div>
+          <div class="prayer-card-name">${p.name}</div>
+          <div class="prayer-card-time">${p.time}</div>
+          <span class="prayer-card-status-badge">${statusLabel}</span>
+        </div>
+      `;
+    });
+    gridEl.innerHTML = gridHtml;
+
+    // Perbarui Countdown Timer Waktu Nyata
+    function updateCountdown() {
+      const liveNow = new Date();
+      const liveSeconds = liveNow.getHours() * 3600 + liveNow.getMinutes() * 60 + liveNow.getSeconds();
+      let diffSec = nextTargetSeconds - liveSeconds;
+
+      // Jika countdown habis, render ulang seluruh widget untuk beralih ke sholat berikutnya
+      if (diffSec <= 0) {
+        renderPrayerWidget();
+        return;
+      }
+
+      const h = Math.floor(diffSec / 3600);
+      const m = Math.floor((diffSec % 3600) / 60);
+      const s = diffSec % 60;
+
+      const timerEl = document.getElementById('nextPrayerCountdown');
+      if (timerEl) {
+        timerEl.textContent = `-${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      }
+    }
+
+    updateCountdown();
+
+    if (prayerCountdownInterval) clearInterval(prayerCountdownInterval);
+    prayerCountdownInterval = setInterval(updateCountdown, 1000);
+  }
+
+  renderPrayerWidget();
+}
+
+// 21. REGISTER PWA SERVICE WORKER (AKSELERASI OFFLINE & INSTALASI APLIKASI WEB)
+if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => { });
+  });
+}
+
 
 

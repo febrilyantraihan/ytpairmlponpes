@@ -3761,7 +3761,7 @@ function renderTabLeads(db, container) {
 
   container.innerHTML = `
     ${isSuperAdmin ? `
-      <!-- Panel Pengaturan Sistem 2 Gelombang PPDB & Periode PSB -->
+      <!-- Panel Pengaturan Sistem Jadwal SPMB Dinamis (Indent, Gelombang 1, Gelombang 2) -->
       <div class="admin-card" style="margin-bottom:22px; border-top:4px solid #0F4C81; background:#FFFFFF; box-shadow:0 4px 16px rgba(10,37,64,0.08); border-radius:10px;">
         <div class="admin-card-header" style="flex-wrap:wrap; gap:12px; padding-bottom:12px; border-bottom:1px solid #E2E8F0;">
           <div style="display:flex; align-items:center; gap:10px;">
@@ -3769,32 +3769,34 @@ function renderTabLeads(db, container) {
               ⚙️
             </div>
             <div>
-              <h3 style="margin:0; font-size:1.05rem; color:#0A2540; font-weight:800;">Pengaturan Sistem 2 Gelombang PPDB (Header Portal & Jadwal)</h3>
-              <p style="margin:0; font-size:0.80rem; color:#64748B;">Kelola tanggal, kuota, teks banner pengumuman untuk Gelombang I & Gelombang II, serta tentukan gelombang yang sedang aktif saat ini.</p>
+              <h3 style="margin:0; font-size:1.05rem; color:#0A2540; font-weight:800;">Pengaturan Sistem Jadwal SPMB Dinamis (Header Portal &amp; Jadwal)</h3>
+              <p style="margin:0; font-size:0.80rem; color:#64748B;">Kelola tanggal, status otomatis kalender (Indent, Gelombang 1, Gelombang 2), batas peringatan H-7 "Akan Berakhir", dan teks pengumuman.</p>
             </div>
           </div>
           <button type="button" class="btn btn-primary btn-sm" onclick="savePsbWaveConfigForm()" style="background:#0F4C81; border-color:#0A2540; font-weight:700; padding:8px 18px; border-radius:6px; box-shadow:0 2px 6px rgba(15,76,129,0.25);">
-            💾 Simpan Pengaturan 2 Gelombang
+            💾 Simpan Jadwal SPMB
           </button>
         </div>
 
         <form id="psbWaveConfigForm" onsubmit="event.preventDefault(); savePsbWaveConfigForm();" style="margin-top:16px;">
-          <!-- Baris Global: Status Gelombang Berjalan & Tahun Ajaran -->
+          <!-- Baris Global: Status Pelacakan Tanggal & Tahun Ajaran -->
           <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px; margin-bottom:18px; padding:12px 14px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px;">
             <div class="form-group" style="margin:0;">
-              <label class="form-label" style="font-weight:800; font-size:0.82rem; color:#0A2540;">🎯 Gelombang yang Sedang Berjalan (Aktif Saat Ini) *</label>
-              <select id="adminActiveWave" class="form-select" style="border-radius:6px; font-weight:800; border-color:#0F4C81; color:#0A2540; background:#FFFFFF;">
-                <option value="1" ${(db.psbWaveConfig && db.psbWaveConfig.activeWave === 1) ? 'selected' : (!db.psbWaveConfig || db.psbWaveConfig.activeWave !== 2 && db.psbWaveConfig.activeWave !== 0 ? 'selected' : '')}>🟢 GELOMBANG I SEDANG BERJALAN (Aktif)</option>
-                <option value="2" ${(db.psbWaveConfig && db.psbWaveConfig.activeWave === 2) ? 'selected' : ''}>🟡 GELOMBANG II SEDANG BERJALAN (Aktif)</option>
-                <option value="0" ${(db.psbWaveConfig && db.psbWaveConfig.activeWave === 0) ? 'selected' : ''}>🔴 SEMUA GELOMBANG DITUTUP (Tutup Sementara)</option>
+              <label class="form-label" style="font-weight:800; font-size:0.82rem; color:#0A2540;">🎯 Mode Pelacakan Status Gelombang *</label>
+              <select id="adminWaveAutoMode" class="form-select" style="border-radius:6px; font-weight:800; border-color:#0F4C81; color:#0A2540; background:#FFFFFF;">
+                <option value="auto" ${(db.psbWaveConfig && db.psbWaveConfig.autoDateTracking !== false) ? 'selected' : ''}>⚡ OTOMATIS: Mengikuti Kalender Real-Time (Rekomendasi)</option>
+                <option value="1" ${(db.psbWaveConfig && db.psbWaveConfig.autoDateTracking === false && db.psbWaveConfig.activeWave === 1) ? 'selected' : ''}>🔵 MANUAL: Paksa Jalur Indent Aktif</option>
+                <option value="2" ${(db.psbWaveConfig && db.psbWaveConfig.autoDateTracking === false && db.psbWaveConfig.activeWave === 2) ? 'selected' : ''}>🟢 MANUAL: Paksa Gelombang 1 Aktif</option>
+                <option value="3" ${(db.psbWaveConfig && db.psbWaveConfig.autoDateTracking === false && db.psbWaveConfig.activeWave === 3) ? 'selected' : ''}>🟡 MANUAL: Paksa Gelombang 2 Aktif</option>
+                <option value="0" ${(db.psbWaveConfig && db.psbWaveConfig.autoDateTracking === false && db.psbWaveConfig.activeWave === 0) ? 'selected' : ''}>🔴 MANUAL: Tutup Sementara Seluruh Gelombang</option>
               </select>
-              <small style="color:#64748B; font-size:0.72rem;">Gelombang terpilih akan otomatis tampil di banner masthead portal dan menjadi tag pendaftar baru.</small>
+              <small style="color:#64748B; font-size:0.72rem;">Pada mode otomatis, sistem mengecek tanggal hari ini: Indent (1 Nov 2026 - 6 Jan 2027) &rarr; Gel 1 (7 Jan - 31 Mar 2027) &rarr; Gel 2 (1 Apr - 8 Jul 2027), serta menampilkan status "Akan Berakhir" otomatis di H-7.</small>
             </div>
 
             <div class="form-group" style="margin:0;">
               <label class="form-label" style="font-weight:800; font-size:0.82rem; color:#0A2540;">📅 Tahun Ajaran Resmi (T.A.) *</label>
-              <input type="text" id="adminWaveAcademicYear" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.academicYear) || 'T.A. 2027/2028 (1447–1448 H)').replace(/"/g, '&quot;')}" placeholder="Contoh: T.A. 2027/2028 (1447–1448 H)" required style="border-radius:6px; font-weight:700;">
-              <small style="color:#64748B; font-size:0.72rem;">Format kalender akademik nasional & penanggalan hijriyah.</small>
+              <input type="text" id="adminWaveAcademicYear" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.academicYear) || 'T.A. 2027/2028').replace(/"/g, '&quot;')}" placeholder="Contoh: T.A. 2027/2028" required style="border-radius:6px; font-weight:700;">
+              <small style="color:#64748B; font-size:0.72rem;">Ditampilkan di lencana masthead portal PSB dan formulir.</small>
             </div>
           </div>
 
@@ -3820,70 +3822,132 @@ function renderTabLeads(db, container) {
             ${renderImageUploadWidget('adminPsbHeroBg', 'Unggah Foto Latar Belakang Masthead PSB', ((db.psbWaveConfig && db.psbWaveConfig.heroBackground) || 'assets/banner_ppdb_hero.jpg'), 1600, 'landscape', '16:9', '1920 × 1080 px')}
           </div>
 
-          <!-- 2 Kartu Konfigurasi Gelombang Berdampingan -->
-          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:16px;">
+          <!-- 3 Kartu Konfigurasi Tahap Gelombang (Indent, Gelombang 1, Gelombang 2) -->
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
             
-            <!-- KARTU GELOMBANG I -->
+            <!-- KARTU JALUR INDENT -->
+            <div style="border:1.5px solid #FCD34D; background:#FFFBEB; border-radius:8px; padding:14px; position:relative;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #FDE68A; padding-bottom:8px;">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:1.1rem;">⭐</span>
+                  <span style="font-size:0.88rem; font-weight:800; color:#B45309;">JALUR INDENT (Tahap Awal)</span>
+                </div>
+                <span class="tree-badge" style="background:#D97706; color:#FFFFFF; font-size:0.62rem; font-weight:800;">INDENT</span>
+              </div>
+
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Nama Resmi Jalur Indent *</label>
+                <input type="text" id="adminIndentName" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.indent && db.psbWaveConfig.indent.name) || 'Jalur Indent (Pemesanan Kuota Awal)').replace(/"/g, '&quot;')}" placeholder="Contoh: Jalur Indent" required style="border-radius:4px; font-size:0.82rem;">
+              </div>
+
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Rentang Tanggal Teks *</label>
+                <input type="text" id="adminIndentDateRange" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.indent && db.psbWaveConfig.indent.dateRange) || '01 Nov 2026 – 06 Jan 2027').replace(/"/g, '&quot;')}" placeholder="01 Nov 2026 – 06 Jan 2027" required style="border-radius:4px; font-size:0.82rem;">
+              </div>
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+                <div class="form-group" style="margin:0;">
+                  <label class="form-label" style="font-weight:700; font-size:0.75rem; color:#1E293B;">Mulai (ISO YYYY-MM-DD)</label>
+                  <input type="date" id="adminIndentStartDate" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.indent && db.psbWaveConfig.indent.startDate) || '2026-11-01')}" style="border-radius:4px; font-size:0.78rem; padding:6px 8px;">
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label class="form-label" style="font-weight:700; font-size:0.75rem; color:#1E293B;">Selesai (ISO YYYY-MM-DD)</label>
+                  <input type="date" id="adminIndentEndDate" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.indent && db.psbWaveConfig.indent.endDate) || '2027-01-06')}" style="border-radius:4px; font-size:0.78rem; padding:6px 8px;">
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Label Status Default</label>
+                <input type="text" id="adminIndentStatus" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.indent && db.psbWaveConfig.indent.status) || 'Dibuka').replace(/"/g, '&quot;')}" placeholder="Dibuka" required style="border-radius:4px; font-size:0.82rem;">
+              </div>
+
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Teks Pengumuman Jalur Indent</label>
+                <textarea id="adminIndentAnnouncement" class="form-input" rows="3" style="border-radius:4px; font-size:0.78rem; resize:vertical;" placeholder="Pengumuman khusus Jalur Indent...">${((db.psbWaveConfig && db.psbWaveConfig.indent && db.psbWaveConfig.indent.announcementText) || 'Jalur Indent SPMB T.A. 2027/2028: 01 November 2026 s/d 06 Januari 2027. Kuota asrama putra dan putri terbatas. Pendaftaran online buka 24 jam. Pelayanan tatap muka hadir ke Kantor Sekretariat Pusat SPMB YTPAI Lamongan atau Kantor Unit Formal (KB–SMA) buka Sabtu s.d. Kamis pukul 07.00 – 14.00 WIB (Hari Jum\'at Libur Lembaga).')}</textarea>
+              </div>
+            </div>
+
+            <!-- KARTU GELOMBANG 1 -->
             <div style="border:1.5px solid #93C5FD; background:#F0F9FF; border-radius:8px; padding:14px; position:relative;">
               <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #BFDBFE; padding-bottom:8px;">
                 <div style="display:flex; align-items:center; gap:6px;">
                   <span style="font-size:1.1rem;">🌟</span>
-                  <span style="font-size:0.88rem; font-weight:800; color:#0369A1;">GELOMBANG I (Jalur Prestasi & Inden)</span>
+                  <span style="font-size:0.88rem; font-weight:800; color:#0369A1;">GELOMBANG 1 (Reguler Utama)</span>
                 </div>
                 <span class="tree-badge" style="background:#0284C7; color:#FFFFFF; font-size:0.62rem; font-weight:800;">TAHAP 1</span>
               </div>
 
               <div class="form-group" style="margin-bottom:10px;">
-                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Nama Resmi Gelombang I *</label>
-                <input type="text" id="adminWave1Name" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave1 && db.psbWaveConfig.wave1.name) || (db.psbWaveConfig && db.psbWaveConfig.name) || 'Gelombang I (Jalur Prestasi & Inden)').replace(/"/g, '&quot;')}" placeholder="Contoh: Gelombang I" required style="border-radius:4px; font-size:0.82rem;">
-              </div>
-
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
-                <div class="form-group" style="margin:0;">
-                  <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Rentang Tanggal *</label>
-                  <input type="text" id="adminWave1DateRange" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave1 && db.psbWaveConfig.wave1.dateRange) || (db.psbWaveConfig && db.psbWaveConfig.dateRange) || '02 Jan – 31 Mar 2026').replace(/"/g, '&quot;')}" placeholder="02 Jan – 31 Mar 2026" required style="border-radius:4px; font-size:0.82rem;">
-                </div>
-                <div class="form-group" style="margin:0;">
-                  <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Status Kuota *</label>
-                  <input type="text" id="adminWave1Status" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave1 && db.psbWaveConfig.wave1.status) || (db.psbWaveConfig && db.psbWaveConfig.status) || 'Kuota Terbatas').replace(/"/g, '&quot;')}" placeholder="Kuota Terbatas" required style="border-radius:4px; font-size:0.82rem;">
-                </div>
-              </div>
-
-              <div class="form-group" style="margin:0;">
-                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Teks Pengumuman Gelombang I</label>
-                <textarea id="adminWave1Announcement" class="form-input" rows="3" style="border-radius:4px; font-size:0.78rem; resize:vertical;" placeholder="Pengumuman khusus Gelombang I...">${((db.psbWaveConfig && db.psbWaveConfig.wave1 && db.psbWaveConfig.wave1.announcementText) || (db.psbWaveConfig && db.psbWaveConfig.announcementText) || 'Periode Gelombang I: 02 Januari s/d 31 Maret 2026. Kuota asrama putra dan putri terbatas. Pendaftaran online buka 24 jam atau hadir langsung ke Kantor Sekretariat Pusat PSB YTPAI Lamongan.')}</textarea>
-              </div>
-            </div>
-
-            <!-- KARTU GELOMBANG II -->
-            <div style="border:1.5px solid #FCD34D; background:#FEFCE8; border-radius:8px; padding:14px; position:relative;">
-              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #FDE68A; padding-bottom:8px;">
-                <div style="display:flex; align-items:center; gap:6px;">
-                  <span style="font-size:1.1rem;">🚀</span>
-                  <span style="font-size:0.88rem; font-weight:800; color:#854D0E;">GELOMBANG II (Jalur Reguler)</span>
-                </div>
-                <span class="tree-badge" style="background:#D97706; color:#FFFFFF; font-size:0.62rem; font-weight:800;">TAHAP 2</span>
+                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Nama Resmi Gelombang 1 *</label>
+                <input type="text" id="adminWave1Name" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave1 && db.psbWaveConfig.wave1.name) || 'Gelombang 1 (Jalur Reguler Tahap I)').replace(/"/g, '&quot;')}" placeholder="Contoh: Gelombang 1" required style="border-radius:4px; font-size:0.82rem;">
               </div>
 
               <div class="form-group" style="margin-bottom:10px;">
-                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Nama Resmi Gelombang II *</label>
-                <input type="text" id="adminWave2Name" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave2 && db.psbWaveConfig.wave2.name) || 'Gelombang II (Jalur Reguler)').replace(/"/g, '&quot;')}" placeholder="Contoh: Gelombang II" required style="border-radius:4px; font-size:0.82rem;">
+                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Rentang Tanggal Teks *</label>
+                <input type="text" id="adminWave1DateRange" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave1 && db.psbWaveConfig.wave1.dateRange) || '07 Jan – 31 Mar 2027').replace(/"/g, '&quot;')}" placeholder="07 Jan – 31 Mar 2027" required style="border-radius:4px; font-size:0.82rem;">
               </div>
 
               <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
                 <div class="form-group" style="margin:0;">
-                  <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Rentang Tanggal *</label>
-                  <input type="text" id="adminWave2DateRange" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave2 && db.psbWaveConfig.wave2.dateRange) || '01 Apr – 30 Jun 2026').replace(/"/g, '&quot;')}" placeholder="01 Apr – 30 Jun 2026" required style="border-radius:4px; font-size:0.82rem;">
+                  <label class="form-label" style="font-weight:700; font-size:0.75rem; color:#1E293B;">Mulai (ISO YYYY-MM-DD)</label>
+                  <input type="date" id="adminWave1StartDate" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave1 && db.psbWaveConfig.wave1.startDate) || '2027-01-07')}" style="border-radius:4px; font-size:0.78rem; padding:6px 8px;">
                 </div>
                 <div class="form-group" style="margin:0;">
-                  <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Status Kuota *</label>
-                  <input type="text" id="adminWave2Status" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave2 && db.psbWaveConfig.wave2.status) || 'Pengisian Sisa Kuota').replace(/"/g, '&quot;')}" placeholder="Pengisian Sisa Kuota" required style="border-radius:4px; font-size:0.82rem;">
+                  <label class="form-label" style="font-weight:700; font-size:0.75rem; color:#1E293B;">Selesai (ISO YYYY-MM-DD)</label>
+                  <input type="date" id="adminWave1EndDate" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave1 && db.psbWaveConfig.wave1.endDate) || '2027-03-31')}" style="border-radius:4px; font-size:0.78rem; padding:6px 8px;">
                 </div>
               </div>
 
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Label Status Default</label>
+                <input type="text" id="adminWave1Status" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave1 && db.psbWaveConfig.wave1.status) || 'Tahap 1').replace(/"/g, '&quot;')}" placeholder="Tahap 1" required style="border-radius:4px; font-size:0.82rem;">
+              </div>
+
               <div class="form-group" style="margin:0;">
-                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Teks Pengumuman Gelombang II</label>
-                <textarea id="adminWave2Announcement" class="form-input" rows="3" style="border-radius:4px; font-size:0.78rem; resize:vertical;" placeholder="Pengumuman khusus Gelombang II...">${((db.psbWaveConfig && db.psbWaveConfig.wave2 && db.psbWaveConfig.wave2.announcementText) || 'Periode Gelombang II: 01 April s/d 30 Juni 2026. Dibuka untuk kuota reguler yang masih tersedia. Pendaftaran dapat dilakukan online atau hadir langsung ke Kantor Sekretariat Pusat PSB YTPAI Lamongan.')}</textarea>
+                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Teks Pengumuman Gelombang 1</label>
+                <textarea id="adminWave1Announcement" class="form-input" rows="3" style="border-radius:4px; font-size:0.78rem; resize:vertical;" placeholder="Pengumuman khusus Gelombang 1...">${((db.psbWaveConfig && db.psbWaveConfig.wave1 && db.psbWaveConfig.wave1.announcementText) || 'Periode Gelombang 1: 07 Januari s/d 31 Maret 2027. Kuota asrama putra dan putri tersedia. Pendaftaran online buka 24 jam via portal web resmi.')}</textarea>
+              </div>
+            </div>
+
+            <!-- KARTU GELOMBANG 2 -->
+            <div style="border:1.5px solid #86EFAC; background:#F0FDF4; border-radius:8px; padding:14px; position:relative;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #BBF7D0; padding-bottom:8px;">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:1.1rem;">🚀</span>
+                  <span style="font-size:0.88rem; font-weight:800; color:#166534;">GELOMBANG 2 (Sisa Kuota)</span>
+                </div>
+                <span class="tree-badge" style="background:#15803D; color:#FFFFFF; font-size:0.62rem; font-weight:800;">TAHAP 2</span>
+              </div>
+
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Nama Resmi Gelombang 2 *</label>
+                <input type="text" id="adminWave2Name" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave2 && db.psbWaveConfig.wave2.name) || 'Gelombang 2 (Jalur Reguler Tahap II)').replace(/"/g, '&quot;')}" placeholder="Contoh: Gelombang 2" required style="border-radius:4px; font-size:0.82rem;">
+              </div>
+
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Rentang Tanggal Teks *</label>
+                <input type="text" id="adminWave2DateRange" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave2 && db.psbWaveConfig.wave2.dateRange) || '01 Apr – 08 Jul 2027').replace(/"/g, '&quot;')}" placeholder="01 Apr – 08 Jul 2027" required style="border-radius:4px; font-size:0.82rem;">
+              </div>
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+                <div class="form-group" style="margin:0;">
+                  <label class="form-label" style="font-weight:700; font-size:0.75rem; color:#1E293B;">Mulai (ISO YYYY-MM-DD)</label>
+                  <input type="date" id="adminWave2StartDate" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave2 && db.psbWaveConfig.wave2.startDate) || '2027-04-01')}" style="border-radius:4px; font-size:0.78rem; padding:6px 8px;">
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label class="form-label" style="font-weight:700; font-size:0.75rem; color:#1E293B;">Selesai (ISO YYYY-MM-DD)</label>
+                  <input type="date" id="adminWave2EndDate" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave2 && db.psbWaveConfig.wave2.endDate) || '2027-07-08')}" style="border-radius:4px; font-size:0.78rem; padding:6px 8px;">
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Label Status Default</label>
+                <input type="text" id="adminWave2Status" class="form-input" value="${((db.psbWaveConfig && db.psbWaveConfig.wave2 && db.psbWaveConfig.wave2.status) || 'Tahap 2').replace(/"/g, '&quot;')}" placeholder="Tahap 2" required style="border-radius:4px; font-size:0.82rem;">
+              </div>
+
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-weight:700; font-size:0.78rem; color:#1E293B;">Teks Pengumuman Gelombang 2</label>
+                <textarea id="adminWave2Announcement" class="form-input" rows="3" style="border-radius:4px; font-size:0.78rem; resize:vertical;" placeholder="Pengumuman khusus Gelombang 2...">${((db.psbWaveConfig && db.psbWaveConfig.wave2 && db.psbWaveConfig.wave2.announcementText) || 'Periode Gelombang 2: 01 April s/d 08 Juli 2027. Pengisian sisa kuota murid baru untuk seluruh jenjang pendidikan.')}</textarea>
               </div>
             </div>
 
@@ -5374,73 +5438,109 @@ window.sendWhatsappTemplate = function(index, type = 'accepted') {
 };
 
 window.savePsbWaveConfigForm = function() {
-  const activeWaveSelect = document.getElementById('adminActiveWave');
+  const autoModeSelect = document.getElementById('adminWaveAutoMode');
   const yearInput = document.getElementById('adminWaveAcademicYear');
 
+  // Jalur Indent
+  const indentName = document.getElementById('adminIndentName');
+  const indentDate = document.getElementById('adminIndentDateRange');
+  const indentStart = document.getElementById('adminIndentStartDate');
+  const indentEnd = document.getElementById('adminIndentEndDate');
+  const indentStatus = document.getElementById('adminIndentStatus');
+  const indentAnnounce = document.getElementById('adminIndentAnnouncement');
+
+  // Gelombang 1
   const wave1Name = document.getElementById('adminWave1Name');
   const wave1Date = document.getElementById('adminWave1DateRange');
+  const wave1Start = document.getElementById('adminWave1StartDate');
+  const wave1End = document.getElementById('adminWave1EndDate');
   const wave1Status = document.getElementById('adminWave1Status');
   const wave1Announce = document.getElementById('adminWave1Announcement');
 
+  // Gelombang 2
   const wave2Name = document.getElementById('adminWave2Name');
   const wave2Date = document.getElementById('adminWave2DateRange');
+  const wave2Start = document.getElementById('adminWave2StartDate');
+  const wave2End = document.getElementById('adminWave2EndDate');
   const wave2Status = document.getElementById('adminWave2Status');
   const wave2Announce = document.getElementById('adminWave2Announcement');
 
-  const activeWaveVal = activeWaveSelect ? parseInt(activeWaveSelect.value, 10) : 1;
-  const academicYearVal = yearInput ? (yearInput.value.trim() || 'T.A. 2027/2028 (1447–1448 H)') : 'T.A. 2027/2028 (1447–1448 H)';
+  const modeVal = autoModeSelect ? autoModeSelect.value : 'auto';
+  const autoDateTracking = (modeVal === 'auto');
+  const activeWaveVal = (modeVal === 'auto') ? 1 : parseInt(modeVal, 10);
+  const academicYearVal = yearInput ? (yearInput.value.trim() || 'T.A. 2027/2028') : 'T.A. 2027/2028';
+
+  const indentObj = {
+    name: indentName ? (indentName.value.trim() || 'Jalur Indent (Pemesanan Kuota Awal)') : 'Jalur Indent (Pemesanan Kuota Awal)',
+    shortName: 'INDENT',
+    dateRange: indentDate ? (indentDate.value.trim() || '01 Nov 2026 – 06 Jan 2027') : '01 Nov 2026 – 06 Jan 2027',
+    startDate: indentStart ? (indentStart.value.trim() || '2026-11-01') : '2026-11-01',
+    endDate: indentEnd ? (indentEnd.value.trim() || '2027-01-06') : '2027-01-06',
+    status: indentStatus ? (indentStatus.value.trim() || 'Dibuka') : 'Dibuka',
+    isOpen: true,
+    announcementText: indentAnnounce ? indentAnnounce.value.trim() : ''
+  };
 
   const wave1Obj = {
-    name: wave1Name ? (wave1Name.value.trim() || 'Gelombang I (Jalur Prestasi & Inden)') : 'Gelombang I (Jalur Prestasi & Inden)',
-    shortName: 'Gelombang I',
-    dateRange: wave1Date ? (wave1Date.value.trim() || '02 Jan – 31 Mar 2026') : '02 Jan – 31 Mar 2026',
-    status: wave1Status ? (wave1Status.value.trim() || 'Kuota Terbatas') : 'Kuota Terbatas',
-    isOpen: activeWaveVal === 1,
+    name: wave1Name ? (wave1Name.value.trim() || 'Gelombang 1 (Jalur Reguler Tahap I)') : 'Gelombang 1 (Jalur Reguler Tahap I)',
+    shortName: 'GELOMBANG 1',
+    dateRange: wave1Date ? (wave1Date.value.trim() || '07 Jan – 31 Mar 2027') : '07 Jan – 31 Mar 2027',
+    startDate: wave1Start ? (wave1Start.value.trim() || '2027-01-07') : '2027-01-07',
+    endDate: wave1End ? (wave1End.value.trim() || '2027-03-31') : '2027-03-31',
+    status: wave1Status ? (wave1Status.value.trim() || 'Tahap 1') : 'Tahap 1',
+    isOpen: false,
     announcementText: wave1Announce ? wave1Announce.value.trim() : ''
   };
 
   const wave2Obj = {
-    name: wave2Name ? (wave2Name.value.trim() || 'Gelombang II (Jalur Reguler)') : 'Gelombang II (Jalur Reguler)',
-    shortName: 'Gelombang II',
-    dateRange: wave2Date ? (wave2Date.value.trim() || '01 Apr – 30 Jun 2026') : '01 Apr – 30 Jun 2026',
-    status: wave2Status ? (wave2Status.value.trim() || 'Pengisian Sisa Kuota') : 'Pengisian Sisa Kuota',
-    isOpen: activeWaveVal === 2,
+    name: wave2Name ? (wave2Name.value.trim() || 'Gelombang 2 (Jalur Reguler Tahap II)') : 'Gelombang 2 (Jalur Reguler Tahap II)',
+    shortName: 'GELOMBANG 2',
+    dateRange: wave2Date ? (wave2Date.value.trim() || '01 Apr – 08 Jul 2027') : '01 Apr – 08 Jul 2027',
+    startDate: wave2Start ? (wave2Start.value.trim() || '2027-04-01') : '2027-04-01',
+    endDate: wave2End ? (wave2End.value.trim() || '2027-07-08') : '2027-07-08',
+    status: wave2Status ? (wave2Status.value.trim() || 'Tahap 2') : 'Tahap 2',
+    isOpen: false,
     announcementText: wave2Announce ? wave2Announce.value.trim() : ''
   };
 
-  // Tentukan payload kompatibilitas legacy sesuai gelombang yang aktif
-  let activePayload = wave1Obj;
-  let isOpenLegacy = true;
-
-  if (activeWaveVal === 2) {
-    activePayload = wave2Obj;
-    isOpenLegacy = true;
-  } else if (activeWaveVal === 0) {
-    activePayload = wave1Obj;
-    isOpenLegacy = false;
-  }
-
+  const db = getDB();
   const bgInput = document.getElementById('adminPsbHeroBg');
   const heroBgVal = bgInput ? (bgInput.value.trim() || 'assets/banner_ppdb_hero.jpg') : ((db.psbWaveConfig && db.psbWaveConfig.heroBackground) || 'assets/banner_ppdb_hero.jpg');
 
-  const db = getDB();
+  // Payload Kompatibilitas Legacy
+  let activePayload = indentObj;
+  let isOpenLegacy = true;
+  if (activeWaveVal === 2) {
+    activePayload = wave1Obj;
+  } else if (activeWaveVal === 3) {
+    activePayload = wave2Obj;
+  } else if (activeWaveVal === 0) {
+    isOpenLegacy = false;
+  }
+
   db.psbWaveConfig = {
     activeWave: activeWaveVal,
+    autoDateTracking: autoDateTracking,
+    endingSoonThresholdDays: 7,
     academicYear: academicYearVal,
     heroBackground: heroBgVal,
+    indent: indentObj,
     wave1: wave1Obj,
     wave2: wave2Obj,
     // Properti Kompatibilitas Flat
     name: activePayload.name,
     shortName: activePayload.shortName,
     dateRange: activePayload.dateRange,
+    startDate: activePayload.startDate,
+    endDate: activePayload.endDate,
     status: activeWaveVal === 0 ? 'Pendaftaran Ditutup' : activePayload.status,
     isOpen: isOpenLegacy,
     announcementText: activePayload.announcementText
   };
 
   saveDB(db);
-  showToast(`✅ Pengaturan Sistem 2 Gelombang PPDB & Foto Latar Belakang berhasil disimpan! Gelombang Aktif: ${activeWaveVal === 1 ? 'Gelombang I' : (activeWaveVal === 2 ? 'Gelombang II' : 'Ditutup Sementara')}.`, 'success');
+  const statusMsg = autoDateTracking ? '⚡ Otomatis Kalender Waktu Nyata' : (activeWaveVal === 1 ? 'Jalur Indent' : (activeWaveVal === 2 ? 'Gelombang 1' : (activeWaveVal === 3 ? 'Gelombang 2' : 'Ditutup Sementara')));
+  showToast(`✅ Pengaturan Jadwal SPMB berhasil disimpan! Status: ${statusMsg}.`, 'success');
   
   // Re-render tab leads agar tampilan langsung ter-refresh
   const container = document.getElementById('adminContentArea');
@@ -13530,17 +13630,28 @@ window.triggerFactoryReset = function() {
   }
 };
 
-/* --- MODAL DIALOG UTILITY --- */
+/* --- MODAL DIALOG UTILITY (OPTIMASI MOBILE SAMSUNG GALAXY A55 & BODY SCROLL LOCK) --- */
 function openAdminModal(title, htmlBody) {
   const modal = document.getElementById('adminModal');
-  document.getElementById('adminModalTitle').textContent = title;
-  document.getElementById('adminModalBody').innerHTML = htmlBody;
-  modal.classList.add('active');
+  const titleEl = document.getElementById('adminModalTitle');
+  const bodyEl = document.getElementById('adminModalBody');
+  if (titleEl) titleEl.textContent = title;
+  if (bodyEl) {
+    bodyEl.innerHTML = htmlBody;
+    bodyEl.scrollTop = 0;
+  }
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
 }
 
 window.closeAdminModal = function() {
   const modal = document.getElementById('adminModal');
-  if (modal) modal.classList.remove('active');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
 };
 
 /* ===================================================================
