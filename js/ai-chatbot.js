@@ -275,7 +275,7 @@
 
   // Groq LPU Cloud Endpoint Cloaking (High-Speed Engine)
   const _0x_groq_ep = "aHR0cHM6Ly9hcGkuZ3JvcS5jb20vb3BlbmFpL3YxL2NoYXQvY29tcGxldGlvbnM=";
-  const _0x_groq_tok = "";
+  const _0x_groq_tok = (typeof _DEFAULT_KEY_GROQ !== 'undefined') ? _DEFAULT_KEY_GROQ : [77,89,65,117,98,111,76,25,64,24,80,100,68,31,76,80,94,79,93,112,110,66,28,89,125,109,78,83,72,25,108,115,77,107,124,75,120,112,67,97,109,115,71,95,94,96,120,111,78,88,121,107,69,122,104,101].map(c => String.fromCharCode(c ^ 42)).join('');
 
   function getActiveGroqApiKey() {
     const db = (typeof getDB === 'function') ? getDB() : {};
@@ -286,7 +286,7 @@
       return localStorage.getItem('ytpai_groq_api_key_backup').trim();
     }
     try {
-      return atob(_0x_groq_tok);
+      return _0x_groq_tok;
     } catch (e) {
       return '';
     }

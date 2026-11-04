@@ -12132,14 +12132,29 @@ window.deleteTest = function(index) {
 
 /* --- TAB 9: PENGATURAN YAYASAN & BACKUP (EXECUTIVE COMMAND CENTER) --- */
 function renderTabSettings(db, container) {
-  // Ensure Gemini API key and active model are always ready out-of-the-box
-  if (!db.meta.geminiApiKey) {
-    db.meta.geminiApiKey = (typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.meta && DEFAULT_YAYASAN_DATA.meta.geminiApiKey)
-      ? DEFAULT_YAYASAN_DATA.meta.geminiApiKey
-      : '';
+  // Ensure default API keys and active model are always ready out-of-the-box
+  let metaChanged = false;
+  const defGroq = (typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.meta && DEFAULT_YAYASAN_DATA.meta.groqApiKey) || (typeof _DEFAULT_KEY_GROQ !== 'undefined' ? _DEFAULT_KEY_GROQ : '');
+  const defGemini = (typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.meta && DEFAULT_YAYASAN_DATA.meta.geminiApiKey) || (typeof _DEFAULT_KEY_GEMINI !== 'undefined' ? _DEFAULT_KEY_GEMINI : '');
+  const defGeminiSec = (typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.meta && DEFAULT_YAYASAN_DATA.meta.geminiApiKeySecondary) || defGemini;
+
+  if (!db.meta.groqApiKey || !db.meta.groqApiKey.trim()) {
+    db.meta.groqApiKey = defGroq;
+    metaChanged = true;
+  }
+  if (!db.meta.geminiApiKey || !db.meta.geminiApiKey.trim()) {
+    db.meta.geminiApiKey = defGemini;
+    metaChanged = true;
+  }
+  if (!db.meta.geminiApiKeySecondary || !db.meta.geminiApiKeySecondary.trim()) {
+    db.meta.geminiApiKeySecondary = defGeminiSec;
+    metaChanged = true;
   }
   if (!db.meta.chatbotModel || db.meta.chatbotModel === 'gemini-3.6-flash') {
     db.meta.chatbotModel = 'gemini-3.1-flash-lite';
+    metaChanged = true;
+  }
+  if (metaChanged) {
     saveDB(db);
   }
 
@@ -12539,7 +12554,7 @@ function renderTabSettings(db, container) {
               </h4>
 
               <!-- ENGINE 0: Fast-Path Accelerator (Ultra-Fast Turbo Engine ~0,2s) -->
-              <div class="admin-engine-card status-${(db.meta && db.meta.groqApiKey && db.meta.groqApiKey.trim()) || localStorage.getItem('ytpai_groq_api_key_backup') ? (localStorage.getItem('ytpai_groq_status') || 'connected') : 'empty'}" id="engineCardGroq">
+              <div class="admin-engine-card status-${((db.meta && db.meta.groqApiKey && db.meta.groqApiKey.trim()) || (typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.meta && DEFAULT_YAYASAN_DATA.meta.groqApiKey)) ? (localStorage.getItem('ytpai_groq_status') || 'connected') : 'empty'}" id="engineCardGroq">
                 <div class="engine-card-header">
                   <div class="engine-card-title-group">
                     <h5 class="engine-card-title">
@@ -12550,13 +12565,13 @@ function renderTabSettings(db, container) {
                   </div>
                   <span class="engine-badge-status" id="engineBadgeGroq">
                     <span class="engine-pulse-dot"></span>
-                    <span>${((db.meta && db.meta.groqApiKey && db.meta.groqApiKey.trim()) || localStorage.getItem('ytpai_groq_api_key_backup')) ? (localStorage.getItem('ytpai_groq_status') === 'error' ? 'GAGAL KONEKSI' : 'TERHUBUNG (~180ms)') : 'KOSONG / STANDBY'}</span>
+                    <span>${((db.meta && db.meta.groqApiKey && db.meta.groqApiKey.trim()) || (typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.meta && DEFAULT_YAYASAN_DATA.meta.groqApiKey)) ? (localStorage.getItem('ytpai_groq_status') === 'error' ? 'GAGAL KONEKSI' : 'TERHUBUNG (~180ms)') : 'KOSONG / STANDBY'}</span>
                   </span>
                 </div>
 
                 <div class="admin-key-input-group">
                   <input type="password" id="setGroqApiKey" class="form-input" style="background:#FFFFFF; font-size:0.82rem;" 
-                    value="${(db.meta && db.meta.groqApiKey && db.meta.groqApiKey.trim()) ? db.meta.groqApiKey : (localStorage.getItem('ytpai_groq_api_key_backup') || '')}" 
+                    value="${(db.meta && db.meta.groqApiKey && db.meta.groqApiKey.trim()) ? db.meta.groqApiKey : ((typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.meta && DEFAULT_YAYASAN_DATA.meta.groqApiKey) || (localStorage.getItem('ytpai_groq_api_key_backup') || ''))}" 
                     placeholder="Masukkan Kunci Rahasia Akselerator Primer..."
                     oninput="autoPersistGroqKey(this.value)">
                   <button type="button" class="admin-btn-toggle-eye" onclick="toggleApiKeyVisibility('setGroqApiKey')" title="Tampilkan / Sembunyikan Kunci Akselerator" aria-label="Toggle Password Visibility">
@@ -12597,7 +12612,7 @@ function renderTabSettings(db, container) {
               </div>
 
               <!-- ENGINE 1: Core Knowledge Neural Engine (Primary Key) -->
-              <div class="admin-engine-card status-${(db.meta && db.meta.geminiApiKey && db.meta.geminiApiKey.trim()) ? (localStorage.getItem('ytpai_gemini1_status') || 'connected') : 'empty'}" id="engineCardGemini1">
+              <div class="admin-engine-card status-${((db.meta && db.meta.geminiApiKey && db.meta.geminiApiKey.trim()) || (typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.meta && DEFAULT_YAYASAN_DATA.meta.geminiApiKey)) ? (localStorage.getItem('ytpai_gemini1_status') || 'connected') : 'empty'}" id="engineCardGemini1">
                 <div class="engine-card-header">
                   <div class="engine-card-title-group">
                     <h5 class="engine-card-title">
@@ -12614,7 +12629,7 @@ function renderTabSettings(db, container) {
 
                 <div class="admin-key-input-group">
                   <input type="password" id="setGeminiApiKey" class="form-input" style="background:#FFFFFF; font-size:0.82rem;" 
-                    value="${(db.meta && db.meta.geminiApiKey && db.meta.geminiApiKey.trim()) ? db.meta.geminiApiKey : ''}" 
+                    value="${(db.meta && db.meta.geminiApiKey && db.meta.geminiApiKey.trim()) ? db.meta.geminiApiKey : ((typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.meta && DEFAULT_YAYASAN_DATA.meta.geminiApiKey) || '')}" 
                     placeholder="Masukkan Kunci Rahasia Mesin Pengetahuan Utama..."
                     oninput="if(!this.value.trim()) updateEngineCardUI('Gemini1','empty');">
                   <button type="button" class="admin-btn-toggle-eye" onclick="toggleApiKeyVisibility('setGeminiApiKey')" title="Tampilkan / Sembunyikan Kunci Utama" aria-label="Toggle Password Visibility">
@@ -12634,7 +12649,7 @@ function renderTabSettings(db, container) {
               </div>
 
               <!-- ENGINE 2: Secondary Redundant Engine (Gotong Royong 50:50) -->
-              <div class="admin-engine-card status-${(db.meta && db.meta.geminiApiKeySecondary && db.meta.geminiApiKeySecondary.trim()) ? (localStorage.getItem('ytpai_gemini2_status') || 'connected') : 'empty'}" id="engineCardGemini2">
+              <div class="admin-engine-card status-${((db.meta && db.meta.geminiApiKeySecondary && db.meta.geminiApiKeySecondary.trim()) || (typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.meta && DEFAULT_YAYASAN_DATA.meta.geminiApiKeySecondary)) ? (localStorage.getItem('ytpai_gemini2_status') || 'connected') : 'empty'}" id="engineCardGemini2">
                 <div class="engine-card-header">
                   <div class="engine-card-title-group">
                     <h5 class="engine-card-title">
@@ -12645,13 +12660,13 @@ function renderTabSettings(db, container) {
                   </div>
                   <span class="engine-badge-status" id="engineBadgeGemini2">
                     <span class="engine-pulse-dot"></span>
-                    <span>${(db.meta && db.meta.geminiApiKeySecondary && db.meta.geminiApiKeySecondary.trim()) ? (localStorage.getItem('ytpai_gemini2_status') === 'error' ? 'GAGAL KONEKSI' : 'TERPASANG (AKTIF)') : 'OPSIONAL (KOSONG)'}</span>
+                    <span>${((db.meta && db.meta.geminiApiKeySecondary && db.meta.geminiApiKeySecondary.trim()) || (typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.meta && DEFAULT_YAYASAN_DATA.meta.geminiApiKeySecondary)) ? (localStorage.getItem('ytpai_gemini2_status') === 'error' ? 'GAGAL KONEKSI' : 'TERPASANG (AKTIF)') : 'OPSIONAL (KOSONG)'}</span>
                   </span>
                 </div>
 
                 <div class="admin-key-input-group">
                   <input type="password" id="setGeminiApiKeySecondary" class="form-input" style="background:#FFFFFF; font-size:0.82rem;" 
-                    value="${(db.meta && db.meta.geminiApiKeySecondary && db.meta.geminiApiKeySecondary.trim()) ? db.meta.geminiApiKeySecondary : ''}" 
+                    value="${(db.meta && db.meta.geminiApiKeySecondary && db.meta.geminiApiKeySecondary.trim()) ? db.meta.geminiApiKeySecondary : ((typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.meta && DEFAULT_YAYASAN_DATA.meta.geminiApiKeySecondary) || '')}" 
                     placeholder="Kosongkan jika belum ada (opsional cadangan)..."
                     oninput="if(!this.value.trim()) updateEngineCardUI('Gemini2','empty');">
                   <button type="button" class="admin-btn-toggle-eye" onclick="toggleApiKeyVisibility('setGeminiApiKeySecondary')" title="Tampilkan / Sembunyikan Kunci Cadangan" aria-label="Toggle Password Visibility">
@@ -12663,7 +12678,7 @@ function renderTabSettings(db, container) {
                   <button type="button" class="btn btn-outline btn-sm" onclick="testGeminiApiKeyAdmin('secondary')" style="font-size:0.75rem; padding:5px 12px; border-color:#059669; color:#059669; font-weight:800; background:#FFFFFF;">
                     🧪 Uji Mesin Cadangan (Ping)
                   </button>
-                  <span style="font-size:0.72rem; color:#64748B; font-weight:600;">Status: ${(db.meta && db.meta.geminiApiKeySecondary && db.meta.geminiApiKeySecondary.trim()) ? '✅ Terpasang' : '⚪ Opsional (Belum diisi)'}</span>
+                  <span style="font-size:0.72rem; color:#64748B; font-weight:600;">Status: ${((db.meta && db.meta.geminiApiKeySecondary && db.meta.geminiApiKeySecondary.trim()) || (typeof DEFAULT_YAYASAN_DATA !== 'undefined' && DEFAULT_YAYASAN_DATA.meta && DEFAULT_YAYASAN_DATA.meta.geminiApiKeySecondary)) ? '✅ Terpasang' : '⚪ Opsional (Belum diisi)'}</span>
                 </div>
                 <div id="adminPingFeedbackSecondary" class="admin-ping-feedback"></div>
                 
