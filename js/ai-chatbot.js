@@ -1299,7 +1299,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
   // Test Groq LPU Cloud Gateway connectivity (Ultra-Fast Response Ping & Auto Model Discovery)
   async function testGroqApiKey(apiKey, model = null) {
     if (!apiKey || !apiKey.trim()) {
-      return { success: false, error: 'Kunci Akses Groq masih kosong. Masukkan Kunci Akses (gsk_...).' };
+      return { success: false, error: 'Kunci Akses Akselerator masih kosong. Masukkan Kunci Akses terlebih dahulu.' };
     }
     // Clean key from quotes and zero-width artifacts
     const cleanKey = apiKey.trim().replace(/^['"]|['"]$/g, '').replace(/[\u200B-\u200D\uFEFF]/g, '');
@@ -1308,7 +1308,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 7500);
 
-      // 1. Verify key and fetch actual list of active models enabled on this Groq account
+      // 1. Verify key and fetch actual list of active models enabled on this account
       let availableModels = [];
       try {
         const mResp = await fetch('https://api.groq.com/openai/v1/models', {
@@ -1319,13 +1319,13 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
           clearTimeout(timeoutId);
           const errM = await mResp.json().catch(() => ({}));
           const authMsg = errM?.error?.message || `HTTP ${mResp.status} (${mResp.statusText})`;
-          return { success: false, error: `Verifikasi Kunci Groq: ${authMsg}`, status: mResp.status };
+          return { success: false, error: `Verifikasi Kunci Akselerator: ${authMsg}`, status: mResp.status };
         }
         const mData = await mResp.json();
         availableModels = (mData?.data || []).map(m => m.id);
       } catch (mErr) {
         if (mErr.name === 'AbortError') {
-          return { success: false, error: 'Koneksi ke Groq API melampaui batas waktu.', status: 408 };
+          return { success: false, error: 'Koneksi ke gateway akselerator melampaui batas waktu.', status: 408 };
         }
       }
 
@@ -1408,9 +1408,9 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
       }
     } catch (e) {
       if (e.name === 'AbortError') {
-        return { success: false, error: 'Koneksi ke Groq LPU melampaui batas waktu.', status: 408, model };
+        return { success: false, error: 'Koneksi ke gateway akselerator melampaui batas waktu.', status: 408, model };
       }
-      return { success: false, error: e.message || 'Gagal terhubung ke gateway Groq.', status: 500, model };
+      return { success: false, error: e.message || 'Gagal terhubung ke gateway akselerator.', status: 500, model };
     }
   }
 
@@ -1490,7 +1490,7 @@ ATURAN PENYAJIAN JAWABAN (PRINSIP RINGKAS, PADAT & ANTI-BERTELE-TELE):
             actions: actions.length > 0 ? actions : null,
             engine: 'groq_lpu_turbo',
             model: model,
-            activeKeyLabel: 'Groq LPU Engine',
+            activeKeyLabel: 'Akselerator Primer (Jalur Cepat)',
             latencyMs: Date.now() - tStart
           };
         }

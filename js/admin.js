@@ -12494,26 +12494,34 @@ function renderTabSettings(db, container) {
         </div>
         <div>
             ${(() => {
+              const hasGroq = (db.meta && db.meta.groqApiKey && db.meta.groqApiKey.trim()) || (typeof localStorage !== 'undefined' && localStorage.getItem('ytpai_groq_api_key_backup'));
               const hasPrimary = db.meta && (db.meta.geminiApiKey || db.meta.raudlyApiKey) && (db.meta.geminiApiKey || db.meta.raudlyApiKey).trim();
               const hasSecondary = db.meta && db.meta.geminiApiKeySecondary && db.meta.geminiApiKeySecondary.trim();
-              if (hasPrimary && hasSecondary) {
+              if (hasGroq) {
                 return `
                   <span class="admin-ai-status-pill active" id="adminAiStatusBadge" style="background:#ECFDF5; border-color:#10B981; color:#047857;">
                     <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10B981; animation:pulse 1.8s infinite;"></span>
-                    <span>⚡ Gotong Royong Aktif (Dual-Engine: 3.000 Chat/Hari)</span>
+                    <span>⚡ Jalur Respons Cepat Aktif (~0,2s) + Cadangan Otomatis</span>
+                  </span>
+                `;
+              } else if (hasPrimary && hasSecondary) {
+                return `
+                  <span class="admin-ai-status-pill active" id="adminAiStatusBadge" style="background:#ECFDF5; border-color:#10B981; color:#047857;">
+                    <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10B981; animation:pulse 1.8s infinite;"></span>
+                    <span>⚡ Sistem Gotong Royong Aktif (Dual-Core: 3.000 Respons/Hari)</span>
                   </span>
                 `;
               } else if (hasPrimary || hasSecondary) {
                 return `
                   <span class="admin-ai-status-pill active" id="adminAiStatusBadge">
                     <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#34D399; animation:pulse 1.8s infinite;"></span>
-                    <span>🟢 RAUDLY Neural Engine Aktif (v3-Pro Online)</span>
+                    <span>🟢 Gerbang Kecerdasan Aktif (Core Engine Online)</span>
                   </span>
                 `;
               } else {
                 return `
                   <span class="admin-ai-status-pill" id="adminAiStatusBadge" style="background:#FEF3C7; border-color:#FCD34D; color:#92400E;">
-                    <span>🟡 Mode Basis Data Lokal</span>
+                    <span>🟡 Mode Basis Data Mandiri (Lokal)</span>
                   </span>
                 `;
               }
@@ -12527,18 +12535,18 @@ function renderTabSettings(db, container) {
             <div class="admin-ai-subcard">
               <h4 class="admin-ai-subcard-title">
                 <span>🔑</span>
-                <span>Koneksi Mesin Kecerdasan & Multi-Key Gateway</span>
+                <span>Koneksi Gerbang Kecerdasan & Private Gateway</span>
               </h4>
 
-              <!-- ENGINE 0: Groq LPU (Ultra-Fast Turbo Engine ~0,2s) -->
+              <!-- ENGINE 0: Fast-Path Accelerator (Ultra-Fast Turbo Engine ~0,2s) -->
               <div class="admin-engine-card status-${(db.meta && db.meta.groqApiKey && db.meta.groqApiKey.trim()) || localStorage.getItem('ytpai_groq_api_key_backup') ? (localStorage.getItem('ytpai_groq_status') || 'connected') : 'empty'}" id="engineCardGroq">
                 <div class="engine-card-header">
                   <div class="engine-card-title-group">
                     <h5 class="engine-card-title">
-                      <span>⚡ Mesin Akselerator LPU (Groq Cloud)</span>
+                      <span>⚡ Jalur Respons Cepat (Akselerator Primer)</span>
                     </h5>
-                    <span class="engine-type-tag" style="background:#059669; color:#FFFFFF;">TURBO 0,2s</span>
-                    <span style="font-size:0.65rem; background:#D1FAE5; color:#065F46; padding:1px 6px; border-radius:10px; font-weight:800;">100% GRATIS</span>
+                    <span class="engine-type-tag" style="background:#059669; color:#FFFFFF;">AKSELERATOR</span>
+                    <span style="font-size:0.65rem; background:#D1FAE5; color:#065F46; padding:1px 6px; border-radius:10px; font-weight:800;">RESPONS ~0,2s</span>
                   </div>
                   <span class="engine-badge-status" id="engineBadgeGroq">
                     <span class="engine-pulse-dot"></span>
@@ -12549,54 +12557,54 @@ function renderTabSettings(db, container) {
                 <div class="admin-key-input-group">
                   <input type="password" id="setGroqApiKey" class="form-input" style="background:#FFFFFF; font-size:0.82rem;" 
                     value="${(db.meta && db.meta.groqApiKey && db.meta.groqApiKey.trim()) ? db.meta.groqApiKey : (localStorage.getItem('ytpai_groq_api_key_backup') || '')}" 
-                    placeholder="Masukkan Kunci Akses Groq (contoh: gsk_...)..."
+                    placeholder="Masukkan Kunci Rahasia Akselerator Primer..."
                     oninput="autoPersistGroqKey(this.value)">
-                  <button type="button" class="admin-btn-toggle-eye" onclick="toggleApiKeyVisibility('setGroqApiKey')" title="Tampilkan / Sembunyikan Kunci Groq" aria-label="Toggle Password Visibility">
+                  <button type="button" class="admin-btn-toggle-eye" onclick="toggleApiKeyVisibility('setGroqApiKey')" title="Tampilkan / Sembunyikan Kunci Akselerator" aria-label="Toggle Password Visibility">
                     👁️
                   </button>
                 </div>
 
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; flex-wrap:wrap; gap:6px;">
                   <button type="button" class="btn btn-outline btn-sm" onclick="testGroqApiKeyAdmin()" style="font-size:0.75rem; padding:5px 12px; border-color:#059669; color:#059669; font-weight:800; background:#FFFFFF;">
-                    🧪 Uji Kunci Groq (Ping ~0,2s)
+                    🧪 Uji Jalur Cepat (Ping ~0,2s)
                   </button>
                   <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer" style="font-size:0.73rem; color:#065F46; font-weight:800; text-decoration:underline;">
-                    Ambil Kunci Gratis di console.groq.com ↗
+                    Akses Konsol Token Akselerator ↗
                   </a>
                 </div>
                 <div id="adminPingFeedbackGroq" class="admin-ping-feedback"></div>
 
                 <div style="margin-top:8px; display:flex; gap:10px; align-items:center;">
-                  <label style="font-size:0.75rem; font-weight:700; color:#065F46; margin:0; white-space:nowrap;">Model Groq:</label>
+                  <label style="font-size:0.75rem; font-weight:700; color:#065F46; margin:0; white-space:nowrap;">Model Akselerator:</label>
                   <select id="setGroqModel" class="form-select" style="font-size:0.78rem; padding:4px 8px; border-color:#A7F3D0; background:#FFFFFF;" onchange="autoPersistGroqModel(this.value)">
                     <option value="qwen/qwen3.8-27b" ${(db.meta.groqModel === 'qwen/qwen3.8-27b' || !db.meta.groqModel || db.meta.groqModel === 'llama-3.1-8b-instant' || db.meta.groqModel === 'llama-3.3-70b-versatile') ? 'selected' : ''}>
-                      ⚡ Qwen 3.8 27B (Direkomendasikan: Super Cerdas, Fasih Bahasa Indonesia & Pesantren)
+                      ⚡ Neural Core R-27 (Direkomendasikan: Super Cerdas & Fasih Pesantren)
                     </option>
                     <option value="groq/compound-mini" ${(db.meta.groqModel === 'groq/compound-mini') ? 'selected' : ''}>
-                      🚀 Groq Compound Mini (Agen Ringan & Ultra Cepat)
+                      🚀 Neural Core R-Mini (Ringan & Ultra Cepat)
                     </option>
                     <option value="openai/gpt-oss-20b" ${(db.meta.groqModel === 'openai/gpt-oss-20b') ? 'selected' : ''}>
-                      🧠 OpenAI GPT-OSS 20B (High Precision)
+                      🧠 Neural Core R-20 (Presisi Logika Tinggi)
                     </option>
                     <option value="allam-2-7b" ${(db.meta.groqModel === 'allam-2-7b') ? 'selected' : ''}>
-                      📖 Allam 2 7B (Model Bahasa Arab & Nilai Pesantren)
+                      📖 Neural Core R-Salaf (Khazanah Kitab & Nilai Pesantren)
                     </option>
                   </select>
                 </div>
                 <small style="color:#047857; font-size:0.72rem; margin-top:6px; display:block; line-height:1.4;">
-                  💡 <strong>Keunggulan Turbo:</strong> Jawaban keluar seketika dalam ~0,2 detik. Jika kuota harian habis, sistem otomatis beralih ke Engine 1 (Google Gemini).
+                  💡 <strong>Keunggulan Jalur Cepat:</strong> Jawaban keluar seketika dalam ~0,2 detik. Jika kuota harian tercapai, sistem secara otomatis mengalihkan tugas ke Mesin Pengetahuan Utama secara mulus tanpa jeda.
                 </small>
               </div>
 
-              <!-- ENGINE 1: Google Gemini Neural (Primary Key) -->
+              <!-- ENGINE 1: Core Knowledge Neural Engine (Primary Key) -->
               <div class="admin-engine-card status-${(db.meta && db.meta.geminiApiKey && db.meta.geminiApiKey.trim()) ? (localStorage.getItem('ytpai_gemini1_status') || 'connected') : 'empty'}" id="engineCardGemini1">
                 <div class="engine-card-header">
                   <div class="engine-card-title-group">
                     <h5 class="engine-card-title">
-                      <span>🌐 Mesin Neural Utama (Google Gemini)</span>
+                      <span>🌐 Mesin Pengetahuan Utama (Core Knowledge Engine)</span>
                     </h5>
                     <span class="engine-type-tag" style="background:#0F4C81; color:#FFFFFF;">ENGINE 1</span>
-                    <span style="font-size:0.65rem; background:#E0F2FE; color:#0369A1; padding:1px 6px; border-radius:10px; font-weight:800;">PRIMARY</span>
+                    <span style="font-size:0.65rem; background:#E0F2FE; color:#0369A1; padding:1px 6px; border-radius:10px; font-weight:800;">PRIMARY CORE</span>
                   </div>
                   <span class="engine-badge-status" id="engineBadgeGemini1">
                     <span class="engine-pulse-dot"></span>
@@ -12607,30 +12615,30 @@ function renderTabSettings(db, container) {
                 <div class="admin-key-input-group">
                   <input type="password" id="setGeminiApiKey" class="form-input" style="background:#FFFFFF; font-size:0.82rem;" 
                     value="${(db.meta && db.meta.geminiApiKey && db.meta.geminiApiKey.trim()) ? db.meta.geminiApiKey : ''}" 
-                    placeholder="Masukkan Kunci Akses Resmi Mesin Kecerdasan..."
+                    placeholder="Masukkan Kunci Rahasia Mesin Pengetahuan Utama..."
                     oninput="if(!this.value.trim()) updateEngineCardUI('Gemini1','empty');">
-                  <button type="button" class="admin-btn-toggle-eye" onclick="toggleApiKeyVisibility('setGeminiApiKey')" title="Tampilkan / Sembunyikan API Key" aria-label="Toggle Password Visibility">
+                  <button type="button" class="admin-btn-toggle-eye" onclick="toggleApiKeyVisibility('setGeminiApiKey')" title="Tampilkan / Sembunyikan Kunci Utama" aria-label="Toggle Password Visibility">
                     👁️
                   </button>
                 </div>
 
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; flex-wrap:wrap; gap:6px;">
                   <button type="button" class="btn btn-outline btn-sm" onclick="testGeminiApiKeyAdmin('primary')" style="font-size:0.75rem; padding:5px 12px; border-color:#0F4C81; color:#0F4C81; font-weight:800; background:#FFFFFF;">
-                    🧪 Uji Kunci Utama (Ping)
+                    🧪 Uji Mesin Utama (Ping)
                   </button>
                   <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style="font-size:0.73rem; color:#0F4C81; font-weight:800; text-decoration:underline;">
-                    Panduan Token Akses Resmi ↗
+                    Akses Konsol Token Mesin Utama ↗
                   </a>
                 </div>
                 <div id="adminPingFeedback" class="admin-ping-feedback"></div>
               </div>
 
-              <!-- ENGINE 2: Google Gemini Cadangan (Gotong Royong 50:50) -->
+              <!-- ENGINE 2: Secondary Redundant Engine (Gotong Royong 50:50) -->
               <div class="admin-engine-card status-${(db.meta && db.meta.geminiApiKeySecondary && db.meta.geminiApiKeySecondary.trim()) ? (localStorage.getItem('ytpai_gemini2_status') || 'connected') : 'empty'}" id="engineCardGemini2">
                 <div class="engine-card-header">
                   <div class="engine-card-title-group">
                     <h5 class="engine-card-title">
-                      <span>🤝 Mesin Cadangan Gotong Royong (Opsional)</span>
+                      <span>🤝 Mesin Cadangan Gotong Royong (Secondary Engine)</span>
                     </h5>
                     <span class="engine-type-tag" style="background:#475569; color:#FFFFFF;">ENGINE 2</span>
                     <span style="font-size:0.65rem; background:#F1F5F9; color:#475569; padding:1px 6px; border-radius:10px; font-weight:800;">50:50 SHARING</span>
@@ -12644,16 +12652,16 @@ function renderTabSettings(db, container) {
                 <div class="admin-key-input-group">
                   <input type="password" id="setGeminiApiKeySecondary" class="form-input" style="background:#FFFFFF; font-size:0.82rem;" 
                     value="${(db.meta && db.meta.geminiApiKeySecondary && db.meta.geminiApiKeySecondary.trim()) ? db.meta.geminiApiKeySecondary : ''}" 
-                    placeholder="Kosongkan jika belum punya (bisa menyusul)..."
+                    placeholder="Kosongkan jika belum ada (opsional cadangan)..."
                     oninput="if(!this.value.trim()) updateEngineCardUI('Gemini2','empty');">
-                  <button type="button" class="admin-btn-toggle-eye" onclick="toggleApiKeyVisibility('setGeminiApiKeySecondary')" title="Tampilkan / Sembunyikan API Key Cadangan" aria-label="Toggle Password Visibility">
+                  <button type="button" class="admin-btn-toggle-eye" onclick="toggleApiKeyVisibility('setGeminiApiKeySecondary')" title="Tampilkan / Sembunyikan Kunci Cadangan" aria-label="Toggle Password Visibility">
                     👁️
                   </button>
                 </div>
 
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; flex-wrap:wrap; gap:6px;">
                   <button type="button" class="btn btn-outline btn-sm" onclick="testGeminiApiKeyAdmin('secondary')" style="font-size:0.75rem; padding:5px 12px; border-color:#059669; color:#059669; font-weight:800; background:#FFFFFF;">
-                    🧪 Uji Kunci Cadangan (Ping)
+                    🧪 Uji Mesin Cadangan (Ping)
                   </button>
                   <span style="font-size:0.72rem; color:#64748B; font-weight:600;">Status: ${(db.meta && db.meta.geminiApiKeySecondary && db.meta.geminiApiKeySecondary.trim()) ? '✅ Terpasang' : '⚪ Opsional (Belum diisi)'}</span>
                 </div>
@@ -12669,7 +12677,7 @@ function renderTabSettings(db, container) {
               <!-- AI Model Selection -->
               <div class="form-group" style="margin-bottom:14px;">
                 <label class="form-label" style="font-weight:700; color:#0F4C81; font-size:0.82rem; margin-bottom:6px;">
-                  Pilihan Arsitektur Mesin Kecerdasan
+                  Pilihan Arsitektur Mesin Pengetahuan
                 </label>
                 <select id="setChatbotModel" class="form-select" style="font-size:0.84rem; padding:8px 12px;">
                   <option value="gemini-3.1-flash-lite" ${(!db.meta.chatbotModel || db.meta.chatbotModel === 'gemini-3.1-flash-lite') ? 'selected' : ''}>
@@ -13124,7 +13132,7 @@ function renderTabSettings(db, container) {
       }
     } else {
       feedback.className = 'admin-ping-feedback error';
-      feedback.innerHTML = '<span>⚠️ Modul AI Chatbot belum siap. Muat ulang halaman lalu coba kembali.</span>';
+      feedback.innerHTML = '<span>⚠️ Modul Asisten Cerdas belum siap. Muat ulang halaman lalu coba kembali.</span>';
     }
   };
 
@@ -13161,7 +13169,7 @@ function renderTabSettings(db, container) {
     } catch(e) {}
   };
 
-  // Test Groq Gateway connectivity from Admin (~0,2s ultra-fast ping)
+  // Test Fast-Path Accelerator connectivity from Admin (~0,2s ultra-fast ping)
   window.testGroqApiKeyAdmin = async function() {
     const keyInput = document.getElementById('setGroqApiKey');
     const modelInput = document.getElementById('setGroqModel');
@@ -13174,7 +13182,7 @@ function renderTabSettings(db, container) {
     if (!apiKey) {
       window.updateEngineCardUI('Groq', 'empty');
       feedback.className = 'admin-ping-feedback error';
-      feedback.innerHTML = `<span>⚠️ Masukkan Kunci Akses Groq (gsk_...) terlebih dahulu sebelum melakukan uji coba.</span>`;
+      feedback.innerHTML = `<span>⚠️ Masukkan Kunci Akses Akselerator terlebih dahulu sebelum melakukan uji coba.</span>`;
       feedback.style.display = 'flex';
       return;
     }
@@ -13190,13 +13198,13 @@ function renderTabSettings(db, container) {
     window.autoPersistGroqModel(model);
 
     feedback.className = 'admin-ping-feedback testing';
-    feedback.innerHTML = `<span>⏳ Mengirim sinyal uji coba kilat (ping) ke Groq LPU Cloud...</span>`;
+    feedback.innerHTML = `<span>⏳ Mengirim sinyal uji coba kilat (ping) ke Jalur Akselerator Primer...</span>`;
     feedback.style.display = 'flex';
 
     if (window.YtpaiAi && typeof window.YtpaiAi.testGroqApiKey === 'function') {
       const res = await window.YtpaiAi.testGroqApiKey(apiKey, model);
       
-      // If Groq provided its actual live model list, dynamically populate dropdown
+      // If server provided its actual live model list, dynamically populate dropdown with clean labels
       if (res.availableModels && res.availableModels.length > 0 && modelInput) {
         const chatModels = res.availableModels.filter(m => {
           const l = m.toLowerCase();
@@ -13204,10 +13212,18 @@ function renderTabSettings(db, container) {
         });
         const currentVal = res.model || modelInput.value;
         if (chatModels.length > 0) {
+          const formatModelLabel = (m) => {
+            if (m.includes('qwen3.8-27b') || m.includes('27b')) return '⚡ Neural Core R-27 (Super Cerdas & Fasih Pesantren)';
+            if (m.includes('compound-mini') || m.includes('mini')) return '🚀 Neural Core R-Mini (Ringan & Cepat)';
+            if (m.includes('oss-20b') || m.includes('20b')) return '🧠 Neural Core R-20 (Presisi Logika Tinggi)';
+            if (m.includes('allam')) return '📖 Neural Core R-Salaf (Khazanah Kitab & Nilai Pesantren)';
+            if (m.includes('70b')) return '💎 Neural Core R-70 (Ultra Intelektual)';
+            if (m.includes('8b')) return '⚡ Neural Core R-8 (Respons Kilat)';
+            return `⚡ Neural Core (${m})`;
+          };
           modelInput.innerHTML = chatModels.map(m => {
             const isSel = (m === currentVal) ? 'selected' : '';
-            const isRec = m.includes('8b') ? '⚡ ' : '🚀 ';
-            return `<option value="${m}" ${isSel}>${isRec}${m}</option>`;
+            return `<option value="${m}" ${isSel}>${formatModelLabel(m)}</option>`;
           }).join('');
           modelInput.value = currentVal;
         }
@@ -13217,18 +13233,18 @@ function renderTabSettings(db, container) {
         window.updateEngineCardUI('Groq', 'connected', res.latencyMs + 'ms');
         feedback.className = 'admin-ping-feedback success';
         feedback.innerHTML = `
-          <span>🚀 <strong>Groq LPU Terhubung Kilat!</strong> Gateway merespons dalam <strong>${res.latencyMs}ms</strong> via model <strong>${res.model}</strong>. Status mesin: <em>"${res.reply}"</em></span>
+          <span>🚀 <strong>Akselerator Primer Terhubung Kilat!</strong> Gateway merespons dalam <strong>${res.latencyMs}ms</strong>. Status mesin: <em>"${res.reply}"</em></span>
         `;
       } else {
         window.updateEngineCardUI('Groq', 'error', res.status || 'Error');
         feedback.className = 'admin-ping-feedback error';
         feedback.innerHTML = `
-          <span>❌ <strong>Groq Gagal:</strong> ${res.error} (Status: ${res.status || 'Jaringan'})</span>
+          <span>❌ <strong>Akselerator Gagal:</strong> ${res.error} (Status: ${res.status || 'Jaringan'})</span>
         `;
       }
     } else {
       feedback.className = 'admin-ping-feedback error';
-      feedback.innerHTML = '<span>⚠️ Modul AI Chatbot belum siap. Muat ulang halaman lalu coba kembali.</span>';
+      feedback.innerHTML = '<span>⚠️ Modul Asisten Cerdas belum siap. Muat ulang halaman lalu coba kembali.</span>';
     }
   };
 
@@ -13571,19 +13587,19 @@ function renderTabSettings(db, container) {
       if (hasGroq) {
         statusBadge.className = 'admin-ai-status-pill active';
         statusBadge.style = 'background:#ECFDF5; border-color:#10B981; color:#047857;';
-        statusBadge.innerHTML = `<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10B981; animation:pulse 1.8s infinite;"></span><span>⚡ Groq Turbo LPU Aktif (~0,3s) + Failover Gemini</span>`;
+        statusBadge.innerHTML = `<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10B981; animation:pulse 1.8s infinite;"></span><span>⚡ Jalur Respons Cepat Aktif (~0,2s) + Cadangan Otomatis</span>`;
       } else if (hasPrimary && hasSecondary) {
         statusBadge.className = 'admin-ai-status-pill active';
         statusBadge.style = 'background:#ECFDF5; border-color:#10B981; color:#047857;';
-        statusBadge.innerHTML = `<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10B981; animation:pulse 1.8s infinite;"></span><span>⚡ Gotong Royong Aktif (Dual-Engine: 3.000 Chat/Hari)</span>`;
+        statusBadge.innerHTML = `<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10B981; animation:pulse 1.8s infinite;"></span><span>⚡ Sistem Gotong Royong Aktif (Dual-Core: 3.000 Respons/Hari)</span>`;
       } else if (hasPrimary || hasSecondary) {
         statusBadge.className = 'admin-ai-status-pill active';
         statusBadge.style = '';
-        statusBadge.innerHTML = `<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#34D399; animation:pulse 1.8s infinite;"></span><span>🟢 RAUDLY Neural Engine Aktif (v3-Pro Online)</span>`;
+        statusBadge.innerHTML = `<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#34D399; animation:pulse 1.8s infinite;"></span><span>🟢 Gerbang Kecerdasan Aktif (Core Engine Online)</span>`;
       } else {
         statusBadge.className = 'admin-ai-status-pill';
         statusBadge.style = 'background:#FEF3C7; border-color:#FCD34D; color:#92400E;';
-        statusBadge.innerHTML = `<span>🟡 Mode Basis Data Lokal</span>`;
+        statusBadge.innerHTML = `<span>🟡 Mode Basis Data Mandiri (Lokal)</span>`;
       }
     }
   };
