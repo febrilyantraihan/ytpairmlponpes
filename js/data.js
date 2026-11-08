@@ -12,7 +12,7 @@ const DEFAULT_YAYASAN_DATA = {
     name: "YTPAI Raudlatul Muta'allimin Lamongan",
     legal: "Yayasan Taman Pendidikan Agama Islam Raudlatul Muta'allimin Lamongan",
     slogan: "#SEKOLAH UNGGULAN BERBASIS PESANTREN",
-    history: "Didirikan pada tahun 1984 di Babat, Lamongan, YTPAI Raudlatul Muta’allimin telah berkiprah selama lebih dari empat dekade mencetak generasi muslim berilmu, berakhlak mulia, dan siap berkontribusi nyata bagi agama, bangsa, dan negara.",
+    history: "Mulai dirintis pada tahun 1954 oleh KH. Sufyan di atas tanah H. Sholeh Al Ayyubi di Dusun Tegalrejo, Datinawong, Babat, Lamongan, Pondok Pesantren dan YTPAI Raudlatul Muta’allimin telah berkhidmat lebih dari tujuh dekade membina santri berilmu syariat, berakhlak mulia, dan siap berkontribusi nyata bagi kemaslahatan umat dan bangsa.",
     vision: "Menjadi lembaga dakwah dan pendidikan yang terkemuka dalam membentuk Generasi mukmin yang terampil, berbudi tinggi, dan berpengetahuan luas untuk mewujudkan kesejahteraan umat dan bangsa",
     missionList: [
       "Menyelenggarakan dan mengelola pendidikan secara profesional",
@@ -1098,43 +1098,52 @@ Wassalamu’alaikum warahmatullahi wabarakatuh.`,
     ]
   },
 
-  // Majelis Muassis & Masyayikh Pendiri Pondok Pesantren (1984)
+  // Majelis Muassis & Masyayikh Pendiri Pondok Pesantren (1954)
   muassis: [
     {
       id: "muassis-1",
-      name: "KH. Sholeh Al-Ayyubi",
-      honorific: "Muassis Pesantren",
-      role: "Perintis & Sesepuh Pendiri (1984)",
+      name: "H. Sholeh Al Ayyubi",
+      honorific: "Tokoh Perintis",
+      role: "Pemberi Hibah Tanah & Perintis Cita-Cita Pesantren (1954 / 1982)",
       photo: "assets/muassis_sholeh_ayyubi.png",
-      period: "Perintis 1984",
-      desc: "Salah satu ulama sesepuh perintis peletakan batu pertama berdirinya pondok pesantren di Dusun Tegalrejo, Babat, Lamongan."
+      period: "Cita-Cita 1954 • Hibah 1982",
+      desc: "Orang tua dari KH. Sufyan yang memiliki cita-cita luhur agar tanah tegal miliknya kelak menjadi pondok pesantren, dan menghibahkan tanahnya secara resmi pada tahun 1982."
     },
     {
       id: "muassis-2",
       name: "KH. Sufyan",
-      honorific: "Muassis Pesantren",
-      role: "Perintis & Sesepuh Pendiri (1984)",
+      honorific: "Pendiri Pertama Pesantren",
+      role: "Pendiri Awal Ponpes Muhyiddin (1954)",
       photo: "assets/muassis_sufyan.png",
-      period: "Perintis 1984",
-      desc: "Tokoh ulama sesepuh pendiri yang memperkokoh pondasi keilmuan syariat, tradisi kitab turats, dan kelembagaan awal pesantren."
+      period: "Pendiri Awal 1954",
+      desc: "Ulama pendiri pertama yang mulai mendirikan pondok pesantren (awalnya bernama Ponpes Muhyiddin) pada tahun 1954 di atas tanah orang tua beliau di Dusun Tegalrejo, sebelum kemudian hijrah ke Desa Moropelang Babat."
     },
     {
       id: "muassis-3",
-      name: "KH. Moh Farhan Saa.",
-      honorific: "Muassis Pesantren",
-      role: "Perintis & Sesepuh Pendiri (1984)",
+      name: "KH. Moh. Farhan SAA",
+      honorific: "Al-Maghfurlah",
+      role: "Pemimpin Pesantren & Ketua Yayasan Pertama (1988 – 2006)",
       photo: "assets/muassis_farhan_saa.png",
-      period: "Perintis 1984",
-      desc: "Tokoh perintis yang mendedikasikan perjuangan dalam pembentukan madrasah, dakwah keumatan, dan kaderisasi santri."
+      period: "Pimpinan & Ketua Yayasan 1988",
+      desc: "Ulama pimpinan yang meneruskan kepemimpinan pesantren di Tegalrejo pasca hijrahnya KH. Sufyan, serta Ketua Yayasan resmi pertama saat badan hukum didirikan tahun 1988 hingga wafat tahun 2006."
     },
     {
       id: "muassis-4",
-      name: "KH. Mas'ud Lathief",
+      name: "KH. Mas'ud Lathif",
       honorific: "Al-Maghfurlah",
-      role: "Muassis & Masyayikh Sepuh Pesantren",
+      role: "Pengasuh Pendidikan & Dewan Pembina Yayasan (2010 – 2017)",
       photo: "assets/muassis_masud_lathief.png",
-      period: "Masyayikh Sepuh",
-      desc: "Ulama kharismatik yang menorehkan keteladanan spiritual luhur, sanad keilmuan, dan untaian doa bagi kemaslahatan santri."
+      period: "Pengasuh & Dewan Pembina",
+      desc: "Ulama pemangku amanah operasional pendidikan formal dan non-formal, serta Dewan Pembina Yayasan hasil restrukturisasi tahun 2010 hingga wafat pada tahun 2017."
+    },
+    {
+      id: "muassis-5",
+      name: "KH. Moh. Sa'dullah By",
+      honorific: "Al-Maghfurlah",
+      role: "Pengasuh Pendidikan, Ketua Yayasan (2006) & Pembina (2010 – 2021)",
+      photo: "assets/muassis_sadullah_ayyubi.png",
+      period: "Pengasuh & Ketua Dewan Pembina",
+      desc: "Ulama pemangku amanah operasional pendidikan formal dan non-formal, penerus kepemimpinan pesantren tahun 2006, serta Ketua Dewan Pembina Yayasan hingga wafat pada tahun 2021."
     }
   ],
 
@@ -2380,52 +2389,52 @@ Mari kita rawat bersama tradisi gotong royong dan khidmah tulus ini agar pesantr
     }
   ],
 
-  // Majelis Muassis & Masyayikh Pendiri Pesantren (1984)
+  // Majelis Muassis & Masyayikh Pendiri Pesantren (1954)
   muassis: [
     {
       id: "muassis-1",
-      name: "KH. Sholeh Al-Ayyubi",
-      honorific: "Muassis Pesantren",
-      role: "Perintis & Sesepuh Pendiri (1984)",
+      name: "H. Sholeh Al Ayyubi",
+      honorific: "Tokoh Perintis",
+      role: "Pemberi Hibah Tanah & Perintis Cita-Cita Pesantren (1954 / 1982)",
       photo: "assets/muassis_sholeh_ayyubi.png",
-      period: "1984 - Perintis Awal",
-      desc: "Salah satu ulama sesepuh perintis peletakan batu pertama berdirinya pondok pesantren di Dusun Tegalrejo, Babat, Lamongan."
+      period: "Cita-Cita 1954 • Hibah 1982",
+      desc: "Orang tua dari KH. Sufyan yang memiliki cita-cita luhur agar tanah tegal miliknya kelak menjadi pondok pesantren, dan menghibahkan tanahnya secara resmi pada tahun 1982."
     },
     {
       id: "muassis-2",
       name: "KH. Sufyan",
-      honorific: "Muassis Pesantren",
-      role: "Perintis & Sesepuh Pendiri (1984)",
+      honorific: "Pendiri Pertama Pesantren",
+      role: "Pendiri Awal Ponpes Muhyiddin (1954)",
       photo: "assets/muassis_sufyan.png",
-      period: "1984 - Perintis Awal",
-      desc: "Tokoh ulama sesepuh pendiri yang memperkokoh pondasi keilmuan syariat, tradisi kitab turats, dan kelembagaan awal pesantren."
+      period: "Pendiri Awal 1954",
+      desc: "Ulama pendiri pertama yang mulai mendirikan pondok pesantren (awalnya bernama Ponpes Muhyiddin) pada tahun 1954 di atas tanah orang tua beliau di Dusun Tegalrejo, sebelum kemudian hijrah ke Desa Moropelang Babat."
     },
     {
       id: "muassis-3",
-      name: "KH. Moh Farhan Saa.",
-      honorific: "Muassis Pesantren",
-      role: "Perintis & Sesepuh Pendiri (1984)",
+      name: "KH. Moh. Farhan SAA",
+      honorific: "Al-Maghfurlah",
+      role: "Pemimpin Pesantren & Ketua Yayasan Pertama (1988 – 2006)",
       photo: "assets/muassis_farhan_saa.png",
-      period: "1984 - Perintis Awal",
-      desc: "Tokoh perintis yang mendedikasikan perjuangan dalam pembentukan madrasah, dakwah keumatan, dan kaderisasi santri."
+      period: "Pimpinan & Ketua Yayasan 1988",
+      desc: "Ulama pimpinan yang meneruskan kepemimpinan pesantren di Tegalrejo pasca hijrahnya KH. Sufyan, serta Ketua Yayasan resmi pertama saat badan hukum didirikan tahun 1988 hingga wafat tahun 2006."
     },
     {
       id: "muassis-4",
-      name: "KH. Mas'ud Lathief",
+      name: "KH. Mas'ud Lathif",
       honorific: "Al-Maghfurlah",
-      role: "Muassis & Masyayikh Sepuh",
+      role: "Pengasuh Pendidikan & Dewan Pembina Yayasan (2010 – 2017)",
       photo: "assets/muassis_masud_lathief.png",
-      period: "Sesepuh & Masyayikh",
-      desc: "Ulama kharismatik yang menorehkan keteladanan spiritual luhur, sanad keilmuan, dan untaian doa bagi kemaslahatan santri."
+      period: "Pengasuh & Dewan Pembina",
+      desc: "Ulama pemangku amanah operasional pendidikan formal dan non-formal, serta Dewan Pembina Yayasan hasil restrukturisasi tahun 2010 hingga wafat pada tahun 2017."
     },
     {
       id: "muassis-5",
-      name: "KH. Moh. Sa'dullah Al-Ayyubi",
-      honorific: "Muassis Pesantren",
-      role: "Perintis & Sesepuh Pendiri (1984)",
+      name: "KH. Moh. Sa'dullah By",
+      honorific: "Al-Maghfurlah",
+      role: "Pengasuh Pendidikan, Ketua Yayasan (2006) & Pembina (2010 – 2021)",
       photo: "assets/muassis_sadullah_ayyubi.png",
-      period: "1984 - Perintis Awal",
-      desc: "Ulama sesepuh perintis yang mendedikasikan keteladanan ilmu syariat, pembinaan akhlak santri, dan penguatan nilai-nilai salafiyah di Babat Lamongan."
+      period: "Pengasuh & Ketua Dewan Pembina",
+      desc: "Ulama pemangku amanah operasional pendidikan formal dan non-formal, penerus kepemimpinan pesantren tahun 2006, serta Ketua Dewan Pembina Yayasan hingga wafat pada tahun 2021."
     }
   ],
   dailySchedules: [
@@ -3003,16 +3012,13 @@ function getDB() {
       parsed.tasmikRecords = DEFAULT_YAYASAN_DATA.tasmikRecords;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     }
-    // Auto-migrate muassis (Muassis & Masyayikh Pendiri 1984)
-    if (!parsed.muassis || !Array.isArray(parsed.muassis) || parsed.muassis.length === 0) {
-      parsed.muassis = DEFAULT_YAYASAN_DATA.muassis;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
-    } else if (!parsed.muassis.some(m => m.name && m.name.includes("Sa'dullah"))) {
-      const sadullah = DEFAULT_YAYASAN_DATA.muassis.find(m => m.name && m.name.includes("Sa'dullah"));
-      if (sadullah) {
-        parsed.muassis.push(sadullah);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+    // Auto-migrate muassis & history (Sejarah Otentik Pesantren 1954 - 2026)
+    if (!parsed.muassis || !Array.isArray(parsed.muassis) || parsed.muassis.length === 0 || !parsed.muassis.some(m => m.period && m.period.includes("1954"))) {
+      parsed.muassis = JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.muassis));
+      if (parsed.meta) {
+        parsed.meta.history = DEFAULT_YAYASAN_DATA.meta.history;
       }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     }
     // Auto-migrate psbWaveConfig (Sistem Jadwal SPMB 3 Tahap Dinamis & Pelacak Tanggal Otomatis)
     if (!parsed.psbWaveConfig || !parsed.psbWaveConfig.indent || !parsed.psbWaveConfig.indent.startDate || parsed.psbWaveConfig.autoDateTracking === undefined) {

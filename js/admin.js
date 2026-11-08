@@ -2027,7 +2027,7 @@ function loadCurrentTab() {
       renderTabLeadership(db, container);
       break;
     case 'muassis':
-      titleEl.textContent = 'Manajemen Muassis & Masyayikh Pendiri (1984)';
+      titleEl.textContent = 'Manajemen Muassis & Masyayikh Pendiri (1954)';
       renderTabMuassis(db, container);
       break;
     case 'facilities':
@@ -10485,7 +10485,7 @@ window.deleteLeader = function(index) {
   }
 };
 
-/* --- TAB 5B: MAJELIS MUASSIS & MASYAYIKH PENDIRI (1984) --- */
+/* --- TAB 5B: MAJELIS MUASSIS & MASYAYIKH PENDIRI (1954) --- */
 function renderTabMuassis(db, container) {
   if (!db.muassis || !Array.isArray(db.muassis)) {
     db.muassis = (DEFAULT_YAYASAN_DATA && DEFAULT_YAYASAN_DATA.muassis) ? JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.muassis)) : [];
@@ -10496,8 +10496,8 @@ function renderTabMuassis(db, container) {
       <div class="admin-card-header" style="flex-wrap:wrap; gap:12px;">
         <div>
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-            <h3 style="margin:0; font-size:1.15rem; color:#0A2540;">Muassis & Masyayikh Pendiri (1984)</h3>
-            <span style="font-size:0.7rem; font-weight:800; background:#FEF3C7; color:#92400E; padding:2px 8px; border-radius:999px; border:1px solid #FCD34D;">EST. 1984</span>
+            <h3 style="margin:0; font-size:1.15rem; color:#0A2540;">Muassis & Masyayikh Pendiri (1954)</h3>
+            <span style="font-size:0.7rem; font-weight:800; background:#FEF3C7; color:#92400E; padding:2px 8px; border-radius:999px; border:1px solid #FCD34D;">EST. 1954</span>
           </div>
           <p style="margin:0; font-size:0.84rem; color:#64748B;">Kelola profil, gelar kehormatan, arsip potret, dan rekaman biografi para alim ulama perintis pesantren. Perubahan akan langsung disinkronkan ke halaman web publik <code>sejarah.html</code>.</p>
         </div>
@@ -10594,13 +10594,13 @@ window.openModalMuassis = function(editIndex = null) {
   const m = isEdit ? db.muassis[editIndex] : {
     name: '',
     honorific: 'Muassis Pesantren',
-    role: 'Perintis & Sesepuh Pendiri (1984)',
+    role: 'Perintis & Sesepuh Pendiri (1954)',
     photo: 'assets/leader_ketua.jpg',
-    period: '1984 - Perintis Awal',
+    period: '1954 - Perintis Awal',
     desc: ''
   };
 
-  openAdminModal(isEdit ? 'Edit Tokoh Muassis & Masyayikh (1984)' : 'Tambah Tokoh Muassis & Masyayikh', `
+  openAdminModal(isEdit ? 'Edit Tokoh Muassis & Masyayikh (1954)' : 'Tambah Tokoh Muassis & Masyayikh', `
     <form onsubmit="saveMuassis(event, ${editIndex})">
       <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:14px; margin-bottom:14px;">
         <div class="form-group">
@@ -10614,7 +10614,7 @@ window.openModalMuassis = function(editIndex = null) {
             <option value="Muassis Pesantren">
             <option value="Al-Maghfurlah">
             <option value="Masyayikh Sepuh">
-            <option value="Ulama Perintis (1984)">
+            <option value="Ulama Perintis (1954)">
             <option value="Tokoh Pendiri Yayasan">
           </datalist>
         </div>
@@ -10623,11 +10623,11 @@ window.openModalMuassis = function(editIndex = null) {
       <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:14px; margin-bottom:14px;">
         <div class="form-group">
           <label class="form-label">Peran / Amanah Sejarah *</label>
-          <input type="text" id="muassisRole" class="form-input" value="${m.role || ''}" placeholder="Contoh: Perintis & Sesepuh Pendiri (1984)" required>
+          <input type="text" id="muassisRole" class="form-input" value="${m.role || ''}" placeholder="Contoh: Perintis & Sesepuh Pendiri (1954)" required>
         </div>
         <div class="form-group">
           <label class="form-label">Masa / Era Perjuangan</label>
-          <input type="text" id="muassisPeriod" class="form-input" value="${m.period || '1984 - Perintis Awal'}" placeholder="Contoh: 1984 - Perintis Awal">
+          <input type="text" id="muassisPeriod" class="form-input" value="${m.period || '1954 - Perintis Awal'}" placeholder="Contoh: 1954 - Perintis Awal">
         </div>
       </div>
 
@@ -10671,7 +10671,7 @@ window.saveMuassis = function(e, editIndex) {
     name: document.getElementById('muassisName').value.trim(),
     honorific: document.getElementById('muassisHonorific').value.trim() || 'Muassis Pesantren',
     role: document.getElementById('muassisRole').value.trim() || 'Perintis & Sesepuh Pendiri',
-    period: document.getElementById('muassisPeriod').value.trim() || '1984 - Perintis Awal',
+    period: document.getElementById('muassisPeriod').value.trim() || '1954 - Perintis Awal',
     photo: photoVal || existing.photo || 'assets/leader_ketua.jpg',
     desc: document.getElementById('muassisDesc').value.trim()
   };
@@ -10718,7 +10718,7 @@ window.openModalEditMuassisDesc = function(index) {
           <div style="font-weight:800; color:#0A2540; font-size:0.96rem;">${m.name}</div>
           <div style="display:flex; align-items:center; gap:6px; margin-top:3px; flex-wrap:wrap;">
             <span style="font-size:0.7rem; font-weight:700; background:#FFFDF5; color:#92400E; border:1px solid rgba(251,191,36,0.5); padding:1px 7px; border-radius:999px;">${m.honorific || 'Muassis Pesantren'}</span>
-            <span style="font-size:0.73rem; color:#64748B;">${m.role || 'Perintis & Sesepuh (1984)'}</span>
+            <span style="font-size:0.73rem; color:#64748B;">${m.role || 'Perintis & Sesepuh (1954)'}</span>
           </div>
         </div>
       </div>

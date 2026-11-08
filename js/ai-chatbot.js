@@ -576,7 +576,7 @@ BASIS DATA RESMI SELURUH EKOSISTEM YAYASAN (REAL-TIME DATA):
 1. IDENTITAS & KONTAK RESMI YAYASAN:
 - Nama Yayasan: ${meta.name || "YTPAI Raudlatul Muta'allimin Lamongan"}
 - Legalitas Badan Hukum: ${meta.legal || "Yayasan Taman Pendidikan Agama Islam Raudlatul Muta'allimin Lamongan"}
-- Sejarah Singkat: Berdiri sejak 1984 di Babat, Lamongan.
+- Sejarah Singkat: Mulai berdiri tahun 1954 oleh KH. Sufyan di atas tanah orang tua beliau H. Sholeh Al Ayyubi di Dusun Tegalrejo, Datinawong, Babat, Lamongan dengan nama awal Ponpes Muhyiddin. Tahun 1969 berganti nama menjadi Pondok Pesantren Raudlatul Muta'allimin atas saran KH. Utsman Al Ishaqi RA. (Surabaya). Tahun 1970 KH. Abdullah Faqih Langitan Widang Tuban menyarankan mendirikan sekolah formal, lalu berdiri MTs (1971) dibantu santri Langitan, MI (1973), dan MA (1978). KH. Sufyan hijrah ke Moropelang, pesantren Tegalrejo dipimpin KH. Moh. Farhan SAA bersama KH. Moh. Sa'dullah By, KH. Mas'ud Lathif, dan KH. Maghfur Bisri. Tahun 1982 H. Sholeh Al Ayyubi menghibahkan tanahnya secara resmi. Tahun 1988 berdiri yayasan resmi diketuai KH. Moh. Farhan SAA serta berdiri sekolah formal SMA dan SMP Raudlatul Muta'allimin. Kini berfasilitas asrama putra-putri, Mushola Pondok Pesantren Putra & Putri, laboratorium sains & CBT, poskestren, dan 7 jenjang formal terakreditasi.
 - Slogan Resmi: "${meta.slogan || "#SEKOLAH UNGGULAN BERBASIS PESANTREN"}"
 - Visi: "${meta.vision || "Menjadi lembaga dakwah dan pendidikan yang terkemuka dalam membentuk Generasi mukmin yang terampil, berbudi tinggi, dan berpengetahuan luas untuk mewujudkan kesejahteraan umat dan bangsa"}"
 - 5 Pilar Misi:

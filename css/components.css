@@ -1800,7 +1800,7 @@
 
 /* ==========================================================================
    EXECUTIVE HISTORY GATEWAY BANNER (#tentang)
-   Prestisius, Dinamis & Berwibawa (1984 - 2026)
+   Prestisius, Dinamis & Berwibawa (1954 - 2026)
    ========================================================================== */
 .about-history-banner-wrapper {
   margin-bottom: 22px;
@@ -13723,7 +13723,7 @@ img.footer-logo {
 /* Lead Narrative Box */
 .history-lead-card {
   background: #FFFFFF;
-  border-radius: 20px;
+  border-radius: 14px;
   border: 1.5px solid rgba(15, 76, 129, 0.15);
   box-shadow: 0 10px 30px -5px rgba(10, 37, 64, 0.08);
   padding: 40px;
@@ -13845,7 +13845,7 @@ img.footer-logo {
   line-height: 1.7;
 }
 
-/* Timeline Milestones (1984 - 2026) */
+/* Timeline Milestones (1954 - 2026) */
 .history-timeline {
   position: relative;
   padding-left: 40px;
@@ -25590,7 +25590,7 @@ body.ai-chat-open .floating-wa-fab {
 }
 
 /* ==========================================================================
-   GALERI KEHORMATAN MUASSIS & MASYAYIKH PENDIRI (1984)
+   GALERI KEHORMATAN MUASSIS & MASYAYIKH PENDIRI (1954)
    ========================================================================== */
 
 .history-muassis-section {

@@ -42,7 +42,7 @@ Salinan kode murni yang telah divalidasi dan berjalan 100% sempurna disimpan di 
   2. Kartu Visi Resmi Yayasan (`.yayasan-vision-card`).
   3. Kartu Interaktif Silaturahmi & Kunjungan Pesantren (`.about-visit-card` - Opsi C): Berisi ajakan kunjungan, checklist layanan, tombol WA reservasi, dan tombol unduh profil.
 - **Kolom Kanan**:
-  1. Judul & Sejarah Pendirian 1984.
+  1. Judul & Sejarah Pendirian 1954 (Pondok Pesantren) / 1988 (Yayasan Resmi).
   2. Kotak 5 Pilar Misi Yayasan (`.yayasan-mission-box`).
 - **Keduanya WAJIB memiliki tinggi yang seimbang (~750px) dan sejajar rata bawah**. Tidak boleh ada ruang kosong (*blank void*).
 
