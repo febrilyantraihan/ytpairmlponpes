@@ -1103,8 +1103,8 @@ Wassalamu’alaikum warahmatullahi wabarakatuh.`,
     {
       id: "muassis-1",
       name: "H. Sholeh Al Ayyubi",
-      honorific: "Tokoh Perintis",
-      role: "Pemberi Hibah Tanah & Perintis Cita-Cita Pesantren (1954 / 1982)",
+      honorific: "Al-Maghfurlah",
+      role: "Pemberi Hibah Tanah & Perintis Cita-Cita (1954 / 1982)",
       photo: "assets/muassis_sholeh_ayyubi.png",
       period: "Cita-Cita 1954 • Hibah 1982",
       desc: "Orang tua dari KH. Sufyan yang memiliki cita-cita luhur agar tanah tegal miliknya kelak menjadi pondok pesantren, dan menghibahkan tanahnya secara resmi pada tahun 1982."
@@ -1112,8 +1112,8 @@ Wassalamu’alaikum warahmatullahi wabarakatuh.`,
     {
       id: "muassis-2",
       name: "KH. Sufyan",
-      honorific: "Pendiri Pertama Pesantren",
-      role: "Pendiri Awal Ponpes Muhyiddin (1954)",
+      honorific: "Al-Maghfurlah",
+      role: "Pendiri Pertama Pondok Pesantren (1954)",
       photo: "assets/muassis_sufyan.png",
       period: "Pendiri Awal 1954",
       desc: "Ulama pendiri pertama yang mulai mendirikan pondok pesantren (awalnya bernama Ponpes Muhyiddin) pada tahun 1954 di atas tanah orang tua beliau di Dusun Tegalrejo, sebelum kemudian hijrah ke Desa Moropelang Babat."
@@ -1140,7 +1140,7 @@ Wassalamu’alaikum warahmatullahi wabarakatuh.`,
       id: "muassis-5",
       name: "KH. Moh. Sa'dullah By",
       honorific: "Al-Maghfurlah",
-      role: "Pengasuh Pendidikan, Ketua Yayasan (2006) & Pembina (2010 – 2021)",
+      role: "Pengasuh Pendidikan, Ketua Yayasan & Pembina (2006 / 2010 – 2021)",
       photo: "assets/muassis_sadullah_ayyubi.png",
       period: "Pengasuh & Ketua Dewan Pembina",
       desc: "Ulama pemangku amanah operasional pendidikan formal dan non-formal, penerus kepemimpinan pesantren tahun 2006, serta Ketua Dewan Pembina Yayasan hingga wafat pada tahun 2021."
@@ -2394,8 +2394,8 @@ Mari kita rawat bersama tradisi gotong royong dan khidmah tulus ini agar pesantr
     {
       id: "muassis-1",
       name: "H. Sholeh Al Ayyubi",
-      honorific: "Tokoh Perintis",
-      role: "Pemberi Hibah Tanah & Perintis Cita-Cita Pesantren (1954 / 1982)",
+      honorific: "Al-Maghfurlah",
+      role: "Pemberi Hibah Tanah & Perintis Cita-Cita (1954 / 1982)",
       photo: "assets/muassis_sholeh_ayyubi.png",
       period: "Cita-Cita 1954 • Hibah 1982",
       desc: "Orang tua dari KH. Sufyan yang memiliki cita-cita luhur agar tanah tegal miliknya kelak menjadi pondok pesantren, dan menghibahkan tanahnya secara resmi pada tahun 1982."
@@ -2403,8 +2403,8 @@ Mari kita rawat bersama tradisi gotong royong dan khidmah tulus ini agar pesantr
     {
       id: "muassis-2",
       name: "KH. Sufyan",
-      honorific: "Pendiri Pertama Pesantren",
-      role: "Pendiri Awal Ponpes Muhyiddin (1954)",
+      honorific: "Al-Maghfurlah",
+      role: "Pendiri Pertama Pondok Pesantren (1954)",
       photo: "assets/muassis_sufyan.png",
       period: "Pendiri Awal 1954",
       desc: "Ulama pendiri pertama yang mulai mendirikan pondok pesantren (awalnya bernama Ponpes Muhyiddin) pada tahun 1954 di atas tanah orang tua beliau di Dusun Tegalrejo, sebelum kemudian hijrah ke Desa Moropelang Babat."
@@ -2431,7 +2431,7 @@ Mari kita rawat bersama tradisi gotong royong dan khidmah tulus ini agar pesantr
       id: "muassis-5",
       name: "KH. Moh. Sa'dullah By",
       honorific: "Al-Maghfurlah",
-      role: "Pengasuh Pendidikan, Ketua Yayasan (2006) & Pembina (2010 – 2021)",
+      role: "Pengasuh Pendidikan, Ketua Yayasan & Pembina (2006 / 2010 – 2021)",
       photo: "assets/muassis_sadullah_ayyubi.png",
       period: "Pengasuh & Ketua Dewan Pembina",
       desc: "Ulama pemangku amanah operasional pendidikan formal dan non-formal, penerus kepemimpinan pesantren tahun 2006, serta Ketua Dewan Pembina Yayasan hingga wafat pada tahun 2021."
@@ -3013,7 +3013,7 @@ function getDB() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     }
     // Auto-migrate muassis & history (Sejarah Otentik Pesantren 1954 - 2026)
-    if (!parsed.muassis || !Array.isArray(parsed.muassis) || parsed.muassis.length === 0 || !parsed.muassis.some(m => m.period && m.period.includes("1954"))) {
+    if (!parsed.muassis || !Array.isArray(parsed.muassis) || parsed.muassis.length === 0 || !parsed.muassis.some(m => m.honorific === "Al-Maghfurlah" && m.name && m.name.includes("Sholeh"))) {
       parsed.muassis = JSON.parse(JSON.stringify(DEFAULT_YAYASAN_DATA.muassis));
       if (parsed.meta) {
         parsed.meta.history = DEFAULT_YAYASAN_DATA.meta.history;
